@@ -33,7 +33,7 @@ export default function EditorSidebar({ data, setData, activeTab, setActiveTab }
             <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-base sm:text-xl font-semibold text-foreground">Thiệp Cưới Online</h1>
+            <h1 className="text-base sm:text-xl font-semibold text-foreground">Thiệp Cưới</h1>
             <p className="text-xs sm:text-sm text-muted-foreground">Chỉnh sửa thông tin thiệp cưới</p>
           </div>
         </div>

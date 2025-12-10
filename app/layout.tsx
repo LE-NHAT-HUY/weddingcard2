@@ -27,10 +27,10 @@ const sacramento = Sacramento({
 })
 
 export const metadata: Metadata = {
-  title: "Thiệp Cưới Online - Wedding Invitation Editor | CineLove Style",
-  description: "Tạo và chỉnh sửa thiệp cưới online đẹp mắt theo phong cách CineLove",
-  keywords: "thiệp cưới online, wedding invitation, thiệp cưới điện tử, mẫu thiệp cưới đẹp",
-  generator: "v0.app",
+  title: "Thư Mời Ngày Cưới Khánh Nam & Lan Nhi",
+  description: "",
+  keywords: "",
+  generator: "",
 
   viewport: "width=390, initial-scale=1, maximum-scale=1",
 }

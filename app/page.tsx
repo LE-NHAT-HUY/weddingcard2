@@ -1,28 +1,46 @@
-import Head from "next/head";
-import WeddingCardView from "@/components/wedding-card-view";
+// app/page.tsx
+import type { ReactNode } from "react";
 
-export default function Home() {
+export const metadata = {
+  title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+  description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
+  openGraph: {
+    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+    description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
+    url: "https://weddingcard-beta.vercel.app/",
+    siteName: "Wedding Card",
+    images: [
+      {
+        url: "https://weddingcard-beta.vercel.app/anh6.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Wedding couple",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+    description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
+    images: ["https://weddingcard-beta.vercel.app/anh6.jpg"],
+  },
+};
+
+export default function HomePage(): ReactNode {
   return (
-    <>
-      <Head>
-        <title>Thư Mời Thiệp Cưới Khánh Nam & Lan Nhi</title>
-        <meta name="description" content="Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025." />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="Thiệp Cưới Nhật Huy & Minh Anh" />
-        <meta property="og:description" content="Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025." />
-        <meta property="og:image" content="https://weddingcard-beta.vercel.app/anh6.jpg" />
-        <meta property="og:url" content="https://weddingcard-beta.vercel.app/" />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Thiệp Cưới Nhật Huy & Minh Anh" />
-        <meta name="twitter:description" content="Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025." />
-        <meta name="twitter:image" content="https://weddingcard-beta.vercel.app/anh6.jpg" />
-      </Head>
-
-      <WeddingCardView />
-    </>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-pink-50">
+      <h1 className="text-4xl font-bold mb-4">
+        Thiệp Cưới Khánh Nam & Lan Nhi
+      </h1>
+      <p className="text-lg mb-6">
+        Chúng tôi hân hạnh mời bạn tham dự lễ cưới vào ngày 20/12/2025
+      </p>
+      <img
+        src="/anh6.jpg"
+        alt="Wedding couple"
+        className="w-[90%] max-w-lg rounded-lg shadow-lg"
+      />
+    </main>
   );
 }
