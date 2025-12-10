@@ -22,7 +22,7 @@ const defaultData: WeddingData = {
   weddingDate: "2025-05-20",
   weddingTime: "12:00",
   lunarDate: "23/04/2025",
-  venueName: "Trung Tâm Tiệc Cưới",
+  venueName: "Tư Gia Nhà Trai",
   venueAddress: "Thôn Phú Lộc 2, Phú Trạch, Quảng Trị",
   message: "Trân trọng kính mời quý khách đến dự bữa tiệc chung vui cùng gia đình chúng tôi",
   template: "",
