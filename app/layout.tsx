@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: "Thiệp Cưới Khánh Nam & Lan Nhi",
   description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
   openGraph: {
-    title: "Thiệp Cưới Khánh Nam & Lan",
+    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
     url: "https://weddingcard-beta.vercel.app/",
     siteName: "Wedding Card",
