@@ -10,6 +10,7 @@ import { createClient } from "@/lib/supabase/client"
 
 // Dữ liệu mặc định của thiệp cưới
 const defaultData: WeddingData = {
+  
   groomName: "Khánh Nam",
   brideName: "Lan Nhi",
   groomFullName: "Lê Khánh Nam",

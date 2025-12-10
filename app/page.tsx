@@ -1,46 +1,27 @@
-// app/page.tsx
-import type { ReactNode } from "react";
+"use client";
 
-export const metadata = {
-  title: "Thiệp Cưới Khánh Nam & Lan Nhi",
-  description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
-  openGraph: {
-    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
-    description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
-    url: "https://weddingcard-beta.vercel.app/",
-    siteName: "Wedding Card",
-    images: [
-      {
-        url: "https://weddingcard-beta.vercel.app/anh6.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Wedding couple",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
-    description: "Mời bạn tham dự lễ cưới của chúng tôi vào ngày 20/12/2025.",
-    images: ["https://weddingcard-beta.vercel.app/anh6.jpg"],
-  },
-};
+import { getMessengerLink } from "@/utils/url";
 
-export default function HomePage(): ReactNode {
+export default function Page() {
+  const url = "https://weddingcard-beta.vercel.app/";
+  const messengerUrl = getMessengerLink(url);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-pink-50">
-      <h1 className="text-4xl font-bold mb-4">
-        Thiệp Cưới Khánh Nam & Lan Nhi
-      </h1>
-      <p className="text-lg mb-6">
-        Chúng tôi hân hạnh mời bạn tham dự lễ cưới vào ngày 20/12/2025
+    <main className="flex flex-col items-center justify-center min-h-screen bg-pink-50 p-4">
+      <h1 className="text-4xl font-bold text-pink-700 mb-6">Khánh Nam & Lan Nhi</h1>
+      <p className="text-center text-lg mb-8">
+        Chúng tôi hân hạnh thông báo lễ cưới của mình! 🎉
       </p>
-      <img
-        src="/anh6.jpg"
-        alt="Wedding couple"
-        className="w-[90%] max-w-lg rounded-lg shadow-lg"
-      />
+
+      {/* Nút chia sẻ Messenger */}
+      <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(messengerUrl)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg transition"
+      >
+        Chia sẻ trên Messenger
+      </a>
     </main>
   );
 }
