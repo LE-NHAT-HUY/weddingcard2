@@ -16,17 +16,90 @@ export default function WeddingCardScroll({
   onToggleMusic,
   onShowWishModal,
 }: WeddingCardScrollProps) {
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const unlockedRef = useRef(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
 
-  // Trạng thái nhạc, mặc định bật
-  const [isMusicOn, setIsMusicOn] = useState(true)
+  // Trạng thái nhạc - BAN ĐẦU LÀ TẮT
+  const [isMusicOn, setIsMusicOn] = useState(false)
 
-  const handleToggleMusic = () => {
-    setIsMusicOn((prev) => !prev)
-    onToggleMusic?.()
+  // Tạo audio element khi component mount
+  useEffect(() => {
+    // Tạo audio element nhưng KHÔNG phát ngay
+    audioRef.current = new Audio('/wedding-background-music.mp3')
+    audioRef.current.loop = true
+    audioRef.current.volume = 0.3
+    audioRef.current.preload = 'auto'
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
+    }
+  }, [])
+
+  // XỬ LÝ CLICK ĐẦU TIÊN - CHỈ ÁP DỤNG CHO CLICK NGOÀI NÚT
+  useEffect(() => {
+  const enableMusicOnFirstTap = (e: Event) => {
+    if (unlockedRef.current || !audioRef.current) return
+
+    const target = e.target as HTMLElement
+    const isMusicButton =
+      target.closest('button[title*="nhạc"]') ||
+      target.closest('button[aria-pressed]')
+
+    // Nếu click vào nút nhạc lần đầu → chỉ unlock, KHÔNG phát nhạc.
+    if (isMusicButton) {
+      unlockedRef.current = true
+    } else {
+      // Nếu click ngoài → unlock + tự phát nhạc
+      unlockedRef.current = true
+      audioRef.current.play().then(() => {
+        setIsMusicOn(true)
+      }).catch(err => console.error(err))
+    }
+
+    // Sau khi unlock → gỡ listener
+    window.removeEventListener("click", enableMusicOnFirstTap, true)
+    window.removeEventListener("touchstart", enableMusicOnFirstTap, true)
   }
 
+  window.addEventListener("click", enableMusicOnFirstTap, { capture: true })
+  window.addEventListener("touchstart", enableMusicOnFirstTap, { capture: true })
+
+  return () => {
+    window.removeEventListener("click", enableMusicOnFirstTap, true)
+    window.removeEventListener("touchstart", enableMusicOnFirstTap, true)
+  }
+}, [])
+
+
+  // XỬ LÝ NÚT TOGGLE
+  const handleToggleMusic = (e: React.MouseEvent) => {
+  e.stopPropagation()
+
+  if (!unlockedRef.current) {
+    unlockedRef.current = true
+  }
+
+  if (!audioRef.current) return
+
+  // Nếu đang bật → TẮT
+  if (isMusicOn) {
+    audioRef.current.pause()
+    setIsMusicOn(false)
+    return
+  }
+
+  // Nếu đang tắt → BẬT
+  audioRef.current.play().catch(err => console.error(err))
+  setIsMusicOn(true)
+}
+
+
+  // ... phần còn lại giữ nguyên ...
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -89,35 +162,37 @@ export default function WeddingCardScroll({
   ]
 
   const containerStyle = {
-  fontFamily: "'Quicksand', 'Playfair Display', sans-serif",
-  backgroundColor: "#FFF8E1", // dễ đổi màu
-};
+    fontFamily: "'Quicksand', 'Playfair Display', sans-serif",
+    backgroundColor: "#FFF8E1",
+  }
 
   return (
-  <div
-    ref={containerRef}
-    className="relative w-full md:max-w-md mx-auto h-screen overflow-y-scroll snap-y snap-mandatory"
-    style={containerStyle}
-  >
-      {/* ===== FLOATING BUTTONS NỔI TRÊN MÀN HÌNH ===== */}
-     
-<div className="fixed bottom-6 right-4 z-50 flex flex-col gap-3">
-  <button
-    onClick={handleToggleMusic}
-    aria-pressed={isMusicOn}
-    className={`bg-black/70 shadow-lg rounded-full p-1.5 hover:scale-105 transition`} // giảm padding từ p-3 xuống p-1.5
-    title="Bật / tắt nhạc"
-  >
-    <img
-      src="/audio-1.png"
-      alt="music icon"
-      className={`w-8 h-8 transition-all duration-500 ${ // tăng kích thước từ w-6 h-6 lên w-8 h-8
-        isMusicOn ? "opacity-100" : "animate-spin opacity-50"
-      }`}
-      style={!isMusicOn ? { animationDuration: '3.00s' } : undefined}
-    />
-  </button>
-
+    <div
+      ref={containerRef}
+      className="relative w-full md:max-w-md mx-auto h-screen overflow-y-scroll snap-y snap-mandatory"
+      style={containerStyle}
+    >
+      {/* ===== FLOATING BUTTONS ===== */}
+      <div className="fixed bottom-6 right-4 z-50 flex flex-col gap-3">
+        <button
+          onClick={handleToggleMusic}
+          aria-pressed={isMusicOn}
+          className="bg-black/70 shadow-lg rounded-full p-1.5 hover:scale-105 transition"
+          title={isMusicOn ? "Tắt nhạc" : "Bật nhạc"}
+        >
+          <img
+            src="/audio-1.png"
+            alt="music icon"
+            className={`w-8 h-8 transition-all duration-500 ${
+              isMusicOn ? "opacity-100 animate-spin" : "opacity-50"
+            }`}
+            style={isMusicOn ? { animationDuration: "3s" } : undefined}
+          />
+        </button>
+        
+      
+      
+       
   <button
   onClick={onShowWishModal}
   style={{ backgroundColor: "#db9999" }} // hồng thắm
@@ -312,10 +387,8 @@ export default function WeddingCardScroll({
           `}
         >
           <img
-            src={
-              data.gallery[1] ||
-              "/placeholder.svg?height=450&width=350&query=couple portrait elegant"
-            }
+            src={data.gallery?.[1] || "/placeholder.svg"}
+
             alt="Gallery"
             className="w-[75%] h-auto max-h-[60vh] object-contain mx-auto"
           />
@@ -382,7 +455,7 @@ export default function WeddingCardScroll({
           `}
         >
           <div className="grid grid-cols-2 gap-3">
-            {data.gallery.slice(0, 2).map((photo, index) => (
+            {[data.gallery?.[6], data.gallery?.[7]].map((photo, index) => (
               <div
                 key={index}
                 className={`
@@ -396,11 +469,12 @@ export default function WeddingCardScroll({
                 `}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <img
+               <img
                   src={photo || "/placeholder.svg"}
                   alt={`Gallery ${index + 1}`}
                   className="w-full h-auto object-contain rounded-sm"
                 />
+
               </div>
             ))}
           </div>
@@ -520,9 +594,9 @@ export default function WeddingCardScroll({
         top: "-2px",
       }}
     >
-      9:00
+      11:00
     </span>{" "}
-    – THỨ SÁU
+    – THỨ TƯ
   </p>
 
   <div className="flex flex-col items-center mb-1">
@@ -577,7 +651,7 @@ export default function WeddingCardScroll({
   </p>
 
   <a
-    href="https://maps.app.goo.gl/E84yGsyMHc4FHMJM8"
+    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block mt-4 px-9 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
@@ -621,9 +695,9 @@ export default function WeddingCardScroll({
             >
               VÀO LÚC{" "}
               <span style={{ fontSize: "1em", fontFamily: "'Playfair Display', serif", position: "relative", top: "-2px" }}>
-                9:00
+                11:00
               </span>{" "}
-              – THỨ SÁU
+              – THỨ TƯ
             </p>
 
             <div className="flex flex-col items-center mb-1">
@@ -660,7 +734,7 @@ export default function WeddingCardScroll({
             </p>
 
             <a
-              href="https://maps.app.goo.gl/E84yGsyMHc4FHMJM8"
+              href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-9 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
@@ -700,28 +774,28 @@ export default function WeddingCardScroll({
 
     {/* Grid 4 ảnh */}
     <div className="grid grid-cols-2 gap-3 w-full">
-      {data.gallery.slice(0, 4).map((photo, index) => {
-        // delay 0ms, 500ms, 1000ms, 1500ms cho từng ảnh
-        const delay = `${index * 500}ms`;
-        return (
-          <div
-            key={index}
-            className={`w-full flex items-center justify-center transition-all duration-2000 ${
-              isVisible("gallery-grid")
-                ? "translate-y-0 opacity-100"
-                : "translate-y-12 opacity-0"
-            }`}
-            style={{ transitionDelay: delay }}
-          >
-            <img
-              src={photo || "/placeholder.svg"}
-              alt={`Gallery ${index + 1}`}
-              className="w-full h-auto object-contain rounded-sm"
-            />
-          </div>
-        );
-      })}
-    </div>
+  {[data.gallery?.[3], data.gallery?.[9], data.gallery?.[8], data.gallery?.[10]].map((photo, index) => {
+    const delay = `${index * 500}ms`;
+    return (
+      <div
+        key={index}
+        className={`w-full flex items-center justify-center transition-all duration-2000 ${
+          isVisible("gallery-grid")
+            ? "translate-y-0 opacity-100"
+            : "translate-y-12 opacity-0"
+        }`}
+        style={{ transitionDelay: delay }}
+      >
+        <img
+          src={photo || "/placeholder.svg"}
+          alt={`Gallery ${index + 1}`}
+          className="w-full h-auto object-contain rounded-sm"
+        />
+      </div>
+    );
+  })}
+</div>
+
   </div>
 </section>
 

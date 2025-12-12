@@ -19,17 +19,18 @@ const defaultData: WeddingData = {
   groomMotherName: "Trương Thị Cúc",
   brideFatherName: "Tên cha",
   brideMotherName: "Tên Mẹ",
-  weddingDate: "2026-02-20",
-  weddingTime: "12:00",
-  lunarDate: "23/04/2025",
+  weddingDate: "2026-01-28",
+  weddingTime: "11:00",
+  lunarDate: "10/12/2025",
   venueName: "Tư Gia Nhà Trai",
   venueAddress: "Thôn Phú Lộc 2, Phú Trạch, Quảng Trị",
   message: "Trân trọng kính mời quý khách đến dự bữa tiệc chung vui cùng gia đình chúng tôi",
   template: "",
   primaryColor: "#9e0a0a",
   accentColor: "#db9999",
-  coverPhoto: "/romantic-couple-wedding-photo-portrait.jpg",
+  coverPhoto: "/anh-nen1.jpg",
   introText:
+  
     "",
   quoteText:
     "",
@@ -68,6 +69,12 @@ const defaultData: WeddingData = {
     "/anh4.jpg",
     "/anh5.jpg",
     "/anh6.jpg",
+    "/anh7.jpg",
+    "/anh8.jpg",
+    "/anh9.jpg",
+    "/reanh10.jpg",
+    "/anh11.jpg",
+    
   ],
 }
 
