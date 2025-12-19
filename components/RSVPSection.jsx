@@ -129,7 +129,7 @@ export default function RSVPSection({ submitEndpoint = "/api/rsvp" }) {
     <section
       id="rsvp"
       className="w-full max-w-full overflow-x-hidden  bg-[##faf8f5] px-4 sm:px-8 py-8"
-      style={{ fontFamily: "'Quicksand', 'Playfair Display', sans-serif" }}
+      style={{ fontFamily: "'Playfair Display', serif", }}
     >
       <p className="text-xs sm:text-sm text-center font-medium tracking-wide text-[#111111] mb-8">
         HÃY XÁC NHẬN SỰ CÓ MẶT CỦA QUÝ KHÁCH ĐỂ GIA ĐÌNH CHÚNG TÔI CHUẨN BỊ ĐÓN TIẾP MỘT CÁCH CHU ĐÁO NHẤT, TRÂN TRỌNG!
@@ -231,39 +231,48 @@ export default function RSVPSection({ submitEndpoint = "/api/rsvp" }) {
         ))}
 
         {/* Submit button */}
-        <div
-          ref={(el) => (fieldsRef.current[fields.length] = el)}
-          data-index={fields.length}
-          className={`flex justify-center transform transition-all duration-700 ${
-            visibleFields.includes(fields.length)
-              ? "translate-y-0 opacity-100"
-              : "translate-y-8 opacity-0"
-          }`}
-          style={{ transitionDelay: `${fields.length * 150}ms` }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="text-white px-31 py-2 rounded-full disabled:opacity-50 transition-all duration-300 font-medium tracking-wide shadow-sm hover:shadow-md"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                backgroundColor: primaryColor,
-                border: `2px solid ${primaryColor}`,
-                opacity: loading ? 0.5 : 1,
-                cursor: loading ? "not-allowed" : "pointer",
-              }}
-              onMouseEnter={(e) => {
-                if (!loading) e.currentTarget.style.backgroundColor = "#030b20ff";
-              }}
-              onMouseLeave={(e) => {
-                if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
-              }}
-            >
-              {loading ? "Đang gửi..." : "Gửi xác nhận"}
-            </button>
-          </div>
-        </div>
+        {/* Submit button */}
+<div
+  ref={(el) => (fieldsRef.current[fields.length] = el)}
+  data-index={fields.length}
+  className={`flex justify-center transform transition-all duration-700 ${
+    visibleFields.includes(fields.length)
+      ? "translate-y-0 opacity-100"
+      : "translate-y-8 opacity-0"
+  }`}
+  style={{ transitionDelay: `${fields.length * 150}ms` }}
+>
+  <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
+    <button
+      type="submit"
+      disabled={loading}
+      className="text-white px-31 py-2 rounded-full disabled:opacity-50 transition-all duration-300 font-medium tracking-wide shadow-sm hover:shadow-md"
+      style={{
+        fontFamily: "'Playfair Display', serif",
+        backgroundColor: primaryColor,
+        border: `2px solid ${primaryColor}`,
+        opacity: loading ? 0.5 : 1,
+        cursor: loading ? "not-allowed" : "pointer",
+      }}
+      onMouseEnter={(e) => {
+        if (!loading) e.currentTarget.style.backgroundColor = "#030b20ff";
+      }}
+      onMouseLeave={(e) => {
+        if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
+      }}
+    >
+      {loading ? "Đang gửi..." : "Xác nhận"}
+    </button>
+
+    {/* --- Thêm nhắc nhở lỗi ngay dưới nút gửi --- */}
+    {errorMsg && (
+      <p className="mt-2 text-red-600 text-sm font-medium text-center w-full sm:w-auto">
+        {errorMsg}
+      </p>
+    )}
+  </div>
+</div>
+
       </form>
     </section>
   );

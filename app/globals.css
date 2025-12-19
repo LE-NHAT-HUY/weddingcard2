@@ -220,7 +220,7 @@ html {
 
 
 .floating-wish {
-  animation: floatUpLive 8s linear forwards;
+  animation: floatUpLive 10s linear forwards;
   pointer-events: none;
   will-change: transform, opacity;
   position: absolute;
