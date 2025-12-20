@@ -1,9 +1,12 @@
 "use client"
-import Head from 'next/head'
+
 import type { WeddingData, Wish } from "@/lib/types"
 import { useEffect, useRef, useState } from "react"
 import { Heart, MapPin, Calendar, Volume2, Send } from "lucide-react"
 import RSVPSection from "@/components/RSVPSection"
+import { useSearchParams } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
+
 
 interface WeddingCardScrollProps {
   data: WeddingData
@@ -16,6 +19,14 @@ export default function WeddingCardScroll({
   onToggleMusic,
   onShowWishModal,
 }: WeddingCardScrollProps) {
+
+const searchParams = useSearchParams()
+const code = searchParams.get("code")
+const supabase = createClient()
+
+const [guestName, setGuestName] = useState<string | null>(null)
+const [guestHonorific, setGuestHonorific] = useState<string | null>(null)
+
   const [showFloatingWishes, setShowFloatingWishes] = useState(true)
   
 
@@ -84,6 +95,35 @@ export default function WeddingCardScroll({
     window.removeEventListener("touchstart", enableMusicOnFirstTap, true)
   }
 }, [])
+
+useEffect(() => {
+    if (!code) return
+
+    const fetchGuest = async () => {
+      const { data } = await supabase
+        .from("guests")
+        .select("name, honorific")
+        .eq("code", code)
+        .single()
+
+      if (data?.name) {
+        setGuestName(data.name)
+      }
+
+      if (data?.honorific) {
+  setGuestHonorific(data.honorific)
+}
+
+      // Ghi nhận mở thiệp
+      fetch("/api/guests/opened", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      }).catch(() => {})
+    }
+
+    fetchGuest()
+  }, [code])
 
 
   // XỬ LÝ NÚT TOGGLE
@@ -175,6 +215,8 @@ export default function WeddingCardScroll({
     fontFamily: "'Quicksand', 'Playfair Display', sans-serif",
     backgroundColor: "#FFF8E1",
   }
+
+  
 
  return (
   <div
@@ -405,72 +447,59 @@ export default function WeddingCardScroll({
           </div>
         </section>
 
-        {/* Gallery photo (not full screen) */}
-        <section
-          id="gallery-2"
-          data-animate
-          className={`
-            px-4
-            py-4
-            transition-all
-            duration-1700
-            ${isVisible("gallery-2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-          `}
-        >
-          <img
-            src={data.gallery?.[1] || "/placeholder.svg"}
+       {/* Invitation text */}
+<section
+  id="quote1"
+  data-animate
+  className={`
+    px-2
+    sm:px-8
+    py-2
+    text-center
+    transition-all
+    duration-1700
+    ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+  `}
+>
+  {/* Dòng 1: TRÂN TRỌNG KÍNH MỜI */}
+  <p
+    className="text-xl sm:text-3xl mb-5 mt-4"
+    style={{
+      fontFamily: "'Playfair Display', serif",
+      color: "#111111",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    TRÂN TRỌNG KÍNH MỜI
+  </p>
 
-            alt="Gallery"
-            className="w-[75%] h-auto max-h-[60vh] object-contain mx-auto"
-          />
-        </section>
+  {/* Dòng 2: Tên khách */}
+  <p
+    className="text-2xl sm:text-3xl mb-2"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    {guestName ?? "quý khách"}
+  </p>
 
-        {/* Invitation text */}
-        <section
-          id="quote1"
-          data-animate
-          className={`
-            px-4
-            sm:px-8
-            py-6
-            text-center
-            transition-all
-            duration-1700
-            ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-          `}
-        >
-          <p
-            className="text-base sm:text-lg mb-2"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: "#111111",
-              letterSpacing: "1px",
-            }}
-          >
-            Trân trọng kính mời quý khách
-          </p>
-          <p
-            className="text-base sm:text-lg mb-4"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: "#111111",
-              letterSpacing: "1px",
-            }}
-          >
-            dành thời gian quý báu tham dự lễ cưới của
-          </p>
-          <p
-            className="text-2xl sm:text-3xl mt-4"
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: "#111111",
-              letterSpacing: "2px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {data.groomName} & {data.brideName}
-          </p>
-        </section>
+  {/* Dòng 3: Nội dung mời dự */}
+  <p
+    className="text-base sm:text-lg mt-2"
+    style={{
+      fontFamily: "'Playfair Display', serif",
+      color: "#111111",
+      letterSpacing: "1px",
+    }}
+  >
+    Đến dự bữa tiệc thân mật mừng hạnh phúc cùng gia đình chúng tôi
+  </p>
+</section>
+
 
         {/* Gallery grid */}
         <section

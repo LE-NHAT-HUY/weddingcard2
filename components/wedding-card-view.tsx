@@ -15,7 +15,7 @@ const defaultData: WeddingData = {
   brideName: "Lan Nhi",
   groomFullName: "Lê Khánh Nam",
   brideFullName: "Nguyễn Thị Lan Nhi",
-  groomFatherName: "Lê Văn Tiến",
+  groomFatherName: "Lê Văn Năm",
   groomMotherName: "Trương Thị Cúc",
   brideFatherName: "Nguyễn Như Thoan",
   brideMotherName: "Tưởng Thị Bích Thành",
