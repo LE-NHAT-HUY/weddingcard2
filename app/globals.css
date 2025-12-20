@@ -419,3 +419,14 @@ html, body, #__next {
     opacity: 0;
   }
 }
+
+/* Cho phép tương tác xuyên qua container và các lời chúc */
+.floating-wishes-container,
+.floating-wishes-container * {
+  pointer-events: none !important;
+}
+
+/* Nhưng vẫn giữ z-index cao để hiển thị trên cùng */
+.floating-wishes-container {
+  z-index: 40;
+}
