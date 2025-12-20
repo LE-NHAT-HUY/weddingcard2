@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type React from "react"
 
@@ -252,7 +252,7 @@ export default function WeddingCardView() {
       left-1/2 -translate-x-1/2
       bottom-3
       z-40
-      pointer-events-none
+      pointer-events-noneh
       w-[92vw] sm:w-[88vw] md:w-[420px]
       h-[55vh]
       overflow-hidden

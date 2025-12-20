@@ -1,13 +1,11 @@
-// app/page.tsx
-import dynamic from "next/dynamic";
+// app/page.tsx - CẦN SỬA NHƯ SAU
+import { Suspense } from 'react'
+import WeddingCardView from '@/components/wedding-card-view'
 
-// Dynamic import WeddingCardView, tắt SSR
-const WeddingCardView = dynamic(
-  () => import("@/components/wedding-card-view"),
-  { ssr: false }
-);
-
-export default function Page() {
-  return <WeddingCardView />;
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WeddingCardView />
+    </Suspense>
+  )
 }
-
