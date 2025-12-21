@@ -333,7 +333,7 @@ if (form.wishMessage.trim()) {
         <textarea
           value={form.wishMessage}
           onChange={(e) => onChange("wishMessage", e.target.value)}
-          placeholder="Viết lời chúc ngắn gọn của bạn..."
+          placeholder="Viết lời chúc của bạn..."
           rows={3}
           className={`w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#042b20] focus:border-transparent resize-none text-sm`}
         />

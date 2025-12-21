@@ -215,14 +215,7 @@ export default function WeddingCardScroll({
         />
       </button>
 
-      <button
-        onClick={onShowWishModal}
-        style={{ backgroundColor: "#db9999" }}
-        className="fixed bottom-6 right-4 z-50 text-white shadow-lg rounded-full p-3 scale-95 hover:scale-105 transition"
-        title="Gửi lời chúc"
-      >
-        <Send className="w-5 h-5" />
-      </button>
+      
 
       {/* First full-screen photo */}
       <section

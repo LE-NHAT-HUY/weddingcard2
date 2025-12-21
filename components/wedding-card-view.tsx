@@ -282,7 +282,7 @@ export default function WeddingCardView() {
   className="
     fixed
     bottom-6
-    right-20
+    right-4
     z-50
     bg-white
     shadow-lg
