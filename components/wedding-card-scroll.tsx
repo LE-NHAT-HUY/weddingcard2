@@ -1,5 +1,5 @@
-"use client";
-import Image from "next/image"
+"use client"
+
 import type { WeddingData, Wish } from "@/lib/types"
 import { useEffect, useRef, useState } from "react"
 import { Heart, MapPin, Calendar, Volume2, Send } from "lucide-react"
@@ -114,12 +114,6 @@ useEffect(() => {
   setGuestHonorific(data.honorific)
 }
 
-      // Ghi nhận mở thiệp
-      fetch("/api/guests/opened", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
-      }).catch(() => {})
     }
 
     fetchGuest()
@@ -176,31 +170,44 @@ useEffect(() => {
   const isVisible = (id: string) => visibleSections.has(id)
 
   const formatCountdown = () => {
-    if (!data.weddingDate) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-    }
-
-    const wedding = new Date(
-      `${data.weddingDate}T${data.weddingTime || "12:00"}`,
-    )
-    const now = new Date()
-    const diff = wedding.getTime() - now.getTime()
-    if (diff <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-    }
-
-    return {
-      days: Math.floor(diff / (700 * 60 * 60 * 24)),
-      hours: Math.floor((diff % (700 * 60 * 60 * 24)) / (700 * 60 * 60)),
-      minutes: Math.floor((diff % (700 * 60 * 60)) / (700 * 60)),
-      seconds: Math.floor((diff % (700 * 60)) / 700),
-    }
+  if (!data.weddingDate) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 }
   }
+
+  const [year, month, day] = data.weddingDate.split("-").map(Number)
+  const [hour, minute] = (data.weddingTime || "11:00")
+    .split(":")
+    .map(Number)
+
+  // ⚠️ month - 1 vì JS đếm tháng từ 0
+  const wedding = new Date(year, month - 1, day, hour, minute, 0)
+  const now = new Date()
+
+  const diff = wedding.getTime() - now.getTime()
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  }
+
+  useEffect(() => {
+  console.log("weddingDate raw:", data.weddingDate)
+  console.log("weddingTime raw:", data.weddingTime)
+  console.log("now:", new Date().toString())
+}, [data.weddingDate, data.weddingTime])
+
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  }
+}
+
 
   const [countdown, setCountdown] = useState(formatCountdown())
 
   useEffect(() => {
-    const timer = setInterval(() => setCountdown(formatCountdown()), 700)
+    const timer = setInterval(() => setCountdown(formatCountdown()), 1000)
     return () => clearInterval(timer)
   }, [data.weddingDate, data.weddingTime])
 
@@ -279,92 +286,128 @@ useEffect(() => {
   
       
         {/* First full-screen photo */}
-      <section
-  id="main-photo-start"
-  data-animate
-  className={`
-    relative
-    w-full
-    h-screen
-    md:relative
-    md:w-full
-    md:h-auto
-    md:aspect-[3/4]
-    md:max-h-[80vh]
-    md:mx-auto
-    md:my-8
-    md:rounded-lg
-    md:overflow-hidden
-    md:shadow-lg
-    transition-opacity
-    duration-700
-    ease-out
-    ${isVisible("main-photo-start") ? "opacity-100" : "opacity-0"}
-  `}
->
-  <div className="relative w-full h-full">
-    <Image
-      src={data.coverPhoto || "/placeholder.svg"}
-      alt="Wedding couple"
-      fill
-      className="object-cover md:object-contain md:object-center"
-      priority  // preload ngay
-      sizes="100vw"
-    />
-
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent md:from-transparent"></div>
-  </div>
-
-  {/* Text overlay */}
-  <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-full text-center z-10 px-4">
-    <p
-      className={`text-sm sm:text-base mb-2 transition-opacity duration-700 ${
-        isVisible("main-photo-start") ? "opacity-100" : "opacity-0"
-      }`}
+       <section
+      id="main-photo-start"
+      data-animate
+      className={`
+        relative
+        w-full
+        h-screen
+        md:relative
+        md:w-full
+        md:h-auto
+        md:aspect-[3/4]
+        md:max-h-[80vh]
+        md:mx-auto
+        md:my-8
+        md:rounded-lg
+        md:overflow-hidden
+        md:shadow-lg
+        transition-all
+        duration-1700
+        ease-out
+        ${isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+      `}
       style={{
-        fontFamily: "'Playfair Display', serif",
-        color: "#ffffff",
-        letterSpacing: "1px",
-        marginBottom: "12px",
-        textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+        // Reset các transform trên mobile
       }}
     >
-      SAVE THE DATE
-    </p>
+      {/* Container for image */}
+      <div className="relative w-full h-full md:h-full">
+        <img
+          src={data.coverPhoto || "/placeholder.svg"}
+          alt="Wedding couple"
+          className="
+            w-full
+            h-full
+            object-cover
+            md:object-contain
+            md:object-center
+          "
+          loading="eager"
+        />
+        
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent md:from-transparent"></div>
+      </div>
 
-    <p
-      className={`text-xl sm:text-3xl md:text-4xl italic transition-opacity duration-700 ${
-        isVisible("main-photo-start") ? "opacity-100" : "opacity-0"
-      }`}
-      style={{
-        fontFamily: "'Great Vibes', cursive",
-        color: "#ffffff",
-        letterSpacing: "2px",
-        whiteSpace: "nowrap",
-        textShadow: "0 2px 8px rgba(0,0,0,0.6)",
-      }}
-    >
-      {data.groomName} & {data.brideName}
-    </p>
+      {/* Text overlay */}
+      <div className="
+        absolute 
+        bottom-[10%] 
+        left-1/2 
+        -translate-x-1/2 
+        w-full 
+        text-center 
+        z-10
+        px-4
+      ">
+        {/* Text content giữ nguyên */}
+        <p
+          className={`
+            text-sm
+            sm:text-base
+            transition-all
+            duration-1700
+            ${isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
+          `}
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            color: "#ffffff",
+            letterSpacing: "1px",
+            marginBottom: "12px",
+            textShadow: "0 2px 8px rgba(0,0,0,0.6)"
+          }}
+        >
+          SAVE THE DATE
+        </p>
 
-    <p
-      className={`mt-2 text-sm sm:text-base md:text-lg transition-opacity duration-700 ${
-        isVisible("main-photo-start") ? "opacity-100" : "opacity-0"
-      }`}
-      style={{
-        fontFamily: "'Playfair Display', serif",
-        color: "#ffffff",
-        letterSpacing: "1px",
-        textShadow: "0 2px 8px rgba(0,0,0,0.6)",
-      }}
-    >
-      {data.weddingDateA
-        ? new Date(data.weddingDateA).toLocaleDateString("vi-VN").replace(/\//g, ".")
-        : "28.01.2026"}
-    </p>
-  </div>
-</section>
+        <p
+          className={`
+            text-xl
+            sm:text-3xl
+            md:text-4xl
+            italic
+            transition-all
+            duration-1700
+            ${isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}
+          `}
+          style={{
+            fontFamily: "'Great Vibes', cursive",
+            color: "#ffffff",
+            letterSpacing: "2px",
+            whiteSpace: "nowrap",
+            textShadow: "0 2px 8px rgba(0,0,0,0.6)"
+          }}
+        >
+          {data.groomName} & {data.brideName}
+        </p>
+
+        <p
+          className={`
+            mt-2
+            text-sm
+            sm:text-base
+            md:text-lg
+            transition-all
+            duration-1700
+            ${isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
+          `}
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            color: "#ffffff",
+            letterSpacing: "1px",
+            textShadow: "0 2px 8px rgba(0,0,0,0.6)"
+          }}
+        >
+          {data.weddingDateA
+            ? new Date(data.weddingDateA)
+                .toLocaleDateString("vi-VN")
+                .replace(/\//g, ".")
+            : "28.01.2026"}
+        </p>
+      </div>
+    </section>
 
         {/* Countdown */}
         <section
@@ -421,13 +464,13 @@ useEffect(() => {
     py-2
     text-center
     transition-all
-    duration-1000
+    duration-1700
     ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
   `}
 >
   {/* Dòng 1: TRÂN TRỌNG KÍNH MỜI */}
   <p
-    className="text-xl sm:text-3xl mb-5 mt-4"
+    className="text-xl sm:text-3xl mb-6 mt-2"
     style={{
       fontFamily: "'Playfair Display', serif",
       color: "#111111",
@@ -440,7 +483,7 @@ useEffect(() => {
 
   {/* Dòng 2: Tên khách */}
   <p
-    className="text-2xl sm:text-3xl mb-2"
+    className="text-2xl sm:text-3xl mb-6"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
@@ -473,7 +516,7 @@ useEffect(() => {
             px-4
             py-3
             transition-all
-            duration-1000
+            duration-1700
             overflow-hidden
             ${isVisible("gallery-grid-1") ? "opacity-100" : "opacity-0"}
           `}
@@ -488,7 +531,7 @@ useEffect(() => {
                   items-center
                   justify-center
                   transition-all
-                  duration-1000
+                  duration-1700
                   ${isVisible("gallery-grid-1") ? "translate-x-0 opacity-100" : index === 0 ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"}
                 `}
                 style={{ transitionDelay: `${index * 100}ms` }}
@@ -513,7 +556,7 @@ useEffect(() => {
             sm:px-8
             py-3
             transition-all
-            duration-1000
+            duration-1700
             ${isVisible("parents") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
           `}
         >
@@ -695,7 +738,7 @@ useEffect(() => {
             sm:py-8
             text-center
             transition-all
-            duration-1000
+            duration-1700
             ${isVisible("wedding-info-2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
           `}
         >
@@ -772,7 +815,7 @@ useEffect(() => {
   <div className="flex flex-col items-center text-center">
     {/* Tiêu đề */}
     <p
-      className={`text-lg sm:text-2xl mt-10 font-semibold mb-6 transition-all duration-700 ${
+      className={`text-lg sm:text-2xl mt-10 font-semibold mb-6 transition-all duration-1000 ${
         isVisible("gallery-grid")
           ? "translate-y-0 opacity-100"
           : "translate-y-12 opacity-0"
@@ -797,7 +840,7 @@ useEffect(() => {
     return (
       <div
         key={index}
-        className={`w-full flex items-center justify-center transition-all duration-1000 ${
+        className={`w-full flex items-center justify-center transition-all duration-2000 ${
           isVisible("gallery-grid")
             ? "translate-y-0 opacity-100"
             : "translate-y-12 opacity-0"
@@ -839,7 +882,7 @@ useEffect(() => {
                 font-semibold
                 mb-6
                 transition-all
-                duration-1000
+                duration-1700
                 ${isVisible("gift-title") ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}
               `}
               style={{
@@ -866,7 +909,7 @@ useEffect(() => {
             py-2
             -mt-6
             transition-all
-            duration-1000
+            duration-1700
             ${isVisible("donate-card") ? "scale-100 opacity-100" : "scale-75 opacity-0"}
           `}
           style={{ fontFamily: "'Playfair Display', serif" }}
@@ -892,8 +935,8 @@ useEffect(() => {
           </div>
         </section>
 
-        {/* =================== Main Photo End =================== */}
-<section
+        {/* Last full-screen photo */}
+        <section
   id="main-photo-end"
   data-animate
   className={`
@@ -909,30 +952,34 @@ useEffect(() => {
     md:rounded-lg
     md:overflow-hidden
     md:shadow-lg
-    transition-opacity
-    duration-700
+    transition-all
+    duration-1700
     ease-out
-    ${isVisible("main-photo-end") ? "opacity-100" : "opacity-0"}
+    ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
   `}
 >
-  <div className="relative w-full h-full">
-    <Image
-      src="/anh14.jpg"
+  {/* Container ảnh */}
+  <div className="absolute inset-0 w-full h-full">
+    <img
+      src={'anh14.jpg'}
       alt="Wedding couple"
-      fill
-      className="object-cover block"
-      priority  // preload ngay
-      sizes="100vw"
+      className="w-full h-full object-cover block"
+      loading="eager"
     />
 
+    {/* Overlay gradient nếu cần */}
     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
     {/* Text overlay */}
     <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
       <p
-        className={`text-3xl sm:text-5xl transition-opacity duration-700 ${
-          isVisible("main-photo-end") ? "opacity-100" : "opacity-0"
-        }`}
+        className={`
+          text-3xl
+          sm:text-5xl
+          transition-all
+          duration-1700
+          ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}
+        `}
         style={{
           fontFamily: "'Great Vibes', cursive",
           color: "#ffffff",
@@ -945,9 +992,13 @@ useEffect(() => {
       </p>
 
       <p
-        className={`text-sm sm:text-base transition-opacity duration-700 ${
-          isVisible("main-photo-end") ? "opacity-100" : "opacity-0"
-        }`}
+        className={`
+          text-sm
+          sm:text-base
+          transition-all
+          duration-1700
+          ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
+        `}
         style={{
           fontFamily: "'Playfair Display', serif",
           color: "#ffffff",
