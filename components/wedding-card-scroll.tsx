@@ -190,17 +190,17 @@ useEffect(() => {
     }
 
     return {
-      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-      minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((diff % (1000 * 60)) / 1000),
+      days: Math.floor(diff / (700 * 60 * 60 * 24)),
+      hours: Math.floor((diff % (700 * 60 * 60 * 24)) / (700 * 60 * 60)),
+      minutes: Math.floor((diff % (700 * 60 * 60)) / (700 * 60)),
+      seconds: Math.floor((diff % (700 * 60)) / 700),
     }
   }
 
   const [countdown, setCountdown] = useState(formatCountdown())
 
   useEffect(() => {
-    const timer = setInterval(() => setCountdown(formatCountdown()), 1000)
+    const timer = setInterval(() => setCountdown(formatCountdown()), 700)
     return () => clearInterval(timer)
   }, [data.weddingDate, data.weddingTime])
 
@@ -421,7 +421,7 @@ useEffect(() => {
     py-2
     text-center
     transition-all
-    duration-1700
+    duration-1000
     ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
   `}
 >
@@ -473,7 +473,7 @@ useEffect(() => {
             px-4
             py-3
             transition-all
-            duration-1700
+            duration-1000
             overflow-hidden
             ${isVisible("gallery-grid-1") ? "opacity-100" : "opacity-0"}
           `}
@@ -488,7 +488,7 @@ useEffect(() => {
                   items-center
                   justify-center
                   transition-all
-                  duration-1700
+                  duration-1000
                   ${isVisible("gallery-grid-1") ? "translate-x-0 opacity-100" : index === 0 ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"}
                 `}
                 style={{ transitionDelay: `${index * 100}ms` }}
@@ -513,7 +513,7 @@ useEffect(() => {
             sm:px-8
             py-3
             transition-all
-            duration-1700
+            duration-1000
             ${isVisible("parents") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
           `}
         >
@@ -695,7 +695,7 @@ useEffect(() => {
             sm:py-8
             text-center
             transition-all
-            duration-1700
+            duration-1000
             ${isVisible("wedding-info-2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
           `}
         >
@@ -772,7 +772,7 @@ useEffect(() => {
   <div className="flex flex-col items-center text-center">
     {/* Tiêu đề */}
     <p
-      className={`text-lg sm:text-2xl mt-10 font-semibold mb-6 transition-all duration-1000 ${
+      className={`text-lg sm:text-2xl mt-10 font-semibold mb-6 transition-all duration-700 ${
         isVisible("gallery-grid")
           ? "translate-y-0 opacity-100"
           : "translate-y-12 opacity-0"
@@ -797,7 +797,7 @@ useEffect(() => {
     return (
       <div
         key={index}
-        className={`w-full flex items-center justify-center transition-all duration-2000 ${
+        className={`w-full flex items-center justify-center transition-all duration-1000 ${
           isVisible("gallery-grid")
             ? "translate-y-0 opacity-100"
             : "translate-y-12 opacity-0"
@@ -839,7 +839,7 @@ useEffect(() => {
                 font-semibold
                 mb-6
                 transition-all
-                duration-1700
+                duration-1000
                 ${isVisible("gift-title") ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}
               `}
               style={{
@@ -866,7 +866,7 @@ useEffect(() => {
             py-2
             -mt-6
             transition-all
-            duration-1700
+            duration-1000
             ${isVisible("donate-card") ? "scale-100 opacity-100" : "scale-75 opacity-0"}
           `}
           style={{ fontFamily: "'Playfair Display', serif" }}

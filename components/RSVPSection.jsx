@@ -122,28 +122,30 @@ export default function RSVPSection({
     setStatus("success");
 
     // 2️⃣ Gửi lời chúc nếu người dùng bật
-    if (form.sendWish && form.wishMessage.trim()) {
-      const wishPayload = {
-        name: form.name,        // dùng tên từ form RSVP
-        message: form.wishMessage,
-      };
+    // GỬI LỜI CHÚC
+if (form.wishMessage.trim()) {
+  const wishPayload = {
+    name: form.name,
+    message: form.wishMessage,
+  }
 
-      const wishRes = await fetch(wishEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(wishPayload),
-      });
+  const res = await fetch("/api/wishes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(wishPayload),
+  })
 
-      if (!wishRes.ok) {
-  const text = await wishRes.text();
-  console.error("Wish API error:", text);
-  setWishStatus("error");
-  setWishError(text || "Gửi lời chúc thất bại");
+  if (!res.ok) {
+    const err = await res.text()
+    console.error("Wish error:", err)
+    setWishStatus("error")
+  } else {
+    setWishStatus("success")
+  }
 }
- else {
-        setWishStatus("success");
-      }
-    }
+
 
     // Reset form sau khi gửi
     setForm({
@@ -152,8 +154,6 @@ export default function RSVPSection({
       attending: null,
       guests: 1,
       phone: "",
-      message: "",
-      sendWish: false,
       wishMessage: "",
     });
     setOpenFields({
@@ -162,7 +162,6 @@ export default function RSVPSection({
       attending: false,
       guestsPhone: false,
       message: false,
-      sendWish: false,
     });
   } catch (err) {
     setStatus("error");
@@ -395,7 +394,7 @@ export default function RSVPSection({
         {/* --- Thông báo riêng cho việc gửi lời chúc (sau khi gửi) --- */}
         {wishStatus === "success" && (
           <p className="text-sm font-medium text-center" style={{ color: successColor }}>
-            ✨ Lời chúc của bạn đã được gửi đến { /* có thể chèn tên cô dâu chú rể nếu muốn */ "" }
+            
           </p>
         )}
         {wishStatus === "error" && (
