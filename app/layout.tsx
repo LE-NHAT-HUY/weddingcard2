@@ -66,27 +66,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="overflow-x-hidden max-w-[100vw] w-full">
-      <head>
-        {/* Thêm các thẻ meta Open Graph trực tiếp */}
-        <meta property="og:url" content="https://khanhnam-lannhi.vercel.app/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        <meta property="og:description" content="Mời bạn tham dự lễ cưới của chúng tôi." />
-        <meta property="og:image" content="https://khanhnam-lannhi.vercel.app/anhnen.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        <meta name="twitter:description" content="Mời bạn tham dự lễ cưới của chúng tôi." />
-        <meta name="twitter:image" content="https://khanhnam-lannhi.vercel.app/anhnen.jpg" />
-        
-        {/* Thẻ meta bổ sung để kiểm soát hiển thị trên mobile */}
-        <meta property="og:locale" content="vi_VN" />
-        <meta property="og:updated_time" content={new Date().toISOString()} />
-      </head>
+     
       <body
         className={`${playfair.variable} ${greatVibes.variable} ${quicksand.variable} ${sacramento.variable} font-sans antialiased overflow-x-hidden max-w-[100vw] w-full relative`}
       >
