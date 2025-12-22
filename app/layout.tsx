@@ -1,3 +1,4 @@
+import HeartFall from '../components/HeartFall';
 
 import type React from "react"
 import type { Metadata, Viewport } from "next"
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "Wedding Card",
     images: [
       {
-        url: "https://khanhnam-lannhi.vercel.app/anhnen.jpg",
+        url: "https://khanhnam-lannhi.vercel.app/anhnen2.jpg",
         width: 1200,
         height: 630,
         alt: "Wedding couple",
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thiệp Cưới Khánh Nam & Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    images: ["https://khanhnam-lannhi.vercel.app/anhnen.jpg"],
+    images: ["https://khanhnam-lannhi.vercel.app/anhnen2.jpg"],
   },
 };
 
@@ -71,6 +72,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${greatVibes.variable} ${quicksand.variable} ${sacramento.variable} font-sans antialiased overflow-x-hidden max-w-[100vw] w-full relative`}
       >
         {children}
+          <HeartFall />
         <Analytics />
       </body>
     </html>

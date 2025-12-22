@@ -1,0 +1,22 @@
+.heart {
+  position: fixed;
+  top: -10px;
+  z-index: 9999;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+  animation-name: fall;
+  animation-timing-function: linear;
+}
+
+/* Animation rơi từ trên xuống */
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
