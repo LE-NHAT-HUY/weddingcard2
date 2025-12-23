@@ -547,6 +547,8 @@ const containerStyle = {
   </div>
 </section>
 
+<div className="relative bg-gray-100"> <div className="absolute left-[17%] top-[-100] translate-y-[-50%] z-20"> <HeartImage /> </div> </div>
+
 {/* Bride & Groom */}
 <section
   id="parents2"
