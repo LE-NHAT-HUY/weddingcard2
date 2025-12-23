@@ -202,13 +202,17 @@ if (form.wishMessage.trim()) {
   ];
 
   return (
-    <section
-      id="rsvp"
-      className="w-full max-w-full overflow-x-hidden  bg-[##faf8f5] px-4 sm:px-8 py-8"
-      style={{ fontFamily: "'Playfair Display', serif" }}
-    >
-      <p className="text-xs sm:text-sm text-center font-medium tracking-wide text-[#111111] mb-8">
-        HÃY XÁC NHẬN SỰ CÓ MẶT CỦA QUÝ KHÁCH ĐỂ GIA ĐÌNH CHÚNG TÔI CHUẨN BỊ ĐÓN TIẾP MỘT CÁCH CHU ĐÁO NHẤT, TRÂN TRỌNG!
+   <section
+  id="rsvp"
+  className="w-full max-w-full overflow-x-hidden px-4 sm:px-8 py-8"
+  style={{
+    fontFamily: "'Playfair Display', serif",
+    color: "#318191ff",
+    backgroundColor: "transparent", // ✅ nền trong suốt
+  }}
+>
+      <p className="text-sm sm:text-sm text-center font-medium tracking-wide  mb-8">
+        Đừng quyên gửi xác nhận tham dự để chúng mình đón tiếp một cách chu đáo hơn!
       </p>
 
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-6">
@@ -371,7 +375,7 @@ if (form.wishMessage.trim()) {
                 if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
               }}
             >
-              {loading ? "Đang gửi..." : "Xác nhận"}
+              {loading ? "Đang gửi..." : " Gửi xác nhận"}
             </button>
 
             {/* --- Thông báo lỗi / thành công --- */}

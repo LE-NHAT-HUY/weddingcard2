@@ -1,5 +1,6 @@
 "use client"
 
+import LoveCardTrigger from '../components/LoveCardTrigger';
 import CustomImage2 from '../components/CustomImage2';
 import CustomImage from '../components/CustomImage';
 import HeartImage from '../components/HeartImage';
@@ -81,6 +82,19 @@ export default function WeddingCardScroll({
     [26, 27, 28, 29, 30, 31] // hàng 5
   ];
 
+  const photos = [
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
+  ];
+
+const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const prev = () => setSelectedIndex((i) => (i - 1 + photos.length) % photos.length);
+  const next = () => setSelectedIndex((i) => (i + 1) % photos.length);
 
   const [guestName, setGuestName] = useState<string | null>(null)
   const [guestHonorific, setGuestHonorific] = useState<string | null>(null)
@@ -434,51 +448,145 @@ const containerStyle = {
  
 
  {/* Invitation text */}
-      <section id="quote1" data-animate className={`px-2 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <p className="text-xl sm:text-xl mb-2 mt-2" style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", whiteSpace: "nowrap" }}>"Hôn nhân là chuyện cả đời,</p>
-        <p className="text-xl sm:text-xl mb-3 mt-2" style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", whiteSpace: "nowrap" }}>"Yêu người vừa ý, cưới người mình thương..."</p>
-      </section>
+ {/* Quote chính */}
+<section
+  id="quote1"
+  data-animate
+  className={`px-2 sm:px-8 py-2 text-center transition-all duration-700 ${
+    isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
+>
+  <p
+    className="text-xl sm:text-xl mb-2 mt-2"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    "Hôn nhân là chuyện cả đời,"
+  </p>
+  <p
+    className="text-xl sm:text-xl mb-3 mt-2"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    "Yêu người vừa ý, cưới người mình thương..."
+  </p>
+</section>
 
-  <section id="quote1" data-animate className={`px-7 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <p className="text-sm sm:text-sm mb-2 mt-2" style={{  fontFamily: "'Montserrat', sans-serif", color: "#5d2c2cff", letterSpacing: "2px", whiteSpace: "nowrap" }}>TRÂN TRỌNG THÔNG BÁO LỄ THÀNH HÔN</p>
-         </section>
+{/* Thông báo */}
+<section
+  id="quote2"
+  data-animate
+  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 delay-300 ${
+    isVisible("quote2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
+>
+  <p
+    className="text-sm sm:text-sm mb-2 mt-2"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#5d2c2cff",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    TRÂN TRỌNG THÔNG BÁO LỄ THÀNH HÔN
+  </p>
+</section>
+
 {/* Parents */}
-      <section id="parents" data-animate className={`px-4 sm:px-8 py-3 transition-all duration-1700 ${isVisible("parents") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
-          <div>
-            <h4 className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif"}}>NHÀ TRAI</h4>
-            <p className="text-xs sm:text-xs mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif"}}>ÔNG: {data.groomFatherName}</p>
-            <p className="text-xs sm:text-xs" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>BÀ: {data.groomMotherName}</p>
-            <p className=" mt-2.5 text-xs sm:text-xs" style={{ color: "#726060ff", fontFamily: "'Montserrat', sans-serif"}}>THÔN PHÚ LỘC 2, PHÚ TRẠCH, QUẢNG TRỊ</p>
-          </div>
-          <div>
-            <h4 className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif"}}>NHÀ GÁI</h4>
-            <p className="text-xs sm:text-sm mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>ÔNG: {data.brideFatherName}</p>
-            <p className="text-xs sm:text-xs" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif"}}>BÀ: {data.brideMotherName}</p>
-            <p className=" mb-5 mt-2.5 text-xs sm:text-xs" style={{ color: "#726060ff", fontFamily: "'Montserrat', sans-serif"}}>THÔN PHÚ LỘC 2, PHÚ TRẠCH, QUẢNG TRỊ</p>
-          </div>
-        </div>
-      </section>
-
-
- <div className="relative bg-gray-100">
-  <div className="absolute left-[17%] top-[-100] translate-y-[-50%] z-20">
-    <HeartImage />
+<section
+  id="parents1"
+  data-animate
+  className={`px-4 sm:px-8 py-3 transition-all duration-700 delay-500 ${
+    isVisible("parents1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
+>
+  <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
+    <div>
+      <h4
+        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3"
+        style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}
+      >
+        NHÀ TRAI
+      </h4>
+      <p className="text-xs sm:text-xs mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
+        ÔNG: {data.groomFatherName}
+      </p>
+      <p className="text-xs sm:text-xs" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
+        BÀ: {data.groomMotherName}
+      </p>
+      <p className="mt-2.5 text-xs sm:text-xs" style={{ color: "#726060ff", fontFamily: "'Montserrat', sans-serif" }}>
+        THÔN PHÚ LỘC 2, PHÚ TRẠCH, QUẢNG TRỊ
+      </p>
+    </div>
+    <div>
+      <h4
+        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3"
+        style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}
+      >
+        NHÀ GÁI
+      </h4>
+      <p className="text-xs sm:text-sm mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
+        ÔNG: {data.brideFatherName}
+      </p>
+      <p className="text-xs sm:text-xs" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
+        BÀ: {data.brideMotherName}
+      </p>
+      <p className="mb-5 mt-2.5 text-xs sm:text-xs" style={{ color: "#726060ff", fontFamily: "'Montserrat', sans-serif" }}>
+        THÔN PHÚ LỘC 2, PHÚ TRẠCH, QUẢNG TRỊ
+      </p>
+    </div>
   </div>
-</div>
+</section>
 
-       <section id="parents" data-animate className={`px-4 sm:px-8 py-3 transition-all duration-1700 ${isVisible("parents") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
-          <div>
-            <h4 className="mb-3  text-xl sm:text-sm font-normal mb-2 sm:mb-3" style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif"}}>Chú Rể</h4>
-              <h4 className="text-3xl sm:text-sm  font-normal mb-2 sm:mb-3" style={{ color: "#934040ff",fontFamily: "'Great Vibes', cursive"}}>Khánh Nam</h4>
-          </div>
-          <div>
-            <h4 className="text-xl mb-3 sm:text-sm font-normal mb-2 sm:mb-3" style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif"}}>Cô Dâu</h4>
-              <h4 className="text-4xl sm:text-sm font-normal mb-2 sm:mb-3" style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive"}}>Lan Nhi</h4>
-          </div>
-        </div>
-      </section>
+{/* Bride & Groom */}
+<section
+  id="parents2"
+  data-animate
+  className={`px-4 sm:px-8 py-3 transition-all duration-700 delay-700 ${
+    isVisible("parents2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
+>
+  <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
+    <div>
+      <h4
+        className="mb-3 text-xl sm:text-sm font-normal mb-2 sm:mb-3"
+        style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif" }}
+      >
+        Chú Rể
+      </h4>
+      <h4
+        className="text-3xl sm:text-sm font-normal mb-2 sm:mb-3"
+        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
+      >
+        Khánh Nam
+      </h4>
+    </div>
+    <div>
+      <h4
+        className="text-xl mb-3 sm:text-sm font-normal mb-2 sm:mb-3"
+        style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif" }}
+      >
+        Cô Dâu
+      </h4>
+      <h4
+        className="text-4xl sm:text-sm font-normal mb-2 sm:mb-3"
+        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
+      >
+        Lan Nhi
+      </h4>
+    </div>
+  </div>
+</section>
+
 
        {/* Gallery grid (small 2-image block) */}
       <section id="gallery-grid-1" data-animate className={`px-2 py-1 transition-all duration-1700 overflow-hidden ${isVisible("gallery-grid-1") ? "opacity-100" : "opacity-0"}`}>
@@ -506,22 +614,76 @@ const containerStyle = {
 
       <div className="flex justify-center my-6"><div className="w-75 h-[1.5px] bg-[#111111] opacity-60" /></div>
 
-      {/* Invitation text */}
-      <section id="quote1" data-animate className={`px-2 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <p className="text-xl sm:text-3xl mb-6 mt-2" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111", letterSpacing: "2px", whiteSpace: "nowrap" }}>TRÂN TRỌNG KÍNH MỜI</p>
-        <p className="text-2xl sm:text-3xl mb-6" style={{ fontFamily: "'Great Vibes', cursive", color: "#874141ff", letterSpacing: "2px", whiteSpace: "nowrap" }}>{guestName ?? "quý khách"}</p>
-        <p className="text-base sm:base-lg mt-2" style={{  fontFamily: "'Montserrat', sans-serif", color: "#353030ff", letterSpacing: "1px" }}>Đến dự bữa tiệc thân mật mừng hạnh phúc cùng gia đình chúng tôi</p>
-      </section>
+    {/* Invitation Text */}
+<section
+  id="quote1"
+  data-animate
+  className="px-2 sm:px-8 py-2 text-center overflow-hidden"
+>
+  {/* Tiêu đề - từ trái vào */}
+  <p
+    className={`text-xl sm:text-3xl mb-6 mt-2 transition-all duration-700 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+    }`}
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#111111",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    TRÂN TRỌNG KÍNH MỜI
+  </p>
 
-     <section id="gallery-grid" className="px-4 py-6 overflow-hidden">
-  <div className="flex justify-center items-center gap-2 md:gap-2 max-w-[1200px] mx-auto">
+  {/* Tên khách - từ phải vào */}
+  <p
+    className={`text-2xl sm:text-3xl mb-6 transition-all duration-700 delay-200 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+    }`}
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#874141ff",
+      letterSpacing: "2px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    {guestName ?? "quý khách"}
+  </p>
+
+  {/* Text phụ - fade-in từ dưới */}
+  <p
+    className={`text-base sm:text-lg mt-2 transition-all duration-700 delay-400 ${
+      isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+    }`}
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#353030ff",
+      letterSpacing: "1px",
+    }}
+  >
+    Đến dự bữa tiệc thân mật mừng hạnh phúc cùng gia đình chúng tôi
+  </p>
+</section>
+
+{/* Gallery Images */}
+<section id="gallery-grid" className="px-4 py-6 overflow-hidden">
+  <div className="flex justify-center items-end gap-2 md:gap-2 max-w-[1200px] mx-auto">
     {(() => {
       const photos = [data.gallery?.[14], data.gallery?.[16], data.gallery?.[17]];
       return photos.map((photo, idx) => {
         const { src, blur } = optimizedPathFor(photo);
         const isCenter = idx === 1;
 
-        // Kích thước: center lớn, bên nhỏ
+        // Animation thứ tự
+        const animationDelay = isCenter ? "delay-[800ms]" : "delay-[500ms]";
+        const fromClass = isCenter
+          ? "opacity-0"
+          : idx === 0
+          ? "-translate-x-full opacity-0"
+          : "translate-x-full opacity-0";
+        const toClass = isCenter ? "opacity-100" : "translate-x-0 opacity-100";
+
+        // Kích thước
         const width = isCenter ? "50%" : "40%";
 
         // Filter + shadow
@@ -543,15 +705,14 @@ const containerStyle = {
           : "70% center";
 
         return (
-          <div key={idx} style={{ width }} className="relative transition-all duration-700">
+          <div key={idx} style={{ width }} className={`relative transition-all duration-700 ${animationDelay}`}>
             <div
-              className="overflow-hidden rounded-md"
+              className={`overflow-hidden rounded-md transition-all duration-700 ${isVisible("quote1") ? toClass : fromClass}`}
               style={{
                 width: "100%",
-                paddingBottom: "135%", // tỷ lệ ảnh
+                paddingBottom: "135%",
                 position: "relative",
                 ...styleEffect,
-                transition: "box-shadow 0.3s ease, filter 0.3s ease",
               }}
             >
               <Image
@@ -559,12 +720,15 @@ const containerStyle = {
                 alt={`Gallery ${idx + 1}`}
                 fill
                 priority
-                sizes={isCenter ? "(max-width: 768px) 65vw, 500px" : "(max-width: 768px) 32vw, 280px"}
-                className="object-cover"
+                sizes={
+                  isCenter
+                    ? "(max-width: 768px) 65vw, 500px"
+                    : "(max-width: 768px) 32vw, 280px"
+                }
+                className="object-cover transition-transform duration-700 ease-out"
                 {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
                 style={{
                   transform: isCenter ? "scale(1.05)" : "scale(1.02)",
-                  transition: "transform 700ms ease-out",
                   objectPosition,
                 }}
               />
@@ -576,102 +740,108 @@ const containerStyle = {
   </div>
 </section>
 
+
+{/* Tiệc cưới Nhà Gái */}
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 ${
+    isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
 >
   <p
-    className="text-[15px] sm:text-xl mt-2 relative inline-block" // relative để pseudo-element hoạt động
+    className="text-[15px] sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-200"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
       letterSpacing: "1px",
       whiteSpace: "nowrap",
+      opacity: isVisible("quote1") ? 1 : 0,
+      transform: isVisible("quote1") ? "translateY(0)" : "translateY(10px)",
     }}
   >
     TIỆC CƯỚI NHÀ GÁI
-    {/* Gạch chân kéo dài bằng pseudo-element */}
     <span
-      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
-      style={{ transform: "translateY(0px)" }} // đẩy xuống một chút so với chữ
+      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full transition-all duration-700"
+      style={{
+        transform: isVisible("quote1") ? "scaleX(1)" : "scaleX(0)",
+        transformOrigin: "left center",
+      }}
     />
   </p>
 </section>
 
-
-
-
-
-<section 
-  id="wedding-info-1" 
+{/* Thông tin lễ cưới */}
+<section
+  id="wedding-info-1"
   data-animate
-  className="px-4 sm:px-8 py-6 sm:py-8 text-center"
+  className="px-4 sm:px-8 py-6 sm:py-8 text-center overflow-hidden"
 >
-  {/* THỨ SÁU */}
+  {/* Thứ */}
   <p
-    className={`text-xl sm:text-2xl font-normal mb-4 ${isVisible("wedding-info-1") ? "animated" : ""}`}
+    className={`text-xl sm:text-2xl font-normal mb-4 transition-all duration-700 delay-300`}
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-      animationDelay: "0.5s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
     }}
   >
     THỨ BA
   </p>
 
-  {/* 17H00 | 27 | 2026 */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal" style={{ fontFamily: "'Montserrat', sans-serif", color: "#564e4eff" }}>
+  {/* Thời gian | Ngày | Năm */}
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal">
     <span
+      className="transition-all duration-700 delay-400"
       style={{
-        animation: isVisible("wedding-info-1") ? "slideLeftFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
       }}
     >
       11H00
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
     <span
-      className="text-6xl sm:text-7xl font-bold relative"
+      className="text-6xl sm:text-7xl font-bold transition-all duration-700 delay-600"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
-        animation: isVisible("wedding-info-1") ? "scaleCenterFade 0.8s ease forwards" : "none",
-        animationDelay: "1.2s",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "scale(1)" : "scale(0.8)",
       }}
     >
       27
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
     <span
+      className="transition-all duration-700 delay-400"
       style={{
-        animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(20px)",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* Tháng 01 */}
+  {/* Tháng */}
   <p
-    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4 transition-all duration-700 delay-400"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "overshootLeft 0.8s ease-out forwards" : "none",
-      animationDelay: "1.2s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
     }}
   >
     Tháng 01
@@ -679,127 +849,172 @@ const containerStyle = {
 
   {/* Lịch âm */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-700 delay-600"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
-      animation: isVisible("wedding-info-1") ? "slideUpFade 0.8s ease forwards" : "none",
-      animationDelay: "0.6s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
     }}
   >
     (Tức ngày 09 tháng 12 năm Ất Tỵ)
   </p>
-  <p className="text-lg sm:text-2xl font-semibold " style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>Tư Gia Nhà Trai</p>
-        <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>CHỈ ĐƯỜNG</a>
+
+  {/* Địa điểm */}
+  <p
+    className="text-lg sm:text-2xl font-semibold transition-all duration-700 delay-400"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      fontWeight: 300,
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+    }}
+  >
+    Tư Gia Nhà Trai
+  </p>
+
+  <a
+    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-600"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+    }}
+  >
+    CHỈ ĐƯỜNG
+  </a>
 </section>
 
+
+{/* Tiệc cưới Nhà Trai */}
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 ${
+    isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
 >
   <p
-    className="text-[15px] sm:text-xl mt-2 relative inline-block" // relative để pseudo-element hoạt động
+    className="text-[15px] sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-100"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
       letterSpacing: "1px",
       whiteSpace: "nowrap",
+      opacity: isVisible("quote1") ? 1 : 0,
+      transform: isVisible("quote1") ? "translateY(0)" : "translateY(10px)",
     }}
   >
     TIỆC CƯỚI NHÀ TRAI
-    {/* Gạch chân kéo dài bằng pseudo-element */}
     <span
-      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
-      style={{ transform: "translateY(0px)" }} // đẩy xuống một chút so với chữ
+      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full transition-all duration-700"
+      style={{
+        transform: isVisible("quote1") ? "scaleX(1)" : "scaleX(0)",
+        transformOrigin: "left center",
+      }}
     />
   </p>
 </section>
 
-
- <div className="relative bg-gray-100">
-  <div className="absolute left-[50%] top-[-100] translate-y-[-50%] z-20">
+{/* Ảnh chính giữa */}
+<div className="relative bg-gray-100">
+  <div
+    className={`absolute left-[50%] top-[-100] translate-y-[-50%] z-20 transition-all duration-700 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-y-10"
+    }`}
+  >
     <CustomImage />
   </div>
 </div>
 
- <div className="relative bg-gray-100">
-  <div className="absolute left-[5%] top-[-15] translate-y-[-50%] z-20">
+{/* Ảnh bên trái */}
+<div className="relative bg-gray-100">
+  <div
+    className={`absolute left-[5%] top-[-15] translate-y-[-50%] z-20 transition-all duration-700 delay-100 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
+    }`}
+  >
     <CustomImage2 />
   </div>
 </div>
 
-<section 
-  id="wedding-info-1" 
+{/* Thông tin lễ cưới */}
+<section
+  id="wedding-info-1"
   data-animate
-  className="px-4 sm:px-8 py-6 sm:py-8 text-center"
+  className="px-4 sm:px-8 py-6 sm:py-8 text-center overflow-hidden"
 >
-  {/* THỨ SÁU */}
+  {/* Thứ */}
   <p
-    className={`text-xl sm:text-2xl font-normal mb-4 ${isVisible("wedding-info-1") ? "animated" : ""}`}
+    className="text-xl sm:text-2xl font-normal mb-4 transition-all duration-700 delay-150"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-      animationDelay: "0.5s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
     }}
   >
     THỨ TƯ
   </p>
 
-  {/* 17H00 | 27 | 2026 */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal" style={{ fontFamily: "'Montserrat', sans-serif", color: "#564e4eff" }}>
+  {/* 11H00 | 28 | 2026 */}
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal">
     <span
+      className="transition-all duration-700 delay-150"
       style={{
-        animation: isVisible("wedding-info-1") ? "slideLeftFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
       }}
     >
       11H00
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
     <span
-      className="text-6xl sm:text-7xl font-bold relative"
+      className="text-6xl sm:text-7xl font-bold transition-all duration-700 delay-300"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
-        animation: isVisible("wedding-info-1") ? "scaleCenterFade 0.8s ease forwards" : "none",
-        animationDelay: "1.2s",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "scale(1)" : "scale(0.8)",
       }}
     >
       28
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
     <span
+      className="transition-all duration-700 delay-150"
       style={{
-        animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(20px)",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* Tháng 01 */}
+  {/* Tháng */}
   <p
-    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4 transition-all duration-700 delay-250"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "overshootLeft 0.8s ease-out forwards" : "none",
-      animationDelay: "1.2s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
     }}
   >
     Tháng 01
@@ -807,21 +1022,48 @@ const containerStyle = {
 
   {/* Lịch âm */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-700 delay-200"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
-      animation: isVisible("wedding-info-1") ? "slideUpFade 0.8s ease forwards" : "none",
-      animationDelay: "0.6s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
     }}
   >
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
-  <p className="text-lg sm:text-2xl font-semibold " style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>Tư Gia Nhà Trai</p>
-        <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>CHỈ ĐƯỜNG</a>
+
+  {/* Địa điểm */}
+  <p
+    className="text-lg sm:text-2xl font-semibold transition-all duration-700 delay-300"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      fontWeight: 300,
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+    }}
+  >
+    Tư Gia Nhà Trai
+  </p>
+
+  <a
+    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-350"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+    }}
+  >
+    CHỈ ĐƯỜNG
+  </a>
 </section>
+
 
 <div className="flex justify-center my-6"><div className="w-53 h-[3px] bg-[#531212ff] opacity-60" /></div>
 
@@ -953,21 +1195,39 @@ const containerStyle = {
         <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>CHỈ ĐƯỜNG</a>
 </section>
 
-
 <div
+  className="falling-title"
   style={{
     fontFamily: "'Great Vibes', cursive",
     fontSize: "35px",
     color: "rgba(75, 75, 71, 1)",
     lineHeight: "normal",
-    fontWeight: 'normal',
+    fontWeight: "normal",
     letterSpacing: "4px",
-    marginLeft: "20px", // dịch chữ sang phải
-    marginTop: "20px"   // dịch chữ xuống
+    marginLeft: "20px",
+    marginTop: "20px",
   }}
 >
   Chuyện kể rằng.....
 </div>
+
+<style jsx>{`
+  @keyframes fallDown {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .falling-title {
+    animation: fallDown 1s ease-out forwards;
+  }
+`}</style>
+
 
 <div
   style={{
@@ -1020,20 +1280,74 @@ const containerStyle = {
 </div>
 
 
+{/* Container bọc toàn bộ */}
+      <div
+        style={{
+          position: "relative",   // để dễ di chuyển bằng top/left
+          top: "40px",             // có thể thay đổi để đẩy xuống
+          left: "260px",            // có thể thay đổi để đẩy sang phải
+          display: "inline-block",
+        }}
+      >
+        <div
+          style={{
+            letterSpacing: "2px",
+            fontFamily: "'Great Vibes', cursive",
+            fontSize: "22px",
+            color: "#4b8da1ff",
+            display: "inline-block",
+            textAlign: "center",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "36px", // chữ T to hơn
+              display: "inline-block",
+              animationName: "float",
+              animationDuration: "2s",
+              animationTimingFunction: "ease-in-out",
+              animationIterationCount: "infinite",
+              transformOrigin: "center",
+            }}
+          >
+            T
+          </span>
+          <span
+            style={{
+              display: "inline-block",
+              animationName: "float",
+              animationDuration: "2s",
+              animationTimingFunction: "ease-in-out",
+              animationIterationCount: "infinite",
+              transformOrigin: "center",
+            }}
+          >
+            háng 1
+          </span>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes float {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+          100% { transform: translateY(0); }
+        }
+      `}</style>
 
 <div style={{ position: "relative", width: "185px", height: "120px" }}>
   {/* Phong thư */}
   <div
     style={{
       position: "absolute", // bắt buộc để top/left hoạt động
-      width: "185px",
-      height: "120px",
+      width: "200px",
+      height: "140px",
       backgroundImage:
         "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/2028f8ab-3cae-4853-97ae-5380c54e70c6.png')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       borderRadius: "0px",
-      top: "50%",
+      top: "30%",
       left: "62%",   // đặt vào giữa container
       transform: "translate(-50%, -50%)", // dịch để căn giữa thật sự
     }}
@@ -1050,7 +1364,7 @@ const containerStyle = {
       backgroundPosition: "center",
       borderRadius: "0px",
       position: "absolute",
-      top: "70%",
+      top: "50%",
       left: "71%",
       transform: "translate(-50%, -50%)", // căn giữa chính xác
       zIndex: 4, // đảm bảo nằm trên phong thư
@@ -1069,7 +1383,7 @@ const containerStyle = {
       borderRadius: "0px",
       position: "absolute",
       left: "195px",  // điều chỉnh vị trí
-      top: "-55px",    // điều chỉnh vị trí
+      top: "-110px",    // điều chỉnh vị trí
       transform: "rotate(15deg)", // nghiêng 10 độ
       zIndex: 2,       // đè lên phong thư
     }}
@@ -1079,8 +1393,8 @@ const containerStyle = {
 
        <div
       style={{
-        width: "208px",
-        height: "143px",
+        width: "228px",
+        height: "158px",
         position: "relative",
         backgroundImage:
           "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/c908dda2-9fe9-4b45-8bc2-d037553ab85d.png')",
@@ -1090,7 +1404,7 @@ const containerStyle = {
         overflow: "hidden",
         fontFamily: '"Times New Roman", serif',
         left: "143px",
-        top: "-55px",
+        top: "-89px",
         zIndex: 3, 
       }}
     >
@@ -1129,8 +1443,8 @@ const containerStyle = {
                 key={day}
                 style={{
                   position: "relative",
-                  width: "20px",  // tăng kích thước ô ngày
-                  height: "20px",
+                  width: "27px",  // tăng kích thước ô ngày
+                  height: "27px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1173,68 +1487,18 @@ const containerStyle = {
       </div>
     </div>
 
-{/* Container bọc toàn bộ */}
-      <div
-        style={{
-          position: "relative",   // để dễ di chuyển bằng top/left
-          top: "-247px",             // có thể thay đổi để đẩy xuống
-          left: "257px",            // có thể thay đổi để đẩy sang phải
-          display: "inline-block",
-        }}
-      >
-        <div
-          style={{
-            letterSpacing: "2px",
-            fontFamily: "'Great Vibes', cursive",
-            fontSize: "22px",
-            color: "#4b8da1ff",
-            display: "inline-block",
-            textAlign: "center",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "36px", // chữ T to hơn
-              display: "inline-block",
-              animationName: "float",
-              animationDuration: "2s",
-              animationTimingFunction: "ease-in-out",
-              animationIterationCount: "infinite",
-              transformOrigin: "center",
-            }}
-          >
-            T
-          </span>
-          <span
-            style={{
-              display: "inline-block",
-              animationName: "float",
-              animationDuration: "2s",
-              animationTimingFunction: "ease-in-out",
-              animationIterationCount: "infinite",
-              transformOrigin: "center",
-            }}
-          >
-            háng 2
-          </span>
-        </div>
-      </div>
-
-      <style jsx global>{`
-        @keyframes float {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-          100% { transform: translateY(0); }
-        }
-      `}</style>
-
       {/* Gallery photo (not full screen) */}
 <section
   id="gallery-2"
   data-animate
-  className={`px-4 overflow-hidden transition-all duration-1700 overflow-hidden ${
+  className={`px-4 overflow-hidden transition-all duration-700 overflow-hidden ${
     isVisible("gallery-2") ? "opacity-100" : "opacity-0"
   }`}
+   style={{
+    marginTop: "-97px", // ⭐ kéo ảnh lên để bị lịch đè
+    position: "relative",
+    zIndex: 1,
+  }}
 >
   <div className="w-full flex items-center justify-center">
     {[data.gallery?.[1]].map((photo, index) => {
@@ -1269,196 +1533,380 @@ const containerStyle = {
   </div>
 </section>
 
-      {/* Countdown */}
-      <section id="countdown" data-animate className={`px-4 sm:px-8 py-8 sm:py-10 text-center transition-all duration-1700 ${isVisible("countdown") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <h3 className="text-base sm:text-2xl mb-4 sm:mb-6" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111" }}>NGÀY TRỌNG ĐẠI ĐANG ĐẾN GẦN...</h3>
-        <div className="flex justify-center gap-1 sm:gap-2">
-          {countdownItems.map((item, index) => (
-            <div key={index} className="flex flex-col items-center justify-center w-16 sm:w-20">
-              <div className="text-xl sm:text-2xl font-bold mb-1" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111" }}>{item.value.toString().padStart(2, "0")}</div>
-              <span className="text-sm sm:text-base" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111" }}>{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Gallery photo (not full screen) */}
-{/* Gallery photo (not full screen) */}
+{/* Countdown */}
+{/* Countdown */}
 <section
-  id="gallery-2"
+  id="countdown"
   data-animate
-  className={`px-4 py-4 transition-all duration-1700 overflow-hidden ${
-    isVisible("gallery-2") ? "opacity-100" : "opacity-0"
+  className={`px-4 sm:px-8 py-8 sm:py-10 text-center transition-all duration-700 ${
+    isVisible("countdown")
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-6"
   }`}
+  style={{
+    marginTop: "-65px", // ⭐ kéo ảnh lên để bị lịch đè
+    position: "relative",
+    zIndex: 2,
+  }}
 >
-  <div className="w-full flex items-center justify-center">
-    {[data.gallery?.[1]].map((photo, index) => {
-      const { src, blur } = optimizedPathFor(photo)
-      return (
+  <div className="flex justify-center gap-4 sm:gap-4">
+    {countdownItems.map((item, index) => (
+      <div
+        key={index}
+        className="flex flex-col items-center justify-center w-14 sm:w-14"
+        style={{
+           transform: "translateX(52px)",
+          backgroundColor: "#7ba7b5ff",   // 🔵 nền xanh cho từng khối
+          borderRadius: "6px",         // bo đúng khối
+          padding: "10px 6px",
+          boxShadow: "0 6px 14px rgba(0,0,0,0.15)",
+        }}
+      >
         <div
-          key={index}
-          className={`w-full flex items-center justify-center transition-opacity transition-transform duration-700 ${
-            isVisible("gallery-2")
-              ? "translate-y-0 opacity-100"
-              : "translate-y-6 opacity-0"
-          }`}
+          className="text-xl sm:text-2xl font-bold mb-1"
           style={{
-            transitionDelay: `${index * 100}ms`,
-            willChange: "transform, opacity",
+            fontFamily: "'Montserrat', sans-serif",
+            color: "#ffffff", // 🤍 chữ trắng
           }}
         >
-          <div className="relative w-[75%] mx-auto" style={{ maxHeight: "60vh" }}>
-            <Image
-              src={src}
-              alt={`Gallery ${index + 1}`}
-              width={1280} // chiều rộng ảnh tối ưu
-              height={960} // chiều cao ảnh tối ưu
-              sizes="(max-width: 768px) 75vw, 800px"
-              className="w-full h-auto object-contain rounded-sm"
-              {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
-            />
-          </div>
+          {item.value.toString().padStart(2, "0")}
         </div>
-      )
-    })}
+
+        <span
+          className="text-xs sm:text-sm uppercase tracking-wide"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            color: "#ffffff",
+            opacity: 0.9,
+          }}
+        >
+          {item.label}
+        </span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section
+  id="countdown-title"
+  style={{
+    position: "relative", // để zIndex & margin hoạt động ổn định
+    zIndex: 7,
+  }}
+>
+  <div
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      fontSize: "40px",
+      color: "rgba(75, 75, 71, 1)",
+      lineHeight: "normal",
+      fontWeight: "normal",
+      letterSpacing: "4px",
+      marginLeft: "120px", // dịch chữ sang phải
+      marginTop: "-130px", // dịch chữ lên
+    }}
+  >
+    <p
+      style={{
+        fontSize: "17px",
+        fontWeight: "normal",
+        marginBottom: "0.3rem",
+      }}
+    >
+      Chỉ còn......
+    </p>
   </div>
 </section>
 
 
+<section
+  id="countdown-title"
+  style={{
+    position: "relative", // để zIndex & margin hoạt động ổn định
+    zIndex: 7,
+  }}
+>
+  <div
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      fontSize: "50px",
+      color: "rgba(75, 75, 71, 1)",
+      lineHeight: "normal",
+      fontWeight: "normal",
+      letterSpacing: "4px",
+        margin: "120px auto 0",  
+     // dịch chữ lên
+    }}
+  >
+    <p
+      style={{
+        fontSize: "30px",
+        fontWeight: "normal",
+        marginBottom: "0.3rem",
+      }}
+    >
+      Album hình cưới.....
+    </p>
+  </div>
+</section>
 
-
-<div className="flex justify-center my-6"><div className="w-75 h-[1px] bg-[#111111] opacity-60" /></div>
+  <div
+      data-transition-key="qu4_wt2pM9-fade-in-1.6-0-ease-out-false"
+      data-node-id="qu4_wt2pM9"
+      style={{
       
+  transform: "none",
+  opacity: 1,
+  width: "auto",          // ❌ bỏ 100% → khung ôm nội dung
+  height: "auto",         // ❌ bỏ 100% → không kéo dài
+  maxWidth: "420px",      // 📐 GIỚI HẠN ĐỘ RỘNG KHUNG
+  margin: "10px auto 0",       // 📍 căn giữa
+}}
 
-      {/* Invitation text */}
-      <section id="quote1" data-animate className={`px-2 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <p className="text-xl sm:text-3xl mb-6 mt-2" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111", letterSpacing: "2px", whiteSpace: "nowrap" }}>TRÂN TRỌNG KÍNH MỜI</p>
-        <p className="text-2xl sm:text-3xl mb-6" style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", whiteSpace: "nowrap" }}>{guestName ?? "quý khách"}</p>
-        <p className="text-base sm:text-lg mt-2" style={{ fontFamily: "'Montserrat', sans-serif", color: "#111111", letterSpacing: "1px" }}>Đến dự bữa tiệc thân mật mừng hạnh phúc cùng gia đình chúng tôi</p>
-      </section>
+    >
+      {/* khung ngoài: viền xanh, padding, borderRadius */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          boxSizing: "border-box",
+          backgroundColor: "transparent",
+          textShadow: "0px 0px 2px rgba(0,0,0,0)",
+          opacity: 1,
+          padding: "10px",
+          border: "4px solid #4870a3",
+          borderRadius: "8px",
+          boxShadow: "none",
+        }}
+      >
+        {/* photo-gallery-wrapper */}
+        <div
+          className="photo-gallery-wrapper"
+          style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <div className="flex h-full w-full flex-col gap-3" style={{ display: "flex", flex: 1, gap: 12 }}>
+            {/* khu vực ảnh chính */}
+            <div
+              className="relative flex-1 min-h-[200px] overflow-hidden rounded-2xl bg-gray-100"
+              style={{
+                position: "relative",
+                flex: 1,
+                minHeight: 200,
+                overflow: "hidden",
+                borderRadius: 16,
+                backgroundColor: "#f3f4f6",
+              }}
+            >
+              {/* ảnh chính (absolute inset) */}
+              <div
+                className="absolute inset-0 transition-opacity duration-300 ease-in-out pointerEvents: none"
+                style={{ position: "absolute", inset: 0, transition: "opacity 300ms ease-in-out", opacity: 1 }}
+              >
+                <img
+                  alt={`Photo ${selectedIndex + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="object-contain"
+                  src={photos[selectedIndex]}
+                  style={{
+                    position: "absolute",
+                    height: "100%",
+                    width: "100%",
+                    inset: 0,
+                    color: "transparent",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
 
-      {/* Gallery grid (small 2-image block) */}
-      <section id="gallery-grid-1" data-animate className={`px-4 py-3 transition-all duration-1700 overflow-hidden ${isVisible("gallery-grid-1") ? "opacity-100" : "opacity-0"}`}>
-        <div className="grid grid-cols-2 gap-3">
-          {[data.gallery?.[11], data.gallery?.[7]].map((photo, index) => {
-            const { src, blur } = optimizedPathFor(photo)
-            return (
-              <div key={index} className={`w-full flex items-center justify-center transition-opacity transition-transform duration-700 ${isVisible("gallery-grid-1") ? "translate-x-0 opacity-100" : index === 0 ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"}`} style={{ transitionDelay: `${index * 100}ms`, willChange: "transform, opacity" }}>
-                <div className="relative w-full">
-                  <Image
-                    src={src}
-                    alt={`Gallery ${index + 1}`}
-                    width={800}
-                    height={1200}
-                    sizes="(max-width: 768px) 50vw, 400px"
-                    className="w-full h-auto object-contain rounded-sm"
-                    {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
-                  />
+              {/* nút prev */}
+              <button
+                onClick={prev}
+                aria-label="Previous photo"
+                className="absolute left-2 top-1/2 z-10"
+                style={{
+                  position: "absolute",
+                  left: 8,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  height: 40,
+                  width: 40,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.85)",
+                  color: "#333",
+                  boxShadow: "0 6px 12px rgba(0,0,0,0.08)",
+                  backdropFilter: "blur(4px)",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
+                </svg>
+              </button>
+
+              {/* nút next */}
+              <button
+                onClick={next}
+                aria-label="Next photo"
+                className="absolute right-2 top-1/2 z-10"
+                style={{
+                  position: "absolute",
+                  right: 8,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  height: 40,
+                  width: 40,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.85)",
+                  color: "#333",
+                  boxShadow: "0 6px 12px rgba(0,0,0,0.08)",
+                  backdropFilter: "blur(4px)",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" aria-hidden >
+                  <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                </svg>
+              </button>
+
+              {/* nút info (ví dụ) */}
+              <button
+          aria-label="Info"
+          style={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            zIndex: 10,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            padding: "6px 8px",
+            fontSize: 12,
+            borderRadius: 999,
+            background: "rgba(255,255,255,0.85)",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+         <span>{selectedIndex + 1}/{photos.length}</span>
+        </button>
+            </div>
+
+            {/* thumbnail scroller */}
+            <div className="relative">
+              <div
+                className="overflow-x-auto overflow-y-hidden"
+                style={{
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                  width: "100%",
+                  maxWidth: "100%",
+                  overflowX: "auto",
+                  overflowY: "hidden",
+                }}
+              >
+                <div
+                  className="flex gap-2 transition-transform duration-300 ease-out will-change-transform"
+                  style={{
+                    display: "flex",
+                    gap: 8,
+                    width: 432,
+                    alignItems: "center",
+                  }}
+                >
+                  {photos.map((p, i) => (
+                    <button
+                      key={p}
+                      onClick={() => setSelectedIndex(i)}
+                      className="relative rounded-md border transition-all duration-200 overflow-hidden flex-shrink-0 cursor-pointer"
+                      style={{
+                        width: 64,
+                        minWidth: 64,
+                        height: 64,
+                        borderRadius: 8,
+                        border: i === selectedIndex ? "2px solid #3b82f6" : "2px solid transparent",
+                        boxShadow: i === selectedIndex ? "0 10px 30px rgba(59,130,246,0.18)" : "none",
+                        padding: 0,
+                        overflow: "hidden",
+                        background: "#fff",
+                      }}
+                      aria-label={`Show photo ${i + 1}`}
+                    >
+                      <img
+                        alt={`Photo ${i + 1}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="object-cover"
+                        src={`${p}?resize=200x&format=webp&quality=90`}
+                        style={{
+                          position: "absolute",
+                          height: "100%",
+                          width: "100%",
+                          inset: 0,
+                          color: "transparent",
+                          objectFit: "cover",
+                        }}
+                      />
+                      {/* white border overlay */}
+                      <div style={{ position: "absolute", inset: 0, border: "2px solid rgba(255,255,255,1)", pointerEvents: "none" }} />
+                    </button>
+                  ))}
                 </div>
               </div>
-            )
-          })}
-        </div>
-      </section>
-
-      {/* Parents */}
-      <section id="parents" data-animate className={`px-4 sm:px-8 py-3 transition-all duration-1700 ${isVisible("parents") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
-          <div>
-            <h4 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>NHÀ TRAI</h4>
-            <p className="text-xs sm:text-sm mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>Ông: {data.groomFatherName}</p>
-            <p className="text-xs sm:text-sm" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>Bà: {data.groomMotherName}</p>
-            <p className="text-sm sm:text-base font-medium mt-2" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.groomFullName}</p>
-          </div>
-          <div>
-            <h4 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>NHÀ GÁI</h4>
-            <p className="text-xs sm:text-sm mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>Ông: {data.brideFatherName}</p>
-            <p className="text-xs sm:text-sm" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>Bà: {data.brideMotherName}</p>
-            <p className="text-sm sm:text-base font-medium mt-2" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.brideFullName}</p>
+            </div>
           </div>
         </div>
-      </section>
+      </div> 
+    </div>
 
-      {/* Wedding info (first block) */}
-      <section id="wedding-info-1" className="px-4 sm:px-8 py-6 sm:py-8 text-center">
-        <div className="flex justify-center mb-3">
-          <img src="/hi.png" alt="Bó hoa" className="w-14 h-auto opacity-90" loading="eager" decoding="async" draggable="false" />
-        </div>
-        <h3 className="text-base sm:text-xl font-semibold mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>LỄ THÀNH HÔN</h3>
-        <p className="mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif", fontSize: "16px", lineHeight: "1.3" }}>
-          VÀO LÚC <span style={{ fontSize: "1em", fontFamily: "'Montserrat', sans-serif", position: "relative", top: "-2px" }}>11:00</span> – THỨ TƯ
-        </p>
-        <div className="flex flex-col items-center mb-1">
-          <div className="w-20 h-[1px] bg-[#111111] mb-[2px]" />
-          <p className="text-xl sm:text-2xl tracking-widest leading-tight" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.weddingDateA ? new Date(data.weddingDateA).toLocaleDateString("vi-VN").replace(/\//g, ".") : "28.01.2026"}</p>
-          <div className="w-20 h-[1px] bg-[#111111] mt-[2px]" />
-        </div>
-        {data.lunarDate && <p className="text-xs sm:text-sm text-gray-600 mt-0 mb-5 leading-tight" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>(TỨC NGÀY {data.lunarDate} ÂM LỊCH)</p>}
-        <MapPin className="w-7 h-7 sm:w-8 sm:h-8 mx-auto mb-2" style={{ color: data.accentColor }} />
-        <p className="text-lg sm:text-2xl font-semibold mb-1" style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>{data.venueName}</p>
-        <p className="text-xs sm:text-sm text-gray-600 px-2" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.venueAddress}</p>
-        <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-9 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>XEM BẢN ĐỒ</a>
-      </section>
+  <div style={{ marginTop: 35 }}>
+  <RSVPSection />
+</div>
 
-      <div className="flex justify-center my-6"><div className="w-55 h-[1px] bg-[#111111] opacity-60" /></div>
+<div style={{ marginBottom: "20px"}}>
+  <LoveCardTrigger />
+</div>
 
-      {/* Second wedding-info block */}
-      <section id="wedding-info-2" data-animate className={`px-4 sm:px-8 py-6 sm:py-8 text-center transition-all duration-1700 ${isVisible("wedding-info-2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="flex flex-col items-center text-center">
-          <h3 className="text-base sm:text-xl font-semibold mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>BỮA CƠM THÂN MẬT</h3>
-          <p className="mb-3" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif", fontSize: "16px", lineHeight: "1.3" }}>VÀO LÚC <span style={{ fontSize: "1em", fontFamily: "'Montserrat', sans-serif", position: "relative", top: "-2px" }}>11:00</span> – THỨ TƯ</p>
-          <div className="flex flex-col items-center mb-1">
-            <div className="w-20 h-[1px] bg-[#111111] mb-[2px]" />
-            <p className="text-xl sm:text-2xl tracking-widest leading-tight" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.weddingDateA ? new Date(data.weddingDateA).toLocaleDateString("vi-VN").replace(/\//g, ".") : "28.01.2026"}</p>
-            <div className="w-20 h-[1px] bg-[#111111] mt-[2px]" />
-          </div>
-          {data.lunarDate && <p className="text-xs sm:text-sm text-gray-600 mt-0 mb-5 leading-tight" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>(TỨC NGÀY {data.lunarDate} ÂM LỊCH)</p>}
-          <MapPin className="w-7 h-7 sm:w-8 sm:h-8 mb-2" style={{ color: data.accentColor }} />
-          <p className="text-lg sm:text-2xl font-semibold mb-1" style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>{data.venueName}</p>
-          <p className="text-xs sm:text-sm text-gray-600 px-2" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>{data.venueAddress}</p>
-          <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-9 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>XEM BẢN ĐỒ</a>
-        </div>
-      </section>
 
-      {/* Album Hình Cưới (4 ảnh grid) */}
-      <section id="gallery-grid" data-animate className="px-4 py-3 overflow-hidden">
-        <div className="flex flex-col items-center text-center">
-          <p className={`text-lg sm:text-2xl mt-10 font-semibold mb-6 transition-all duration-1000 ${isVisible("gallery-grid") ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "30px", whiteSpace: "nowrap", fontWeight: "300", transitionDelay: "0ms" }}>Album Hình Cưới</p>
+<section
+  id="countdown-title"
+  style={{
+    position: "relative",
+    zIndex: 7,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",       // căn giữa ngang
+    justifyContent: "center",   // căn giữa dọc
+    marginTop: "20px",          // dịch chữ lên nếu cần
+    textAlign: "center",
+  }}
+>
+  <p
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      fontSize: "27px",
+      color: "rgba(49, 151, 182, 1)",
+      lineHeight: "normal",
+      fontWeight: "normal",
+      letterSpacing: "4px",
+      margin: "40px 0"
+    }}
+  >
+    Gửi mường cưới
+  </p>
+</section>
 
-          <div className="grid grid-cols-2 gap-3 w-full">
-            {[data.gallery?.[15], data.gallery?.[14], data.gallery?.[16], data.gallery?.[17], data.gallery?.[8], data.gallery?.[10]].map((photo, index) => {
-              const { src, blur } = optimizedPathFor(photo)
-              const delay = `${index * 500}ms`
-              return (
-                <div key={index} className={`w-full flex items-center justify-center transition-all duration-2000 ${isVisible("gallery-grid") ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} style={{ transitionDelay: delay }}>
-                  <div className="relative w-full">
-                    <Image
-                      src={src}
-                      alt={`Gallery ${index + 1}`}
-                      width={800}
-                      height={1200}
-                      sizes="(max-width: 768px) 50vw, 400px"
-                      className="w-full h-auto object-contain rounded-sm"
-                      {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <RSVPSection />
-
-      <GiftEnvelope
-  titleVisible={isVisible("gift-title")}
-  cardVisible={isVisible("donate-card")}
-  qrSrc="/donate.png"
-  name="LE KHANH NAM"
-  bank="MB BANK"
-  account="88888888888"
-/>
 
       {/* Last full-screen photo */}
       <section id="main-photo-end" data-animate className={`relative w-screen h-screen md:w-full md:h-auto md:aspect-[3/4] md:max-h-[80vh] md:mx-auto md:my-8 md:rounded-lg md:overflow-hidden md:shadow-lg transition-all duration-1700 ease-out ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
