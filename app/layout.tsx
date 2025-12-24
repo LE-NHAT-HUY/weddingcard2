@@ -33,11 +33,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Thiệp Cưới Khánh Nam & Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    url: "https://lannhi-khanhnam.vercel.app/",
+    url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/",
     siteName: "Wedding Card",
     images: [
       {
-        url: "https://lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg",
+        url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg",
         width: 1200,
         height: 630,
         alt: "Wedding couple",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thiệp Cưới Khánh Nam & Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    images: ["https://lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg"],
+    images: ["https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg"],
   },
 };
 
@@ -69,24 +69,6 @@ export default function RootLayout({
       <head>
         {/* Facebook App ID */}
         <meta property="fb:app_id" content="1389624622571348" />
-
-        {/* Open Graph meta */}
-        <meta property="og:url" content="https://lannhi-khanhnam.vercel.app/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        <meta property="og:description" content="Mời bạn tham dự lễ cưới của chúng tôi." />
-        <meta property="og:image" content="https://lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        <meta property="og:locale" content="vi_VN" />
-        <meta property="og:updated_time" content={new Date().toISOString()} />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Thiệp Cưới Khánh Nam & Lan Nhi" />
-        <meta name="twitter:description" content="Mời bạn tham dự lễ cưới của chúng tôi." />
-        <meta name="twitter:image" content="https://lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg" />
 
         {/* ✍️ Handwritten fonts */}
         <link
