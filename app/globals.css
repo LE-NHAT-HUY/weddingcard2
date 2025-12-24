@@ -218,9 +218,8 @@ html {
   opacity: 0.3;
 }
 
-
 .floating-wish {
-  animation: floatUpLive 10s linear forwards;
+  animation: floatUpLive 8.5s linear forwards;
   pointer-events: none;
   will-change: transform, opacity;
   position: absolute;
@@ -238,17 +237,17 @@ html {
   }
 
   70% {
-    transform: translateY(-32vh);
+    transform: translateY(-26vh);
     opacity: 1;    /* trôi bình thường */
   }
 
   90% {
-    transform: translateY(-36vh);
+    transform: translateY(-28vh);
     opacity: 0.5;  /* bắt đầu fade dần */
   }
 
   100% {
-    transform: translateY(-38vh);
+    transform: translateY(-30vh);
     opacity: 0;    /* biến mất mượt */
   }
 }

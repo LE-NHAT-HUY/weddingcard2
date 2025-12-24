@@ -161,7 +161,7 @@ export default function WeddingCardView() {
       })
 
       wishIndexRef.current++
-    }, 2500)
+    }, 1600)
 
     const cleanupInterval = setInterval(() => {
       setActiveWishes((prev) => {
@@ -257,7 +257,7 @@ export default function WeddingCardView() {
     {activeWishes.map((wish) => (
       <div
         key={wish.uniqueKey}
-        className="floating-wish absolute left-0 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl"
+        className="floating-wish absolute left-0 px-3 py-1 sm:px-3 sm:py-2 rounded-lg"
         style={{
           bottom: 0,
           maxWidth: "85%",

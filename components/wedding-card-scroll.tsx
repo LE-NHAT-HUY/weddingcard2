@@ -452,7 +452,7 @@ const containerStyle = {
 <section
   id="quote1"
   data-animate
-  className={`px-2 sm:px-8 py-2 text-center transition-all duration-700 ${
+  className={`px-2 sm:px-2 py-2 text-center transition-all duration-700 ${
     isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
@@ -484,7 +484,7 @@ const containerStyle = {
 <section
   id="quote2"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 delay-300 ${
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 delay-300 ${
     isVisible("quote2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
@@ -505,14 +505,14 @@ const containerStyle = {
 <section
   id="parents1"
   data-animate
-  className={`px-4 sm:px-8 py-3 transition-all duration-700 delay-500 ${
+  className={`px-4 sm:px-4 py-3 transition-all duration-700 delay-500 ${
     isVisible("parents1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
-  <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
+  <div className="grid grid-cols-2 gap-4 sm:gap-4 text-center">
     <div>
       <h4
-        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3"
+        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-2"
         style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}
       >
         NHÀ TRAI
@@ -529,7 +529,7 @@ const containerStyle = {
     </div>
     <div>
       <h4
-        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-3"
+        className="text-sm sm:text-sm font-semibold mb-2 sm:mb-2"
         style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}
       >
         NHÀ GÁI
@@ -541,32 +541,35 @@ const containerStyle = {
         BÀ: {data.brideMotherName}
       </p>
       <p className="mb-5 mt-2.5 text-xs sm:text-xs" style={{ color: "#726060ff", fontFamily: "'Montserrat', sans-serif" }}>
-        THÔN PHÚ LỘC 2, PHÚ TRẠCH, QUẢNG TRỊ
+        THÔN PHÚC KIỀU, HÒA TRẠCH, QUẢNG TRỊ
       </p>
     </div>
   </div>
 </section>
 
-<div className="relative bg-gray-100"> <div className="absolute left-[17%] top-[-100] translate-y-[-50%] z-20"> <HeartImage /> </div> </div>
 
-{/* Bride & Groom */}
 <section
   id="parents2"
   data-animate
-  className={`px-4 sm:px-8 py-3 transition-all duration-700 delay-700 ${
+  className={`relative w-full px-4 sm:px-4 py-3 transition-all duration-700 delay-700 ${
     isVisible("parents2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
-  <div className="grid grid-cols-2 gap-4 sm:gap-8 text-center">
+  {/* HeartImage nằm giữa màn hình */}
+  <div className="absolute top-[-17px] left-1/2 transform -translate-x-1/2 z-20 w-full flex justify-center">
+    <HeartImage />
+  </div>
+
+  <div className="grid grid-cols-2 gap-4 sm:gap-4 text-center">
     <div>
       <h4
-        className="mb-3 text-xl sm:text-sm font-normal mb-2 sm:mb-3"
+        className="mb-3 text-xl sm:text-xl font-normal mb-2 sm:mb-3"
         style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif" }}
       >
         Chú Rể
       </h4>
       <h4
-        className="text-3xl sm:text-sm font-normal mb-2 sm:mb-3"
+        className="text-3xl sm:text-3xl font-normal mb-2 sm:mb-3"
         style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
       >
         Khánh Nam
@@ -574,13 +577,13 @@ const containerStyle = {
     </div>
     <div>
       <h4
-        className="text-xl mb-3 sm:text-sm font-normal mb-2 sm:mb-3"
+        className="text-xl mb-3 sm:text-xl font-normal mb-2 sm:mb-2"
         style={{ color: "#4d4848ff", fontFamily: "'Montserrat', sans-serif" }}
       >
         Cô Dâu
       </h4>
       <h4
-        className="text-4xl sm:text-sm font-normal mb-2 sm:mb-3"
+        className="text-4xl sm:text-4xl font-normal mb-2 sm:mb-2"
         style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
       >
         Lan Nhi
@@ -588,6 +591,7 @@ const containerStyle = {
     </div>
   </div>
 </section>
+
 
 
        {/* Gallery grid (small 2-image block) */}
@@ -620,11 +624,11 @@ const containerStyle = {
 <section
   id="quote1"
   data-animate
-  className="px-2 sm:px-8 py-2 text-center overflow-hidden"
+  className="px-2 sm:px-2 py-2 text-center overflow-hidden"
 >
   {/* Tiêu đề - từ trái vào */}
   <p
-    className={`text-xl sm:text-3xl mb-6 mt-2 transition-all duration-700 ${
+    className={`text-xl sm:text-xl mb-6 mt-2 transition-all duration-700 ${
       isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
     }`}
     style={{
@@ -639,7 +643,7 @@ const containerStyle = {
 
   {/* Tên khách - từ phải vào */}
   <p
-    className={`text-2xl sm:text-3xl mb-6 transition-all duration-700 delay-200 ${
+    className={`text-2xl sm:text-2xl mb-6 transition-all duration-700 delay-200 ${
       isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
     }`}
     style={{
@@ -654,7 +658,7 @@ const containerStyle = {
 
   {/* Text phụ - fade-in từ dưới */}
   <p
-    className={`text-base sm:text-lg mt-2 transition-all duration-700 delay-400 ${
+    className={`text-base sm:text-base mt-2 transition-all duration-700 delay-400 ${
       isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
     }`}
     style={{
@@ -747,12 +751,12 @@ const containerStyle = {
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 ${
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 ${
     isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
-    className="text-[15px] sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-200"
+    className="text-[15px] sm:text-[15px] mt-2 relative inline-block transition-all duration-700 delay-200"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -777,11 +781,11 @@ const containerStyle = {
 <section
   id="wedding-info-1"
   data-animate
-  className="px-4 sm:px-8 py-6 sm:py-8 text-center overflow-hidden"
+  className="px-4 sm:px-4 py-6 sm:py-6 text-center overflow-hidden"
 >
   {/* Thứ */}
   <p
-    className={`text-xl sm:text-2xl font-normal mb-4 transition-all duration-700 delay-300`}
+    className={`text-xl sm:text-xl font-normal mb-4 transition-all duration-700 delay-300`}
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -793,7 +797,7 @@ const containerStyle = {
   </p>
 
   {/* Thời gian | Ngày | Năm */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal">
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
     <span
       className="transition-all duration-700 delay-400"
       style={{
@@ -809,7 +813,7 @@ const containerStyle = {
     <span className="border-l-2 border-gray-500 h-13" />
 
     <span
-      className="text-6xl sm:text-7xl font-bold transition-all duration-700 delay-600"
+      className="text-6xl sm:text-6xl font-bold transition-all duration-700 delay-600"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
@@ -838,7 +842,7 @@ const containerStyle = {
 
   {/* Tháng */}
   <p
-    className="text-xl sm:text-2xl font-normal mt-3 mb-4 transition-all duration-700 delay-400"
+    className="text-xl sm:text-2l font-normal mt-3 mb-4 transition-all duration-700 delay-400"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -865,7 +869,7 @@ const containerStyle = {
 
   {/* Địa điểm */}
   <p
-    className="text-lg sm:text-2xl font-semibold transition-all duration-700 delay-400"
+    className="text-lg sm:text-lg font-semibold transition-all duration-700 delay-400"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
@@ -875,11 +879,11 @@ const containerStyle = {
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
     }}
   >
-    Tư Gia Nhà Trai
+    Nhà Văn Hóa Thôn Phúc Kiều
   </p>
 
   <a
-    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    href="https://maps.app.goo.gl/qpaHW71TFikdvxzx5"
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-600"
@@ -898,12 +902,12 @@ const containerStyle = {
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-700 ${
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 ${
     isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
-    className="text-[15px] sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-100"
+    className="text-[15px] sm:text-[15px] mt-2 relative inline-block transition-all duration-700 delay-100"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -950,11 +954,11 @@ const containerStyle = {
 <section
   id="wedding-info-1"
   data-animate
-  className="px-4 sm:px-8 py-6 sm:py-8 text-center overflow-hidden"
+  className="px-4 sm:px-4 py-6 sm:py-6 text-center overflow-hidden"
 >
   {/* Thứ */}
   <p
-    className="text-xl sm:text-2xl font-normal mb-4 transition-all duration-700 delay-150"
+    className="text-xl sm:text-xl font-normal mb-4 transition-all duration-700 delay-150"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -966,7 +970,7 @@ const containerStyle = {
   </p>
 
   {/* 11H00 | 28 | 2026 */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal">
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
     <span
       className="transition-all duration-700 delay-150"
       style={{
@@ -982,7 +986,7 @@ const containerStyle = {
     <span className="border-l-2 border-gray-500 h-13" />
 
     <span
-      className="text-6xl sm:text-7xl font-bold transition-all duration-700 delay-300"
+      className="text-6xl sm:text-6xl font-bold transition-all duration-700 delay-300"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
@@ -1011,7 +1015,7 @@ const containerStyle = {
 
   {/* Tháng */}
   <p
-    className="text-xl sm:text-2xl font-normal mt-3 mb-4 transition-all duration-700 delay-250"
+    className="text-xl sm:text-xl font-normal mt-3 mb-4 transition-all duration-700 delay-250"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -1038,7 +1042,7 @@ const containerStyle = {
 
   {/* Địa điểm */}
   <p
-    className="text-lg sm:text-2xl font-semibold transition-all duration-700 delay-300"
+    className="text-lg sm:text-lg font-semibold transition-all duration-700 delay-300"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
@@ -1073,10 +1077,10 @@ const containerStyle = {
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-8 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
 >
   <p
-    className="text-[17px] sm:text-xl mt-2 relative inline-block" // relative để pseudo-element hoạt động
+    className="text-[17px] sm:text-[17px] mt-2 relative inline-block" // relative để pseudo-element hoạt động
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -1084,7 +1088,7 @@ const containerStyle = {
       whiteSpace: "nowrap",
     }}
   >
-    LỄ VU QUY
+    LỄ THÀNH HÔN
     {/* Gạch chân kéo dài bằng pseudo-element */}
     <span
       className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
@@ -1108,11 +1112,11 @@ const containerStyle = {
 <section 
   id="wedding-info-1" 
   data-animate
-  className="px-4 sm:px-8 py-6 sm:py-8 text-center"
+  className="px-4 sm:px-4 py-6 sm:py-6 text-center"
 >
   {/* THỨ SÁU */}
   <p
-    className={`text-xl sm:text-2xl font-normal mb-4 ${isVisible("wedding-info-1") ? "animated" : ""}`}
+    className={`text-xl sm:text-xl font-normal mb-4 ${isVisible("wedding-info-1") ? "animated" : ""}`}
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -1125,7 +1129,7 @@ const containerStyle = {
   </p>
 
   {/* 17H00 | 27 | 2026 */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-xl font-normal" style={{ fontFamily: "'Montserrat', sans-serif", color: "#564e4eff" }}>
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal" style={{ fontFamily: "'Montserrat', sans-serif", color: "#564e4eff" }}>
     <span
       style={{
         animation: isVisible("wedding-info-1") ? "slideLeftFade 0.8s ease forwards" : "none",
@@ -1139,7 +1143,7 @@ const containerStyle = {
     <span className="border-l-2 border-gray-500 h-13" />
     
     <span
-      className="text-6xl sm:text-7xl font-bold relative"
+      className="text-6xl sm:text-6xl font-bold relative"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
@@ -1167,7 +1171,7 @@ const containerStyle = {
 
   {/* Tháng 01 */}
   <p
-    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
+    className="text-xl sm:text-xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
@@ -1193,9 +1197,44 @@ const containerStyle = {
   >
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
-        <p className="text-lg sm:text-2xl font-semibold " style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>Tư Gia Nhà Trai</p>
+        <p className="text-lg sm:text-lg font-semibold " style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>Tư Gia Nhà Trai</p>
         <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>CHỈ ĐƯỜNG</a>
 </section>
+
+<div
+  className="falling-title"
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    fontSize: "30px",
+    color: "rgba(75, 75, 71, 1)",
+    lineHeight: "normal",
+    fontWeight: "normal",
+    letterSpacing: "4px",
+    marginLeft: "20px",
+    marginTop: "20px",
+  }}
+>
+  Từ giảng đường...
+</div>
+
+<div
+  className="falling-title"
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    fontSize: "30px",
+    color: "rgba(75, 75, 71, 1)",
+    lineHeight: "normal",
+    fontWeight: "normal",
+    letterSpacing: "4px",
+    marginLeft: "auto",   // đẩy sang phải
+    marginRight: "20px",  // khoảng cách từ cạnh phải
+    marginTop: "20px",
+    textAlign: "right",   // căn chữ bên trong sang phải
+  }}
+>
+  ...Đến lễ đường
+</div>
+
 
 <div
   className="falling-title"
@@ -1392,102 +1431,109 @@ const containerStyle = {
   ></div>
 </div>
 
-
-       <div
-      style={{
-        width: "228px",
-        height: "158px",
-        position: "relative",
-        backgroundImage:
-          "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/c908dda2-9fe9-4b45-8bc2-d037553ab85d.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        borderRadius: "0px",
-        overflow: "hidden",
-        fontFamily: '"Times New Roman", serif',
-        left: "143px",
-        top: "-89px",
-        zIndex: 3, 
-      }}
-    >
+<div
+  style={{
+    width: "228px",
+    height: "158px",
+    position: "relative",
+    backgroundImage:
+      "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/c908dda2-9fe9-4b45-8bc2-d037553ab85d.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    borderRadius: "0px",
+    overflow: "hidden",
+    fontFamily: '"Times New Roman", serif',
+    left: "143px",
+    top: "-89px",
+    zIndex: 3,
+  }}
+>
+  <div
+    className="calendar-overlay"
+    style={{
+      position: "absolute",
+      inset: 0,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "stretch",
+      padding: "6px 8px",
+      boxSizing: "border-box",
+      color: "#4870a3",
+      fontSize: "13px",
+      zIndex: 2,
+    }}
+  >
+    {rows.map((row, rowIndex) => (
       <div
-        className="calendar-overlay"
+        key={rowIndex}
+        className="calendar-row"
         style={{
-          position: "absolute",
-          inset: 0,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "stretch",
-          padding: "6px 8px",
-          boxSizing: "border-box",
-          color: "#4870a3",
-          fontSize: "13px",
-          zIndex: 2,
+          gap: "4px",
+          alignItems: "center",
+          paddingLeft: rowIndex === 0 ? "50%" : "0",
+          justifyContent: rowIndex === 0 ? "flex-start" : "center",
+          flexWrap: "nowrap",
+          marginBottom: rowIndex === rows.length - 1 ? 0 : "4px",
         }}
       >
-        {rows.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className="calendar-row"
-            style={{
-              display: "flex",
-              gap: "4px", // khoảng cách giữa các ngày
-              alignItems: "center",
-              paddingLeft: rowIndex === 0 ? "50%" : "0",
-              justifyContent: rowIndex === 0 ? "flex-start" : "center",
-              flexWrap: "nowrap",
-              marginBottom: rowIndex === rows.length - 1 ? 0 : "4px",
-            }}
-          >
-            {row.map((day) => (
+        {row.map((day) => {
+          const highlightedDays = [27, 28]; // các ngày có hiệu ứng
+          const isHighlighted = highlightedDays.includes(day);
+
+          return (
+            <div
+              key={day}
+              style={{
+                position: "relative",
+                width: "27px",
+                height: "27px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "12px",
+                lineHeight: "1",
+              }}
+            >
+              {isHighlighted && (
+                <img
+                  src="https://assets.cinelove.me/assets/plugins/calen_heart_1.png"
+                  alt="heart"
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "22px",
+                    height: "22px",
+                    zIndex: 1,
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
+
               <div
-                key={day}
                 style={{
                   position: "relative",
-                  width: "27px",  // tăng kích thước ô ngày
-                  height: "27px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "12px",
-                  lineHeight: "1",
+                  zIndex: 2,
+                  color: isHighlighted ? "#fff" : undefined,
+                  fontWeight: isHighlighted ? 700 : 400,
+                  textShadow: isHighlighted
+                    ? "0 0 2px rgba(0,0,0,0.5)"
+                    : "none",
                 }}
               >
-                {day === 28 && (
-                  <img
-                    src="https://assets.cinelove.me/assets/plugins/calen_heart_1.png"
-                    alt="heart"
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "22px",
-                      height: "22px",
-                      zIndex: 1,
-                      pointerEvents: "none",
-                    }}
-                  />
-                )}
-
-                <div
-                  style={{
-                    position: "relative",
-                    zIndex: 2,
-                    color: day === 28 ? "#fff" : undefined,
-                    fontWeight: day === 28 ? 700 : 400,
-                    textShadow: day === 28 ? "0 0 2px rgba(0,0,0,0.5)" : "none",
-                  }}
-                >
-                  {day}
-                </div>
+                {day}
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
 
       {/* Gallery photo (not full screen) */}
 <section
@@ -1540,7 +1586,7 @@ const containerStyle = {
 <section
   id="countdown"
   data-animate
-  className={`px-4 sm:px-8 py-8 sm:py-10 text-center transition-all duration-700 ${
+  className={`px-4 sm:px-4 py-8 sm:py-8 text-center transition-all duration-700 ${
     isVisible("countdown")
       ? "opacity-100 translate-y-0"
       : "opacity-0 translate-y-6"
@@ -1565,7 +1611,7 @@ const containerStyle = {
         }}
       >
         <div
-          className="text-xl sm:text-2xl font-bold mb-1"
+          className="text-xl sm:text-xl font-bold mb-1"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             color: "#ffffff", // 🤍 chữ trắng
@@ -1575,7 +1621,7 @@ const containerStyle = {
         </div>
 
         <span
-          className="text-xs sm:text-sm uppercase tracking-wide"
+          className="text-xs sm:text-xs uppercase tracking-wide"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             color: "#ffffff",
@@ -1905,28 +1951,47 @@ const containerStyle = {
       margin: "40px 0"
     }}
   >
-    Gửi mường cưới
+    Gửi quà mường cưới
   </p>
 </section>
 
 
       {/* Last full-screen photo */}
-      <section id="main-photo-end" data-animate className={`relative w-screen h-screen md:w-full md:h-auto md:aspect-[3/4] md:max-h-[80vh] md:mx-auto md:my-8 md:rounded-lg md:overflow-hidden md:shadow-lg transition-all duration-1700 ease-out ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="absolute inset-0 w-full h-full relative">
-          {/* sử dụng ảnh tối ưu (anh14) */}
-          {(() => {
-            const { src, blur } = optimizedPathFor("/anh14.jpg")
-            return <Image src={src} alt="Wedding couple" fill priority sizes="100vw" className="object-cover" {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})} />
-          })()}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
-            <p className={`text-3xl sm:text-5xl transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`} style={{ fontFamily: "'Great Vibes', cursive", color: "#ffffff", letterSpacing: "2px", marginBottom: "16px", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>Lời Cảm Ơn!</p>
-            <p className={`text-sm sm:text-base transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`} style={{ fontFamily: "'Montserrat', sans-serif", color: "#ffffff", maxWidth: "420px", lineHeight: "1.7", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
-              Trân trọng cảm ơn quý khách đã dành thời gian đến chung vui cùng gia đình chúng tôi.
-            </p>
-          </div>
-        </div>
-      </section>
+      <section
+  id="main-photo-end"
+  data-animate
+  className={`relative w-screen md:max-w-[60vw] mx-auto transition-all duration-1700 ease-out ${
+    isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  }`}
+  style={{ aspectRatio: "3/4" }}
+>
+  <div className="absolute inset-0 w-full h-full relative overflow-hidden">
+    {(() => {
+      const { src, blur } = optimizedPathFor("/anh14.jpg")
+      return (
+        <Image
+          src={src}
+          alt="Wedding couple"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 60vw"
+          className="object-cover w-full h-full"
+          {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
+        />
+      )
+    })()}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+    <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
+      <p className={`text-3xl sm:text-3xl transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`} style={{ fontFamily: "'Great Vibes', cursive", color: "#ffffff", letterSpacing: "2px", marginBottom: "16px", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>Lời Cảm Ơn!</p>
+      <p className={`text-sm sm:text-sm transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`} style={{ fontFamily: "'Montserrat', sans-serif", color: "#ffffff", maxWidth: "420px", lineHeight: "1.7", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
+        Trân trọng cảm ơn quý khách đã dành thời gian đến chung vui cùng gia đình chúng tôi.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
     </div>
   )
 }

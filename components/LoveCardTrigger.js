@@ -44,7 +44,7 @@ export default function LoveCardTrigger() {
               Quét QR code để gửi yêu thương trực tiếp tới:
             </p>
 
-            <div className="role">Cô dâu</div>
+            <div className="role">Cô dâu chú rể</div>
 
             <div className="qr-box">
               <img src="/qrcode1.JPG" alt="QR code" />

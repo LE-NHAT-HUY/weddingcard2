@@ -207,7 +207,7 @@ if (form.wishMessage.trim()) {
   className="w-full max-w-full overflow-x-hidden px-4 sm:px-8 py-8"
   style={{
     fontFamily: "'Playfair Display', serif",
-    color: "#318191ff",
+    color: "#1f2628ff",
     backgroundColor: "transparent", // ✅ nền trong suốt
   }}
 >
@@ -251,59 +251,61 @@ if (form.wishMessage.trim()) {
                 </div>
               )}
               {field.type === "radio" && (
-                <div
-                  className={`overflow-hidden transition-all duration-500 ${
-                    openFields[field.key] ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="flex gap-6 justify-center py-2">
-                    <label className="inline-flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name={field.key}
-                        checked={form.attending === true}
-                        onChange={() => onChange("attending", true)}
-                        className={radioClass}
-                        style={{
-                          appearance: "none",
-                          backgroundColor: form.attending === true ? primaryColor : "transparent",
-                          borderColor: primaryColor,
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontFamily: "'Playfair Display', serif",
-                          color: form.attending === true ? primaryColor : "#111111",
-                        }}
-                      >
-                        Có
-                      </span>
-                    </label>
-                    <label className="inline-flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name={field.key}
-                        checked={form.attending === false}
-                        onChange={() => onChange("attending", false)}
-                        className={radioClass}
-                        style={{
-                          appearance: "none",
-                          backgroundColor: form.attending === false ? primaryColor : "transparent",
-                          borderColor: primaryColor,
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontFamily: "'Playfair Display', serif",
-                          color: form.attending === false ? primaryColor : "#111111",
-                        }}
-                      >
-                        Không
-                      </span>
-                    </label>
+                  <div
+                    className={`overflow-hidden transition-all duration-500 ${
+                      openFields[field.key] ? "max-h-80 opacity-100 mt-3" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="flex flex-col gap-4 py-2 pl-6">
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name={field.key}
+                          checked={form.attending === true}
+                          onChange={() => onChange("attending", true)}
+                          className={radioClass}
+                          style={{
+                            appearance: "none",
+                            backgroundColor: form.attending === true ? primaryColor : "transparent",
+                            borderColor: primaryColor,
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: "'Playfair Display', serif",
+                            color: form.attending === true ? primaryColor : "#111111",
+                          }}
+                        >
+                          Có, tôi sẽ tham dự
+                        </span>
+                      </label>
+
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name={field.key}
+                          checked={form.attending === false}
+                          onChange={() => onChange("attending", false)}
+                          className={radioClass}
+                          style={{
+                            appearance: "none",
+                            backgroundColor: form.attending === false ? primaryColor : "transparent",
+                            borderColor: primaryColor,
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: "'Playfair Display', serif",
+                            color: form.attending === false ? primaryColor : "#111111",
+                          }}
+                        >
+                          Không, tôi bận, rất tiếc không thể tham dự
+                        </span>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+
             </div>
           </div>
         ))}
