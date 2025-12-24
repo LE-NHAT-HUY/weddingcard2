@@ -1,5 +1,6 @@
 "use client"
 
+import AutoScrollToBottom from "../components/AutoScrollToBottom";
 import LoveCardTrigger from '../components/LoveCardTrigger';
 import CustomImage2 from '../components/CustomImage2';
 import CustomImage from '../components/CustomImage';
@@ -82,14 +83,16 @@ export default function WeddingCardScroll({
     [26, 27, 28, 29, 30, 31] // hàng 5
   ];
 
-  const photos = [
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-    "https://khanhnam-lannhi.vercel.app/anh6.jpg",
-  ];
+ // ảnh RIÊNG cho gallery này (ví dụ ảnh 1–6)
+const photos = [
+  data.gallery?.[22],
+  data.gallery?.[21],
+  data.gallery?.[19],
+  data.gallery?.[20],
+  data.gallery?.[23],
+  data.gallery?.[9],
+].filter(Boolean)
+
 
 const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -244,11 +247,13 @@ const containerStyle = {
   // ---------- render ----------
   return (
     
+    
     <div
       ref={containerRef}
       className="relative w-full md:max-w-md mx-auto h-screen overflow-y-scroll snap-y snap-mandatory"
       style={containerStyle}
     >
+          <AutoScrollToBottom containerRef={containerRef} />
       {/* FLOATING BUTTONS */}
       <button
         onClick={handleToggleMusic}
@@ -263,8 +268,6 @@ const containerStyle = {
           style={isMusicOn ? { animationDuration: "3s" } : undefined}
         />
       </button>
-
-      
 
       {/* First full-screen photo */}
   {/* Main start: Text block on top + Image block below */}
@@ -675,7 +678,7 @@ const containerStyle = {
 <section id="gallery-grid" className="px-4 py-6 overflow-hidden">
   <div className="flex justify-center items-end gap-2 md:gap-2 max-w-[1200px] mx-auto">
     {(() => {
-      const photos = [data.gallery?.[14], data.gallery?.[16], data.gallery?.[17]];
+      const photos = [data.gallery?.[18], data.gallery?.[16], data.gallery?.[17]];
       return photos.map((photo, idx) => {
         const { src, blur } = optimizedPathFor(photo);
         const isCenter = idx === 1;
@@ -746,7 +749,6 @@ const containerStyle = {
   </div>
 </section>
 
-
 {/* Tiệc cưới Nhà Gái */}
 <section
   id="quote1"
@@ -776,6 +778,29 @@ const containerStyle = {
     />
   </p>
 </section>
+
+{/* Ảnh chính giữa */}
+<div className="relative bg-gray-100">
+  <div
+    className={`absolute left-[50%] top-[-100] translate-y-[-50%] z-20 transition-all duration-700 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-y-10"
+    }`}
+  >
+    <CustomImage />
+  </div>
+</div>
+
+{/* Ảnh bên trái */}
+<div className="relative bg-gray-100">
+  <div
+    className={`absolute left-[5%] top-[-15] translate-y-[-50%] z-20 transition-all duration-700 delay-100 ${
+      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
+    }`}
+  >
+    <CustomImage2 />
+  </div>
+</div>
+
 
 {/* Thông tin lễ cưới */}
 <section
@@ -883,7 +908,7 @@ const containerStyle = {
   </p>
 
   <a
-    href="https://maps.app.goo.gl/qpaHW71TFikdvxzx5"
+    href="https://maps.app.goo.gl/kgoqhKQqiGUGzcJb7?g_st=ic"
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-600"
@@ -1696,227 +1721,112 @@ const containerStyle = {
       Album hình cưới.....
     </p>
   </div>
-</section>
+  </section>
 
+<div
+  data-transition-key="qu4_wt2pM9-fade-in-1.6-0-ease-out-false"
+  data-node-id="qu4_wt2pM9"
+  style={{
+    transform: "none",
+    opacity: 1,
+    width: "auto",
+    height: "auto",
+    maxWidth: "420px",
+    margin: "10px auto 0",
+  }}
+>
+  {/* khung ngoài */}
   <div
-      data-transition-key="qu4_wt2pM9-fade-in-1.6-0-ease-out-false"
-      data-node-id="qu4_wt2pM9"
-      style={{
-      
-  transform: "none",
-  opacity: 1,
-  width: "auto",          // ❌ bỏ 100% → khung ôm nội dung
-  height: "auto",         // ❌ bỏ 100% → không kéo dài
-  maxWidth: "420px",      // 📐 GIỚI HẠN ĐỘ RỘNG KHUNG
-  margin: "10px auto 0",       // 📍 căn giữa
-}}
-
-    >
-      {/* khung ngoài: viền xanh, padding, borderRadius */}
+    style={{
+      position: "relative",
+      width: "100%",
+      boxSizing: "border-box",
+      padding: "10px",
+      border: "4px solid #4870a3",
+      borderRadius: "8px",
+    }}
+  >
+    <div className="photo-gallery-wrapper flex flex-col gap-3">
+      {/* ẢNH CHÍNH */}
       <div
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          boxSizing: "border-box",
-          backgroundColor: "transparent",
-          textShadow: "0px 0px 2px rgba(0,0,0,0)",
-          opacity: 1,
-          padding: "10px",
-          border: "4px solid #4870a3",
-          borderRadius: "8px",
-          boxShadow: "none",
-        }}
+        className="relative flex-1 min-h-[200px] overflow-hidden rounded-2xl bg-gray-100"
+        style={{ minHeight: 200 }}
       >
-        {/* photo-gallery-wrapper */}
-        <div
-          className="photo-gallery-wrapper"
-          style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}
+        {(() => {
+          const photo = photos[selectedIndex]
+          const { src, blur } = optimizedPathFor(photo)
+
+          return (
+            <Image
+              src={src}
+              alt={`Photo ${selectedIndex + 1}`}
+              fill
+              sizes="(max-width: 768px) 90vw, 400px"
+              className="object-contain"
+              priority
+              {...(blur
+                ? { placeholder: "blur", blurDataURL: blur }
+                : {})}
+            />
+          )
+        })()}
+
+        {/* prev */}
+        <button
+          onClick={prev}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
         >
-          <div className="flex h-full w-full flex-col gap-3" style={{ display: "flex", flex: 1, gap: 12 }}>
-            {/* khu vực ảnh chính */}
-            <div
-              className="relative flex-1 min-h-[200px] overflow-hidden rounded-2xl bg-gray-100"
+          ‹
+        </button>
+
+        {/* next */}
+        <button
+          onClick={next}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
+        >
+          ›
+        </button>
+
+        {/* counter */}
+        <div className="absolute top-2 right-2 text-xs bg-white/85 px-2 py-1 rounded-full">
+          {selectedIndex + 1}/{photos.length}
+        </div>
+      </div>
+
+      {/* THUMBNAILS */}
+      <div className="flex gap-2 overflow-x-auto">
+        {photos.map((photo, i) => {
+          const { src, blur } = optimizedPathFor(photo)
+
+          return (
+            <button
+              key={i}
+              onClick={() => setSelectedIndex(i)}
+              className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0"
               style={{
-                position: "relative",
-                flex: 1,
-                minHeight: 200,
-                overflow: "hidden",
-                borderRadius: 16,
-                backgroundColor: "#f3f4f6",
+                border:
+                  i === selectedIndex
+                    ? "2px solid #3b82f6"
+                    : "2px solid transparent",
               }}
             >
-              {/* ảnh chính (absolute inset) */}
-              <div
-                className="absolute inset-0 transition-opacity duration-300 ease-in-out pointerEvents: none"
-                style={{ position: "absolute", inset: 0, transition: "opacity 300ms ease-in-out", opacity: 1 }}
-              >
-                <img
-                  alt={`Photo ${selectedIndex + 1}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="object-contain"
-                  src={photos[selectedIndex]}
-                  style={{
-                    position: "absolute",
-                    height: "100%",
-                    width: "100%",
-                    inset: 0,
-                    color: "transparent",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-
-              {/* nút prev */}
-              <button
-                onClick={prev}
-                aria-label="Previous photo"
-                className="absolute left-2 top-1/2 z-10"
-                style={{
-                  position: "absolute",
-                  left: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 10,
-                  height: 40,
-                  width: 40,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.85)",
-                  color: "#333",
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.08)",
-                  backdropFilter: "blur(4px)",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
-                </svg>
-              </button>
-
-              {/* nút next */}
-              <button
-                onClick={next}
-                aria-label="Next photo"
-                className="absolute right-2 top-1/2 z-10"
-                style={{
-                  position: "absolute",
-                  right: 8,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 10,
-                  height: 40,
-                  width: 40,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.85)",
-                  color: "#333",
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.08)",
-                  backdropFilter: "blur(4px)",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 320 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" aria-hidden >
-                  <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
-                </svg>
-              </button>
-
-              {/* nút info (ví dụ) */}
-              <button
-          aria-label="Info"
-          style={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            padding: "6px 8px",
-            fontSize: 12,
-            borderRadius: 999,
-            background: "rgba(255,255,255,0.85)",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-         <span>{selectedIndex + 1}/{photos.length}</span>
-        </button>
-            </div>
-
-            {/* thumbnail scroller */}
-            <div className="relative">
-              <div
-                className="overflow-x-auto overflow-y-hidden"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                  width: "100%",
-                  maxWidth: "100%",
-                  overflowX: "auto",
-                  overflowY: "hidden",
-                }}
-              >
-                <div
-                  className="flex gap-2 transition-transform duration-300 ease-out will-change-transform"
-                  style={{
-                    display: "flex",
-                    gap: 8,
-                    width: 432,
-                    alignItems: "center",
-                  }}
-                >
-                  {photos.map((p, i) => (
-                    <button
-                      key={p}
-                      onClick={() => setSelectedIndex(i)}
-                      className="relative rounded-md border transition-all duration-200 overflow-hidden flex-shrink-0 cursor-pointer"
-                      style={{
-                        width: 64,
-                        minWidth: 64,
-                        height: 64,
-                        borderRadius: 8,
-                        border: i === selectedIndex ? "2px solid #3b82f6" : "2px solid transparent",
-                        boxShadow: i === selectedIndex ? "0 10px 30px rgba(59,130,246,0.18)" : "none",
-                        padding: 0,
-                        overflow: "hidden",
-                        background: "#fff",
-                      }}
-                      aria-label={`Show photo ${i + 1}`}
-                    >
-                      <img
-                        alt={`Photo ${i + 1}`}
-                        loading="lazy"
-                        decoding="async"
-                        className="object-cover"
-                        src={`${p}?resize=200x&format=webp&quality=90`}
-                        style={{
-                          position: "absolute",
-                          height: "100%",
-                          width: "100%",
-                          inset: 0,
-                          color: "transparent",
-                          objectFit: "cover",
-                        }}
-                      />
-                      {/* white border overlay */}
-                      <div style={{ position: "absolute", inset: 0, border: "2px solid rgba(255,255,255,1)", pointerEvents: "none" }} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> 
+              <Image
+                src={src}
+                alt={`Thumb ${i + 1}`}
+                fill
+                sizes="64px"
+                className="object-cover"
+                {...(blur
+                  ? { placeholder: "blur", blurDataURL: blur }
+                  : {})}
+              />
+            </button>
+          )
+        })}
+      </div>
     </div>
+  </div>
+</div>
 
   <div style={{ marginTop: 35 }}>
   <RSVPSection />
@@ -1951,7 +1861,7 @@ const containerStyle = {
       margin: "40px 0"
     }}
   >
-    Gửi quà mường cưới
+    Gửi quà mừng cưới
   </p>
 </section>
 
@@ -1967,7 +1877,7 @@ const containerStyle = {
 >
   <div className="absolute inset-0 w-full h-full relative overflow-hidden">
     {(() => {
-      const { src, blur } = optimizedPathFor("/anh14.jpg")
+      const { src, blur } = optimizedPathFor("/anh26.jpg")
       return (
         <Image
           src={src}

@@ -82,6 +82,13 @@ export const defaultData: WeddingData = {
     "/anh17.jpg",
     "/anh18.jpg",
     "/anh19.jpg",
+    "/anh20.jpg",
+    "/anh21.jpg",
+    "/anh22.jpg",
+    "/anh23.jpg",
+    "/anh24.jpg",
+    "/anh25.jpg",
+    "/anh26.jpg",
   ],
 }
 
@@ -161,7 +168,7 @@ export default function WeddingCardView() {
       })
 
       wishIndexRef.current++
-    }, 1600)
+    }, 1700)
 
     const cleanupInterval = setInterval(() => {
       setActiveWishes((prev) => {

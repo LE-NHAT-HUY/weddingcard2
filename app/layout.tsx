@@ -28,28 +28,28 @@ const sacramento = Sacramento({
 })
 
 export const metadata: Metadata = {
-  title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+  title: "Thiệp Cưới Khánh Nam và Lan Nhi",
   description: "Mời bạn tham dự lễ cưới của chúng tôi.",
   openGraph: {
-    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+    title: "Thiệp Cưới Khánh Nam và Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
     url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/",
-    siteName: "Wedding Card",
+    siteName: "Mời bạn tham dự lễ cưới của chúng tôi",
     images: [
       {
-        url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg",
+        url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_DSC07102.jpg",
         width: 1200,
         height: 630,
-        alt: "Wedding couple",
+        alt: "Mời bạn tham dự lễ cưới của chúng tôi",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thiệp Cưới Khánh Nam & Lan Nhi",
+    title: "Thiệp Cưới Khánh Nam và Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    images: ["https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_anhnencuoi.jpg"],
+    images: ["https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_DSC07102.jpg"],
   },
 };
 

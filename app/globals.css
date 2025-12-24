@@ -431,3 +431,7 @@ html, body, #__next {
 }
 
 
+.container {
+  will-change: scroll-position;
+  backface-visibility: hidden;
+}
