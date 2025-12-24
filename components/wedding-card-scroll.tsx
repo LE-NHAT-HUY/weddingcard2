@@ -253,7 +253,12 @@ const containerStyle = {
       className="relative w-full md:max-w-md mx-auto h-screen overflow-y-scroll snap-y snap-mandatory"
       style={containerStyle}
     >
-          <AutoScrollToBottom containerRef={containerRef} />
+          <AutoScrollToBottom
+  containerRef={containerRef}
+  speed={80}
+  delay={2000}
+/>
+
       {/* FLOATING BUTTONS */}
       <button
         onClick={handleToggleMusic}
@@ -1336,11 +1341,11 @@ const containerStyle = {
 </p>
 
 <p style={{ marginBottom: "0.5rem" }}>
-  Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: người mình muốn ở cạnh nhất… vẫn là người bạn học năm nào.
+ Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.
 </p>
 
 <p style={{ marginTop: "-0.3rem" }}>
-  Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai.
+ Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy băng một lời hứa chung đường, chung nhà, chung tương lai.
 </p>
 
 </div>

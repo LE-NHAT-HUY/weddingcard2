@@ -97,12 +97,25 @@ export default function RSVPSection({
     setLoading(false);
     return;
   }
+
+    if (!form.relation.trim()) {
+    setErrorMsg("Vui lòng cho biết bạn là gì của cô dâu chú rể.");
+    setLoading(false);
+    return;
+  }
+
   if (form.attending === null) {
     setErrorMsg("Vui lòng cho biết bạn có tham dự hay không.");
     setLoading(false);
     return;
   }
 
+  if (!form.wishMessage.trim()) {
+    setErrorMsg("Vui lòng gửi lời chúc đến cô dâu chú rể 💖");
+    setLoading(false);
+    return;
+  }
+  
   try {
     // 1️⃣ Gửi RSVP
     const res = await fetch(submitEndpoint, {

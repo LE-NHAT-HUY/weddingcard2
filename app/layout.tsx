@@ -33,11 +33,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Thiệp Cưới Khánh Nam và Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/",
+    url: "https://wedding-khanhnam-lannhi.vercel.app/",
     siteName: "Mời bạn tham dự lễ cưới của chúng tôi",
     images: [
       {
-        url: "https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_DSC07102.jpg",
+        url: "https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg",
         width: 1200,
         height: 630,
         alt: "Mời bạn tham dự lễ cưới của chúng tôi",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thiệp Cưới Khánh Nam và Lan Nhi",
     description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    images: ["https://thiep-moi-tiec-cuoi-lannhi-khanhnam.vercel.app/result_DSC07102.jpg"],
+    images: ["https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg"],
   },
 };
 
