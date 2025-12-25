@@ -1899,7 +1899,7 @@ const containerStyle = {
     <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
       <p className={`text-3xl sm:text-3xl transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`} style={{ fontFamily: "'Great Vibes', cursive", color: "#ffffff", letterSpacing: "2px", marginBottom: "16px", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>Lời Cảm Ơn!</p>
       <p className={`text-sm sm:text-sm transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`} style={{ fontFamily: "'Montserrat', sans-serif", color: "#ffffff", maxWidth: "420px", lineHeight: "1.7", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
-        Trân trọng cảm ơn quý khách đã dành thời gian đến chung vui cùng gia đình chúng tôi.
+        Sự hiện diện của quý khách là niềm vinh hạnh lớn của gia đình chúng tôi! Hân hạnh được đón tiếp!
       </p>
     </div>
   </div>
