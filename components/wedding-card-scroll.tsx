@@ -252,11 +252,12 @@ const containerStyle = {
     
     
     
-    <div
+  <div
   ref={containerRef}
-  className="relative w-full md:max-w-[390px] md:max-h-[844px] mx-auto h-screen md:h-[844px] overflow-y-scroll snap-y snap-mandatory shadow-lg"
+  className="relative w-full md:max-w-[390px] md:max-h-[844px] mx-auto h-screen md:h-[844px] overflow-y-scroll overflow-x-hidden snap-y snap-mandatory shadow-lg"
   style={containerStyle}
 >
+
           <AutoScrollToBottom
   containerRef={containerRef}
   speed={80}
