@@ -251,10 +251,9 @@ const containerStyle = {
   return (
     
     
-    
-  <div
+   <div
   ref={containerRef}
-  className="relative w-full md:max-w-[390px] md:max-h-[844px] mx-auto h-screen md:h-[844px] overflow-y-scroll overflow-x-hidden snap-y snap-mandatory shadow-lg"
+  className="relative w-full md:max-w-[390px] mx-auto h-screen md:h-[844px] overflow-y-scroll overflow-x-hidden snap-y snap-mandatory bg-white"
   style={containerStyle}
 >
 
@@ -280,157 +279,113 @@ const containerStyle = {
         />
       </button>
 
-      {/* First full-screen photo */}
-  {/* Main start: Text block on top + Image block below */}
  <section
-    id="main-photo-start"
-    data-animate
-    className={`relative w-full min-h-screen md:min-h-[844px] flex justify-center items-center transition-all duration-1700 ease-out ${
-      isVisible("main-photo-start")
-        ? "opacity-100 translate-y-0"
-        : "opacity-0 translate-y-6"
-    }`}
-    style={{ willChange: "opacity, transform", boxShadow: "none" }}
-  >
-    {/* ===== CONTAINER CHÍNH - FLEX COLUMN ===== */}
-    <div className="w-full max-w-[390px] h-screen md:min-h-[844px] flex flex-col justify-start overflow-hidden">
-
-      {/* ===== PHẦN CHỮ - CHIẾM 35% ===== */}
-      <div className="h-[35%] min-h-[295px] flex flex-col justify-center px-4 pt-4">
-        
-        {/* SAVE THE DATE */}
-        <div className="w-full text-center mb-3">
-          <p
-            className={`text-sm transition-all duration-700 ${
-              isVisible("main-photo-start")
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 -translate-y-4"
-            }`}
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              letterSpacing: "1.5px",
-              color: "#3c3535ff",
-            }}
-          >
-            SAVE THE DATE
-          </p>
-        </div>
-
-        {/* ===== NAMES ===== */}
-        <div className="relative w-full flex items-center justify-center flex-1">
-          
-          {/* Groom */}
-          <p
-            className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
-              isVisible("main-photo-start")
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-12"
-            }`}
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: "#804b4bff",
-            }}
-          >
-            {data.groomName}
-          </p>
-
-          {/* & */}
-          <span
-            className="text-3xl opacity-50"
-            style={{ fontFamily: "'Great Vibes', cursive" }}
-          >
-            &
-          </span>
-
-          {/* Bride */}
-          <p
-            className={`absolute right-2 top-[47%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-              isVisible("main-photo-start")
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-12"
-            }`}
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: "#804b4bff",
-            }}
-          >
-            {data.brideName}
-          </p>
-
-        </div>
-      </div>
-
-      {/* ===== PHẦN ẢNH - CHIẾM 65% - CÓ KHE HỞ GIỮA CÁC ẢNH ===== */}
-     {/* ===== PHẦN ẢNH - CHIẾM 65% - CÓ KHE HỞ GIỮA CÁC ẢNH ===== */}
-<div className="h-[65%] min-h-[549px] w-full flex items-end justify-center px-0 overflow-visible">
-  <div className="relative w-full h-full flex items-end justify-center">
-    
-    {/* LEFT IMAGE */}
-    <div
-      className={`relative w-[17%] h-[110%] -mb-[10%] transition-all duration-1200 ease-out overflow-visible mr-0.5 ${
-        isVisible("main-photo-start")
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-12"
-      }`}
-      style={{ 
-        flexShrink: 0,
-      }}
-    >
-      <div className="relative w-full h-full overflow-hidden">
-        <img
-          src="/anh15cat1.jpg"
-          alt="Left image"
-          className="object-cover object-center w-full h-full"
-        />
-      </div>
+  id="main-photo-start"
+  data-animate
+  className={`relative w-full min-h-screen flex flex-col justify-start transition-all duration-1700 ease-out ${
+    isVisible("main-photo-start")
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-6"
+  }`}
+  style={{ willChange: "opacity, transform" }}
+>
+  {/* ===== PHẦN CHỮ ===== */}
+  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12">
+    {/* SAVE THE DATE */}
+    <div className="w-full text-center mb-4">
+      <p
+        className={`text-sm transition-all duration-700 ${
+          isVisible("main-photo-start")
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-4"
+        }`}
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          letterSpacing: "1.5px",
+          color: "#3c3535ff",
+        }}
+      >
+        SAVE THE DATE
+      </p>
     </div>
 
-    {/* CENTER IMAGE */}
-    <div
-      className={`relative w-[66%] h-[120%] -mb-[20%] transition-all duration-1400 ease-out overflow-visible mx-0.5 ${
-        isVisible("main-photo-start")
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 -translate-y-12"
-      }`}
-      style={{ 
-        flexShrink: 0,
-      }}
-    >
-      <div className="relative w-full h-full overflow-hidden">
+    {/* ===== NAMES ===== */}
+    <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px]">
+      <p
+        className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
+          isVisible("main-photo-start")
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 -translate-x-12"
+        }`}
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          color: "#804b4bff",
+        }}
+      >
+        {data.groomName}
+      </p>
+
+      <span
+        className="text-3xl opacity-50"
+        style={{ fontFamily: "'Great Vibes', cursive" }}
+      >
+        &
+      </span>
+
+      <p
+        className={`absolute right-5 sm:right-5 top-[47%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
+          isVisible("main-photo-start")
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-12"
+        }`}
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          color: "#804b4bff",
+        }}
+      >
+        {data.brideName}
+      </p>
+    </div>
+  </div>
+
+  {/* ===== KHOẢNG CÁCH AN TOÀN ===== */}
+  <div className="min-h-[40px] md:min-h-[60px] flex-shrink-0"></div>
+
+  {/* ===== PHẦN ẢNH ===== */}
+  <div className="w-full flex justify-center px-4 pb-12 mt-auto">
+    <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
+      {/* LEFT IMAGE */}
+      <div className="h-[420px] flex items-end justify-center">
+        <img
+          src="/anh15cat4.jpg"
+          alt="Left image"
+          loading="lazy"
+          className="h-full w-auto object-contain object-bottom"
+        />
+      </div>
+
+      {/* CENTER IMAGE - ẢNH CHÍNH */}
+      <div className="h-[420px] flex items-end justify-center translate-y-4">
         <img
           src="/anh15cat3.jpg"
           alt="Main center image"
-          className="object-cover object-center w-full h-full"
+          loading="lazy"
+          className="h-full w-auto object-contain object-bottom"
         />
       </div>
-    </div>
 
-    {/* RIGHT IMAGE */}
-    <div
-      className={`relative w-[17%] h-[110%] -mb-[10%] transition-all duration-1200 ease-out overflow-visible ml-0.5 ${
-        isVisible("main-photo-start")
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-12"
-      }`}
-      style={{ 
-        flexShrink: 0,
-      }}
-    >
-      <div className="relative w-full h-full overflow-hidden">
+      {/* RIGHT IMAGE */}
+      <div className="h-[420px] flex items-end justify-center">
         <img
           src="/anh15cat2.jpg"
           alt="Right image"
-          className="object-cover object-center w-full h-full"
+          loading="lazy"
+          className="h-full w-auto object-contain object-bottom"
         />
       </div>
     </div>
-
   </div>
-</div>
-
-    </div>
-  </section>
-
+</section>
 
  {/* Quote chính */}
 <section
@@ -518,7 +473,7 @@ const containerStyle = {
       >
         NHÀ GÁI
       </h4>
-      <p className="text-xs sm:text-sm mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
+      <p className="text-xs sm:text-xs mb-1" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
         ÔNG: {data.brideFatherName}
       </p>
       <p className="text-xs sm:text-xs" style={{ color: "#111111", fontFamily: "'Montserrat', sans-serif" }}>
@@ -760,9 +715,8 @@ const containerStyle = {
   </p>
 </section>
 
-
-
 {/* Thông tin lễ cưới */}
+
 <section
   id="wedding-info-1"
   data-animate
@@ -783,13 +737,14 @@ const containerStyle = {
 
   {/* Thời gian | Ngày | Năm */}
   <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
+    {/* 11H00 */}
     <span
-      className="transition-all duration-700 delay-400"
+      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-50px)",
       }}
     >
       11H00
@@ -797,14 +752,15 @@ const containerStyle = {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
+    {/* 27 - hiện tại bạn để tĩnh, mình thêm nhẹ fade + delay để đồng bộ */}
     <span
-      className="text-6xl sm:text-6xl font-bold transition-all duration-700 delay-600"
+      className="text-6xl sm:text-6xl font-bold transition-all duration-1000 ease-out delay-[600ms]"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "scale(1)" : "scale(0.8)",
+        transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(20px)",
       }}
     >
       27
@@ -812,27 +768,32 @@ const containerStyle = {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
+    {/* 2026 */}
     <span
-      className="transition-all duration-700 delay-400"
+      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(20px)",
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(50px)",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* Tháng */}
+  {/* Tháng 01 - SỬA LỖI "hiện sẵn rồi mới chạy animation" */}
   <p
-    className="text-xl sm:text-2l font-normal mt-3 mb-4 transition-all duration-700 delay-400"
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
+      // Đảm bảo ban đầu ẩn hoàn toàn (opacity 0)
+      opacity: isVisible("wedding-info-1") ? 0 : 0,
+      // Animation chỉ chạy khi visible, và bắt đầu từ vị trí xa + ẩn
+      animation: isVisible("wedding-info-1")
+        ? "overshootLeftFast 0.9s ease-out 0.6s forwards"
+        : "none",
     }}
   >
     Tháng 01
@@ -840,13 +801,13 @@ const containerStyle = {
 
   {/* Lịch âm */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-700 delay-600"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-800 ease-out delay-[1200ms]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(100%)",
     }}
   >
     (Tức ngày 09 tháng 12 năm Ất Tỵ)
@@ -854,14 +815,14 @@ const containerStyle = {
 
   {/* Địa điểm */}
   <p
-    className="text-lg sm:text-lg font-semibold transition-all duration-700 delay-400"
+    className="text-lg sm:text-lg font-semibold transition-all duration-800 ease-out delay-[1400ms]"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
       letterSpacing: "2px",
       fontWeight: 300,
       opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(100%)",
     }}
   >
     Nhà Văn Hóa Thôn Phúc Kiều
@@ -871,24 +832,46 @@ const containerStyle = {
     href="https://maps.app.goo.gl/kgoqhKQqiGUGzcJb7?g_st=ic"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-600"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-800 ease-out delay-[1600ms]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(100%)",
     }}
   >
     CHỈ ĐƯỜNG
   </a>
 </section>
 
+{/* Keyframes - đã điều chỉnh nhẹ để mượt hơn và chắc chắn ẩn ban đầu */}
+<style jsx global>{`
+  @keyframes overshootLeftFast {
+    0% {
+      transform: translateX(-150%);
+      opacity: 0;
+    }
+    55% {
+      transform: translateX(20%);
+      opacity: 1;
+    }
+    75% {
+      transform: translateX(-5%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+`}</style>
 
-{/* Tiệc cưới Nhà Trai */}
+
+{/* Tiệc cưới Nhà Trai - phần quote giữ nguyên hoặc đổi id nếu cần */}
 <section
-  id="quote1"
+  id="quote2"
   data-animate
   className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 ${
-    isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+    isVisible("quote2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
@@ -898,50 +881,50 @@ const containerStyle = {
       color: "#342a2aff",
       letterSpacing: "1px",
       whiteSpace: "nowrap",
-      opacity: isVisible("quote1") ? 1 : 0,
-      transform: isVisible("quote1") ? "translateY(0)" : "translateY(10px)",
+      opacity: isVisible("quote2") ? 1 : 0,
+      transform: isVisible("quote2") ? "translateY(0)" : "translateY(10px)",
     }}
   >
     TIỆC CƯỚI NHÀ TRAI
     <span
       className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full transition-all duration-700"
       style={{
-        transform: isVisible("quote1") ? "scaleX(1)" : "scaleX(0)",
+        transform: isVisible("quote2") ? "scaleX(1)" : "scaleX(0)",
         transformOrigin: "left center",
       }}
     />
   </p>
 </section>
 
-
-{/* Thông tin lễ cưới */}
+{/* Thông tin lễ cưới Nhà Trai - theo đúng mẫu Nhà Gái nhưng đảo ngược hướng animation */}
 <section
-  id="wedding-info-1"
+  id="wedding-info-2"
   data-animate
   className="px-4 sm:px-4 py-6 sm:py-6 text-center overflow-hidden"
 >
-  {/* Thứ */}
+  {/* Thứ - đảo hướng: từ phải sang */}
   <p
-    className="text-xl sm:text-xl font-normal mb-4 transition-all duration-700 delay-150"
+    className={`text-xl sm:text-xl font-normal mb-4 transition-all duration-700 delay-300`}
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
+      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(20px)",
     }}
   >
     THỨ TƯ
   </p>
 
-  {/* 11H00 | 28 | 2026 */}
+  {/* Thời gian | Ngày | Năm */}
   <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
+    {/* 11H00 - từ phải */}
     <span
-      className="transition-all duration-700 delay-150"
+      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
-        opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
+        opacity: isVisible("wedding-info-2") ? 1 : 0,
+        transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(50px)",
       }}
     >
       11H00
@@ -949,14 +932,15 @@ const containerStyle = {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
+    {/* 28 - fade + từ trên xuống nhẹ, delay đồng bộ với Tháng */}
     <span
-      className="text-6xl sm:text-6xl font-bold transition-all duration-700 delay-300"
+      className="text-6xl sm:text-6xl font-bold transition-all duration-1000 ease-out delay-[600ms]"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
-        opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "scale(1)" : "scale(0.8)",
+        opacity: isVisible("wedding-info-2") ? 1 : 0,
+        transform: isVisible("wedding-info-2") ? "translateY(0)" : "translateY(20px)",
       }}
     >
       28
@@ -964,56 +948,59 @@ const containerStyle = {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
+    {/* 2026 - từ trái */}
     <span
-      className="transition-all duration-700 delay-150"
+      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
-        opacity: isVisible("wedding-info-1") ? 1 : 0,
-        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(20px)",
+        opacity: isVisible("wedding-info-2") ? 1 : 0,
+        transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-50px)",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* Tháng */}
+  {/* Tháng 01 - lao nhanh từ PHẢI, quá đà rồi bật lại, không hiện sẵn */}
   <p
-    className="text-xl sm:text-xl font-normal mt-3 mb-4 transition-all duration-700 delay-250"
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-20px)",
+      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      animation: isVisible("wedding-info-2")
+        ? "overshootRightFast 0.9s ease-out 0.6s forwards"
+        : "none",
     }}
   >
     Tháng 01
   </p>
 
-  {/* Lịch âm */}
+  {/* Lịch âm - đẩy từ bên TRÁI */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-700 delay-200"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-800 ease-out delay-[1200ms]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
     }}
   >
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
 
-  {/* Địa điểm */}
+  {/* Địa điểm - đẩy từ bên TRÁI */}
   <p
-    className="text-lg sm:text-lg font-semibold transition-all duration-700 delay-300"
+    className="text-lg sm:text-lg font-semibold transition-all duration-800 ease-out delay-[1400ms]"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
       letterSpacing: "2px",
       fontWeight: 300,
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
     }}
   >
     Tư Gia Nhà Trai
@@ -1023,16 +1010,63 @@ const containerStyle = {
     href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-700 delay-350"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-800 ease-out delay-[1600ms]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(10px)",
+      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
     }}
   >
     CHỈ ĐƯỜNG
   </a>
 </section>
+
+{/* Keyframes cho hiệu ứng overshoot từ bên phải (Nhà Trai) */}
+<style jsx global>{`
+  @keyframes overshootRightFast {
+    0% {
+      transform: translateX(150%);
+      opacity: 0;
+    }
+    55% {
+      transform: translateX(-20%);
+      opacity: 1;
+    }
+    75% {
+      transform: translateX(5%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+`}</style>
+
+{/* Keyframes cho hiệu ứng overshoot từ bên phải (ngược với phần Nhà Gái) */}
+<style jsx global>{`
+  @keyframes overshootLeftFast {
+    0% {
+      transform: translateX(-150%);
+      opacity: 0;
+    }
+    55% {
+      transform: translateX(20%);
+      opacity: 1;
+    }
+    75% {
+      transform: translateX(-5%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+`}</style>
+
+
+
 
 
 <div className="flex justify-center my-6"><div className="w-53 h-[3px] bg-[#531212ff] opacity-60" /></div>
@@ -1073,97 +1107,141 @@ const containerStyle = {
   </div>
 </div>
 
-<section 
-  id="wedding-info-1" 
+
+
+
+<section
+  id="wedding-info-1"
   data-animate
   className="px-4 sm:px-4 py-6 sm:py-6 text-center"
 >
-  {/* THỨ SÁU */}
+  {/* THỨ TƯ - đẩy nhẹ từ dưới lên */}
   <p
-    className={`text-xl sm:text-xl font-normal mb-4 ${isVisible("wedding-info-1") ? "animated" : ""}`}
+    className="text-xl sm:text-xl font-normal mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-      animationDelay: "0.5s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s",
     }}
   >
     THỨ TƯ
   </p>
 
-  {/* 17H00 | 27 | 2026 */}
-  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal" style={{ fontFamily: "'Montserrat', sans-serif", color: "#564e4eff" }}>
+  {/* 11H00 | 28 | 2026 */}
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
+    {/* 11H00 - trượt từ bên TRÁI */}
     <span
       style={{
-        animation: isVisible("wedding-info-1") ? "slideLeftFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-60px)",
+        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
       }}
     >
       11H00
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
+    {/* Số 28 - đẩy từ dưới lên (đơn giản, nổi bật) */}
     <span
-      className="text-6xl sm:text-6xl font-bold relative"
+      className="text-6xl sm:text-6xl font-bold"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
-        animation: isVisible("wedding-info-1") ? "scaleCenterFade 0.8s ease forwards" : "none",
-        animationDelay: "1.2s",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(40px)",
+        transition: "opacity 1s ease 1s, transform 1s ease 1s",
       }}
     >
       28
     </span>
-    
+
     <span className="border-l-2 border-gray-500 h-13" />
-    
+
+    {/* 2026 - trượt từ bên PHẢI */}
     <span
       style={{
-        animation: isVisible("wedding-info-1") ? "slideRightFade 0.8s ease forwards" : "none",
-        animationDelay: "0.5s",
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(60px)",
+        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* Tháng 01 */}
+  {/* Tháng 01 - đẩy từ dưới lên */}
   <p
-    className="text-xl sm:text-xl font-normal mt-3 mb-4"
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      animation: isVisible("wedding-info-1") ? "overshootLeft 0.8s ease-out forwards" : "none",
-      animationDelay: "1.2s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.9s ease 1.2s, transform 0.9s ease 1.2s",
     }}
   >
     Tháng 01
   </p>
 
-  {/* Lịch âm */}
+  {/* Lịch âm - đẩy từ dưới lên */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3  mb-3"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
-      animation: isVisible("wedding-info-1") ? "slideUpFade 0.8s ease forwards" : "none",
-      animationDelay: "0.6s",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s",
     }}
   >
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
-        <p className="text-lg sm:text-lg font-semibold " style={{ fontFamily: "'Great Vibes', cursive", color: "#111111", letterSpacing: "2px", fontSize: "20px", whiteSpace: "nowrap", fontWeight: "300" }}>Tư Gia Nhà Trai</p>
-        <a href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]" style={{ fontFamily: "'Montserrat', sans-serif" }}>CHỈ ĐƯỜNG</a>
+
+  {/* Địa điểm - đẩy từ dưới lên */}
+  <p
+    className="text-lg sm:text-lg font-semibold mb-4"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      fontSize: "20px",
+      whiteSpace: "nowrap",
+      fontWeight: 300,
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 1.6s, transform 0.8s ease 1.6s",
+    }}
+  >
+    Tư Gia Nhà Trai
+  </p>
+
+  {/* Nút CHỈ ĐƯỜNG - đẩy từ dưới lên cuối cùng */}
+  <a
+    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 1.8s, transform 0.8s ease 1.8s",
+    }}
+  >
+    CHỈ ĐƯỜNG
+  </a>
 </section>
+
+
 
 <div
   className="falling-title"

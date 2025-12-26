@@ -92,6 +92,7 @@ export const defaultData: WeddingData = {
     "/anh15cat1.jpg",
     "/anh15cat2.jpg",
     "/anh15cat3.jpg",
+    "/anh15cat4.jpg",
      
     
   ],

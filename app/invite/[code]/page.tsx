@@ -4,43 +4,47 @@ import { createClient } from "@/lib/supabase/client"
 import type { Metadata } from "next"
 
 type Props = {
-  params: Promise<{ code: string }>  // Next.js 15: params là Promise
+  params: Promise<{ code: string }>
 }
 
-// === Title + OpenGraph động có tên khách mời ===
+// === generateMetadata: luôn có ảnh, dù code đúng/sai/không tồn tại ===
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
   const supabase = createClient()
 
   let guestName = "Quý khách"
 
-  const { data } = await supabase
-    .from("guests")
-    .select("name")
-    .eq("code", code.toLowerCase().trim())  // linh hoạt: lowercase + trim
-    .single()
+  // Vẫn cố gắng lấy tên nếu code hợp lệ
+  if (code) {
+    const { data } = await supabase
+      .from("guests")
+      .select("name")
+      .eq("code", code.toLowerCase().trim())
+      .single()
 
-  if (data?.name) {
-    guestName = data.name.trim()
+    if (data?.name) {
+      guestName = data.name.trim()
+    }
   }
 
   const title = guestName === "Quý khách"
-    ? "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi❤️"
-    : `Thân mời ${guestName} | Tham dự đám cưới của Nam & Nhi❤️`
+    ? "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi ❤️"
+    : `Thân mời ${guestName} | Tham dự đám cưới của Nam & Nhi ❤️`
 
   const description = "Mời bạn tham dự lễ cưới của chúng tôi"
 
+  // ← QUAN TRỌNG: Luôn dùng ảnh cố định, không phụ thuộc code
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      url: `https://wedding-khanhnam-lannhi.vercel.app/invite/${code}`,
+      url: "https://weddingnamnhi.vercel.app",  // link chung hoặc để trống cũng được
       siteName: "Tham dự đám cưới của Nam & Nhi",
       images: [
         {
-          url: "https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg",
+          url: "https://weddingnamnhi.vercel.app/result_DSC07102.jpg",
           width: 1200,
           height: 630,
           alt: "Thiệp cưới Khánh Nam & Lan Nhi",
@@ -52,29 +56,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg"],
+      images: ["https://weddingnamnhi.vercel.app/result_DSC07102.jpg"],
     },
   }
 }
 
-// === Trang mời cá nhân ===
+// === Trang mời cá nhân: vẫn xử lý tên khách bình thường ===
 export default async function InvitePage({ params }: Props) {
   const { code } = await params
   const supabase = createClient()
 
   let initialGuestName = "quý khách"
 
-  const { data } = await supabase
-    .from("guests")
-    .select("name")
-    .eq("code", code.toLowerCase().trim())
-    .single()
+  if (code) {
+    const { data } = await supabase
+      .from("guests")
+      .select("name")
+      .eq("code", code.toLowerCase().trim())
+      .single()
 
-  if (data?.name) {
-    initialGuestName = data.name.trim()
+    if (data?.name) {
+      initialGuestName = data.name.trim()
+    }
   }
 
-  // Truyền đầy đủ: tên + code (nếu cần backup client-side)
   return (
     <WeddingCardView
       guestCode={code}
