@@ -97,7 +97,13 @@ export const defaultData: WeddingData = {
   ],
 }
 
-export default function WeddingCardView() {
+type WeddingCardViewProps = {
+  initialGuestName: string   // ← THÊM DÒNG NÀY
+  // các props khác nếu đã có
+}
+
+export default function WeddingCardView({ initialGuestName }: WeddingCardViewProps) {
+  const [guestName, setGuestName] = useState(initialGuestName)
   const [data, setData] = useState<WeddingData>(defaultData)
   const [showMusicPrompt, setShowMusicPrompt] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)

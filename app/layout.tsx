@@ -27,36 +27,6 @@ const sacramento = Sacramento({
   variable: "--font-sacramento",
 })
 
-// Metadata mặc định
-export const metadata: Metadata = {
-  title: {
-    default: "Thiệp Cưới Khánh Nam và Lan Nhi",
-    template: "%s | Thiệp Cưới"
-  },
-  description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-  openGraph: {
-    title: "Thiệp Cưới Khánh Nam và Lan Nhi",
-    description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    url: "https://wedding-khanhnam-lannhi.vercel.app/",
-    siteName: "Thiệp Cưới Khánh Nam và Lan Nhi",
-    images: [
-      {
-        url: "https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Thiệp cưới Khánh Nam và Lan Nhi",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Thiệp Cưới Khánh Nam và Lan Nhi",
-    description: "Mời bạn tham dự lễ cưới của chúng tôi.",
-    images: ["https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg"],
-  },
-};
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,

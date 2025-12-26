@@ -111,7 +111,6 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const wishIndexRef = useRef(0)
   const [isMusicOn, setIsMusicOn] = useState(false)
 
-
   useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
     audioRef.current.loop = true
@@ -261,7 +260,7 @@ const containerStyle = {
 />
 
  <PageHead guestName={guestName} />
-
+ 
       {/* FLOATING BUTTONS */}
       <button
         onClick={handleToggleMusic}
