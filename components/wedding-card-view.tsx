@@ -89,6 +89,11 @@ export const defaultData: WeddingData = {
     "/anh24.jpg",
     "/anh25.jpg",
     "/anh26.jpg",
+    "/anh15cat1.jpg",
+    "/anh15cat2.jpg",
+    "/anh15cat3.jpg",
+     
+    
   ],
 }
 
@@ -264,7 +269,7 @@ export default function WeddingCardView() {
     {activeWishes.map((wish) => (
       <div
         key={wish.uniqueKey}
-        className="floating-wish absolute left-0 px-3 py-1 sm:px-3 sm:py-2 rounded-lg"
+        className="floating-wish absolute left-0 px-3 py-1 sm:px-3 sm:py-1 rounded-lg"
         style={{
           bottom: 0,
           maxWidth: "85%",

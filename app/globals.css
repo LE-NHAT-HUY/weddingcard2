@@ -218,41 +218,31 @@ html {
   opacity: 0.3;
 }
 
+
 .floating-wish {
-  animation: floatUpLive 8.5s linear forwards;
-  pointer-events: none;
-  will-change: transform, opacity;
   position: absolute;
   left: 0;
+  pointer-events: none;
+  will-change: transform, clip-path;
+  animation: floatUpBlock 8.5s linear forwards;
 }
 
-@keyframes floatUpLive {
+@keyframes floatUpBlock {
   0% {
     transform: translateY(0);
-    opacity: 0;    /* bắt đầu ẩn */
-  }
-
-  8% {
-    opacity: 1;    /* xuất hiện mượt */
+    clip-path: inset(0 0 0 0);
   }
 
   70% {
     transform: translateY(-26vh);
-    opacity: 1;    /* trôi bình thường */
-  }
-
-  90% {
-    transform: translateY(-28vh);
-    opacity: 0.5;  /* bắt đầu fade dần */
+    clip-path: inset(0 0 0 0); /* vẫn nguyên */
   }
 
   100% {
     transform: translateY(-30vh);
-    opacity: 0;    /* biến mất mượt */
+    clip-path: inset(100% 0 0 0); /* bị "chắn" cắt hết */
   }
 }
-
-
 
 @keyframes heartBeat {
   0%,

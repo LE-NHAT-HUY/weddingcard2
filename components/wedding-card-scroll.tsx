@@ -112,6 +112,15 @@ const [selectedIndex, setSelectedIndex] = useState(0);
 
 
   useEffect(() => {
+  if (guestName) {
+    document.title = `Thân mời ${guestName}| Tham dự đám cưới của Nam & Nhi`;
+  } else {
+    document.title = "Thiệp Cưới Khánh Nam và Lan Nhi.";
+  }
+}, [guestName]);
+
+
+  useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
     audioRef.current.loop = true
     audioRef.current.volume = 0.3
@@ -156,14 +165,13 @@ useEffect(() => {
   const fetchGuest = async () => {
     const { data, error } = await supabase
       .from("guests")
-      .select("name, honorific")
+      .select("name")
       .eq("code", codeToUse)
       .single()
     
     console.log("Supabase result:", { data, error })
 
     if (data?.name) setGuestName(data.name)
-    if (data?.honorific) setGuestHonorific(data.honorific)
   }
 
   fetchGuest()
@@ -249,10 +257,10 @@ const containerStyle = {
     
     
     <div
-      ref={containerRef}
-      className="relative w-full md:max-w-md mx-auto h-screen overflow-y-scroll snap-y snap-mandatory"
-      style={containerStyle}
-    >
+  ref={containerRef}
+  className="relative w-full md:max-w-[390px] md:max-h-[844px] mx-auto h-screen md:h-[844px] overflow-y-scroll snap-y snap-mandatory shadow-lg"
+  style={containerStyle}
+>
           <AutoScrollToBottom
   containerRef={containerRef}
   speed={80}
@@ -276,186 +284,156 @@ const containerStyle = {
 
       {/* First full-screen photo */}
   {/* Main start: Text block on top + Image block below */}
-<section
-  id="main-photo-start"
-  data-animate
-  className={`w-screen h-screen flex justify-center items-center transition-all duration-1700 ease-out ${
-    isVisible("main-photo-start")
-      ? "opacity-100 translate-y-0"
-      : "opacity-0 translate-y-6"
-  }`}
-  style={{ willChange: "opacity, transform" }}
->
-  {/* ===== CONTAINER CHÍNH ===== */}
-  <div className="w-full max-w-[720px] h-full flex flex-col">
+ <section
+    id="main-photo-start"
+    data-animate
+    className={`relative w-full min-h-screen md:min-h-[844px] flex justify-center items-center transition-all duration-1700 ease-out ${
+      isVisible("main-photo-start")
+        ? "opacity-100 translate-y-0"
+        : "opacity-0 translate-y-6"
+    }`}
+    style={{ willChange: "opacity, transform", boxShadow: "none" }}
+  >
+    {/* ===== CONTAINER CHÍNH - FLEX COLUMN ===== */}
+    <div className="w-full max-w-[390px] h-screen md:min-h-[844px] flex flex-col justify-start overflow-hidden">
 
-    {/* ===== PHẦN CHỮ – 40% ===== */}
-    <div className="h-[35%] flex flex-col justify-start pt-4 px-4">
-      
-      {/* SAVE THE DATE – sát trên */}
-      <div className="w-full text-center mb-3">
-        <p
-          className={`text-sm transition-all duration-700 ${
-            isVisible("main-photo-start")
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-4"
-          }`}
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            letterSpacing: "1.5px",
-            color: "#3c3535ff",
-          }}
-        >
-          SAVE THE DATE
-        </p>
+      {/* ===== PHẦN CHỮ - CHIẾM 35% ===== */}
+      <div className="h-[35%] min-h-[295px] flex flex-col justify-center px-4 pt-4">
+        
+        {/* SAVE THE DATE */}
+        <div className="w-full text-center mb-3">
+          <p
+            className={`text-sm transition-all duration-700 ${
+              isVisible("main-photo-start")
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-4"
+            }`}
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              letterSpacing: "1.5px",
+              color: "#3c3535ff",
+            }}
+          >
+            SAVE THE DATE
+          </p>
+        </div>
+
+        {/* ===== NAMES ===== */}
+        <div className="relative w-full flex items-center justify-center flex-1">
+          
+          {/* Groom */}
+          <p
+            className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
+              isVisible("main-photo-start")
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-12"
+            }`}
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              color: "#804b4bff",
+            }}
+          >
+            {data.groomName}
+          </p>
+
+          {/* & */}
+          <span
+            className="text-3xl opacity-50"
+            style={{ fontFamily: "'Great Vibes', cursive" }}
+          >
+            &
+          </span>
+
+          {/* Bride */}
+          <p
+            className={`absolute right-2 top-[47%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
+              isVisible("main-photo-start")
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-12"
+            }`}
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              color: "#804b4bff",
+            }}
+          >
+            {data.brideName}
+          </p>
+
+        </div>
       </div>
 
-      {/* ===== NAMES ===== */}
-      <div className="relative w-full flex-1">
-
-        {/* Groom – trái, cao */}
-        <p
-          className={`absolute left-0 top-4 text-[2.5rem] md:text-[2.6rem] italic transition-all duration-1000 delay-[700ms] ${
-            isVisible("main-photo-start")
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-12"
-          }`}
-          style={{
-            fontFamily: "'Great Vibes', cursive",
-            color: "#804b4bff",
-            letterSpacing: "1.5px",
-          }}
-        >
-          {data.groomName}
-        </p>
-
-        {/* & – nhẹ, ở giữa */}
-        <span
-          className="absolute left-50 top-19 -translate-x-1/2 text-3xl opacity-40"
-          style={{ fontFamily: "'Great Vibes', cursive" }}
-        >
-          &
-        </span>
-
-        {/* Bride – phải, thấp hơn chút */}
-        <p
-          className={`absolute right-0 top-27 text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-            isVisible("main-photo-start")
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 translate-x-12"
-          }`}
-          style={{
-            fontFamily: "'Great Vibes', cursive",
-            color: "#804b4bff",
-            letterSpacing: "1.5px",
-          }}
-        >
-          {data.brideName}
-        </p>
-
+      {/* ===== PHẦN ẢNH - CHIẾM 65% - CÓ KHE HỞ GIỮA CÁC ẢNH ===== */}
+     {/* ===== PHẦN ẢNH - CHIẾM 65% - CÓ KHE HỞ GIỮA CÁC ẢNH ===== */}
+<div className="h-[65%] min-h-[549px] w-full flex items-end justify-center px-0 overflow-visible">
+  <div className="relative w-full h-full flex items-end justify-center">
+    
+    {/* LEFT IMAGE */}
+    <div
+      className={`relative w-[17%] h-[110%] -mb-[10%] transition-all duration-1200 ease-out overflow-visible mr-0.5 ${
+        isVisible("main-photo-start")
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-12"
+      }`}
+      style={{ 
+        flexShrink: 0,
+      }}
+    >
+      <div className="relative w-full h-full overflow-hidden">
+        <img
+          src="/anh15cat1.jpg"
+          alt="Left image"
+          className="object-cover object-center w-full h-full"
+        />
       </div>
     </div>
 
+    {/* CENTER IMAGE */}
+    <div
+      className={`relative w-[66%] h-[120%] -mb-[20%] transition-all duration-1400 ease-out overflow-visible mx-0.5 ${
+        isVisible("main-photo-start")
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 -translate-y-12"
+      }`}
+      style={{ 
+        flexShrink: 0,
+      }}
+    >
+      <div className="relative w-full h-full overflow-hidden">
+        <img
+          src="/anh15cat3.jpg"
+          alt="Main center image"
+          className="object-cover object-center w-full h-full"
+        />
+      </div>
+    </div>
 
-    {/* ===== PHẦN ẢNH (6 phần - 60% chiều cao) ===== */}
-    {/* ⭐ FIX: Đặt chiều cao cụ thể cho container ảnh */}
-    <div className="h-3/5 flex items-end">
-      <div className="w-full px-2 md:px-4" style={{ height: "100%" }}>
-        <div
-          className="relative flex items-end gap-x-1"
-          style={{ 
-            height: "112%", // ⭐ QUAN TRỌNG: Chiều cao 100%
-          }}
-        >
-          
-          {/* LEFT slice – 17%, cao hơn */}
-          <div
-            className={`relative w-[17%] overflow-hidden transition-all duration-1200 ease-out ${
-              isVisible("main-photo-start") ? "opacity-100 -translate-y-3" : "opacity-0 translate-y-12"
-            }`}
-            style={{
-              height: "100%", // Cao hơn 5%
-              position: "relative", // ⭐ QUAN TRỌNG: Cho Image fill
-            }}
-          >
-            <Image
-              src={coverPhotoOptimized || "/placeholder.jpg"}
-              alt="Left slice"
-              fill
-              priority
-              sizes="(max-width: 768px) 17vw, 17vw"
-              className="object-cover"
-              style={{
-                objectPosition: "8% center",
-                transform: "scale(1.08)",
-              }}
-              onError={(e) => {
-                console.error("Image failed to load:", e);
-                // Fallback nếu ảnh lỗi
-                const target = e.target as HTMLImageElement;
-                target.src = "/placeholder.jpg";
-              }}
-            />
-          </div>
-
-          {/* CENTER slice – 66%, thấp hơn */}
-          <div
-            className={`relative w-[66%] overflow-hidden transition-all duration-1400 ease-out ${
-              isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-12"
-            }`}
-            style={{
-              height: "100%", // Thấp hơn 5%
-              position: "relative", // ⭐ QUAN TRỌNG
-            }}
-          >
-            <Image
-              src={coverPhotoOptimized || "/placeholder.jpg"}
-              alt="Center slice"
-              fill
-              priority
-              sizes="(max-width: 768px) 66vw, 66vw"
-              className="object-cover"
-              style={{
-                objectPosition: "50% 48%",
-                transform: "scale(1.12)",
-              }}
-            />
-          </div>
-
-          {/* RIGHT slice – 17%, cao hơn */}
-          <div
-            className={`relative w-[17%] overflow-hidden transition-all duration-1200 ease-out ${
-              isVisible("main-photo-start") ? "opacity-100 -translate-y-3" : "opacity-0 translate-y-12"
-            }`}
-            style={{
-              height: "100%", // Cao hơn 5%
-              position: "relative", // ⭐ QUAN TRỌNG
-            }}
-          >
-            <Image
-              src={coverPhotoOptimized || "/placeholder.jpg"}
-              alt="Right slice"
-              fill
-              priority
-              sizes="(max-width: 768px) 17vw, 17vw"
-              className="object-cover"
-              style={{
-                objectPosition: "92% center",
-                transform: "scale(1.08)",
-              }}
-            />
-          </div>
-          
-        </div>
+    {/* RIGHT IMAGE */}
+    <div
+      className={`relative w-[17%] h-[110%] -mb-[10%] transition-all duration-1200 ease-out overflow-visible ml-0.5 ${
+        isVisible("main-photo-start")
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-12"
+      }`}
+      style={{ 
+        flexShrink: 0,
+      }}
+    >
+      <div className="relative w-full h-full overflow-hidden">
+        <img
+          src="/anh15cat2.jpg"
+          alt="Right image"
+          className="object-cover object-center w-full h-full"
+        />
       </div>
     </div>
 
   </div>
-</section>
+</div>
 
- 
+    </div>
+  </section>
 
- {/* Invitation text */}
+
  {/* Quote chính */}
 <section
   id="quote1"
@@ -784,27 +762,6 @@ const containerStyle = {
   </p>
 </section>
 
-{/* Ảnh chính giữa */}
-<div className="relative bg-gray-100">
-  <div
-    className={`absolute left-[50%] top-[-100] translate-y-[-50%] z-20 transition-all duration-700 ${
-      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-y-10"
-    }`}
-  >
-    <CustomImage />
-  </div>
-</div>
-
-{/* Ảnh bên trái */}
-<div className="relative bg-gray-100">
-  <div
-    className={`absolute left-[5%] top-[-15] translate-y-[-50%] z-20 transition-all duration-700 delay-100 ${
-      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
-    }`}
-  >
-    <CustomImage2 />
-  </div>
-</div>
 
 
 {/* Thông tin lễ cưới */}
@@ -958,27 +915,6 @@ const containerStyle = {
   </p>
 </section>
 
-{/* Ảnh chính giữa */}
-<div className="relative bg-gray-100">
-  <div
-    className={`absolute left-[50%] top-[-100] translate-y-[-50%] z-20 transition-all duration-700 ${
-      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-y-10"
-    }`}
-  >
-    <CustomImage />
-  </div>
-</div>
-
-{/* Ảnh bên trái */}
-<div className="relative bg-gray-100">
-  <div
-    className={`absolute left-[5%] top-[-15] translate-y-[-50%] z-20 transition-all duration-700 delay-100 ${
-      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
-    }`}
-  >
-    <CustomImage2 />
-  </div>
-</div>
 
 {/* Thông tin lễ cưới */}
 <section
@@ -1872,13 +1808,9 @@ const containerStyle = {
 
 
       {/* Last full-screen photo */}
-      <section
+   <section
   id="main-photo-end"
-  data-animate
-  className={`relative w-screen md:max-w-[60vw] mx-auto transition-all duration-1700 ease-out ${
-    isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-  }`}
-  style={{ aspectRatio: "3/4" }}
+  className="relative w-full h-screen md:h-auto md:aspect-[3/4] mx-auto"
 >
   <div className="absolute inset-0 w-full h-full relative overflow-hidden">
     {(() => {
@@ -1889,22 +1821,44 @@ const containerStyle = {
           alt="Wedding couple"
           fill
           priority
-          sizes="(max-width: 768px) 100vw, 60vw"
+          sizes="(max-width: 768px) 100vw, 390px"
           className="object-cover w-full h-full"
           {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
         />
       )
     })()}
+
     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
     <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
-      <p className={`text-3xl sm:text-3xl transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`} style={{ fontFamily: "'Great Vibes', cursive", color: "#ffffff", letterSpacing: "2px", marginBottom: "16px", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>Lời Cảm Ơn!</p>
-      <p className={`text-sm sm:text-sm transition-all duration-1700 ${isVisible("main-photo-end") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`} style={{ fontFamily: "'Montserrat', sans-serif", color: "#ffffff", maxWidth: "420px", lineHeight: "1.7", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
+      <p
+        className="text-3xl sm:text-3xl"
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          color: "#ffffff",
+          letterSpacing: "2px",
+          marginBottom: "16px",
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+        }}
+      >
+        Lời Cảm Ơn!
+      </p>
+
+      <p
+        className="text-sm sm:text-sm"
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          color: "#ffffff",
+          maxWidth: "420px",
+          lineHeight: "1.7",
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+        }}
+      >
         Sự hiện diện của quý khách là niềm vinh hạnh lớn của gia đình chúng tôi! Hân hạnh được đón tiếp!
       </p>
     </div>
   </div>
 </section>
-
 
 
     </div>
