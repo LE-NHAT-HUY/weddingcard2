@@ -21,6 +21,7 @@ interface WeddingCardScrollProps {
   data: WeddingData
   onToggleMusic?: () => void
   onShowWishModal?: () => void
+  initialGuestName: string
 }
 
 export default function WeddingCardScroll({
@@ -28,7 +29,9 @@ export default function WeddingCardScroll({
   data,
   onToggleMusic,
   onShowWishModal,
+  initialGuestName,
 }: WeddingCardScrollProps) {
+  
   // ---------- helper: lấy tên file (loại bỏ -1280 nếu có) ----------
   const getBaseName = (path?: string | null) => {
     if (!path) return null
@@ -100,7 +103,9 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const prev = () => setSelectedIndex((i) => (i - 1 + photos.length) % photos.length);
   const next = () => setSelectedIndex((i) => (i + 1) % photos.length);
 
-  const [guestName, setGuestName] = useState<string | null>(null)
+  const [guestName, setGuestName] = useState<string>(initialGuestName)
+
+  
   const [guestHonorific, setGuestHonorific] = useState<string | null>(null)
   const [showFloatingWishes, setShowFloatingWishes] = useState(true)
   const audioRef = useRef<HTMLAudioElement | null>(null)

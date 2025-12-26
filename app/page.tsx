@@ -1,14 +1,14 @@
 // app/page.tsx
 import { Suspense } from 'react'
 import WeddingCardView from '@/components/wedding-card-view'
-import { createClient } from '@/lib/supabase/client' // hoặc server client nếu bạn có riêng
+import { createClient } from '@/lib/supabase/client' // hoặc server client
 import type { Metadata } from 'next'
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-// === THÊM PHẦN NÀY: generateMetadata ===
+// === THÊM generateMetadata ===
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const supabase = createClient()
   const code = searchParams.code as string | undefined
@@ -61,12 +61,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   }
 }
 
-// === Sửa Home để nhận searchParams và truyền initialGuestName ===
+// === Sửa Home để fetch và truyền initialGuestName ===
 export default async function Home({ searchParams }: Props) {
   const supabase = createClient()
   const code = searchParams.code as string | undefined
 
-  let initialGuestName = "quý khách" // fallback cho UI
+  let initialGuestName = "quý khách"
 
   if (code) {
     const { data } = await supabase
@@ -82,7 +82,7 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <Suspense fallback={<div></div>}>
-      {/* Truyền thêm props */}
+      {/* Truyền thêm prop */}
       <WeddingCardView initialGuestName={initialGuestName} />
     </Suspense>
   )
