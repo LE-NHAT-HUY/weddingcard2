@@ -1,5 +1,6 @@
 "use client"
 
+import PageHead from '../components/PageHead';
 import AutoScrollToBottom from "../components/AutoScrollToBottom";
 import LoveCardTrigger from '../components/LoveCardTrigger';
 import CustomImage2 from '../components/CustomImage2';
@@ -109,15 +110,6 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const [activeWishes, setActiveWishes] = useState<Array<Wish & { uniqueKey: string; position: number }>>([])
   const wishIndexRef = useRef(0)
   const [isMusicOn, setIsMusicOn] = useState(false)
-
-
-  useEffect(() => {
-  if (guestName) {
-    document.title = `Thân mời ${guestName}| Tham dự đám cưới của Nam & Nhi`;
-  } else {
-    document.title = "Thiệp Cưới Khánh Nam và Lan Nhi.";
-  }
-}, [guestName]);
 
 
   useEffect(() => {
@@ -256,6 +248,7 @@ const containerStyle = {
   return (
     
     
+    
     <div
   ref={containerRef}
   className="relative w-full md:max-w-[390px] md:max-h-[844px] mx-auto h-screen md:h-[844px] overflow-y-scroll snap-y snap-mandatory shadow-lg"
@@ -266,6 +259,8 @@ const containerStyle = {
   speed={80}
   delay={2000}
 />
+
+ <PageHead guestName={guestName} />
 
       {/* FLOATING BUTTONS */}
       <button
