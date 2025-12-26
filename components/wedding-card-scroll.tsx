@@ -1,6 +1,5 @@
 "use client"
 
-import PageHead from '../components/PageHead';
 import AutoScrollToBottom from "../components/AutoScrollToBottom";
 import LoveCardTrigger from '../components/LoveCardTrigger';
 import CustomImage2 from '../components/CustomImage2';
@@ -105,7 +104,7 @@ const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [guestName, setGuestName] = useState<string>(initialGuestName)
 
-  
+
   const [guestHonorific, setGuestHonorific] = useState<string | null>(null)
   const [showFloatingWishes, setShowFloatingWishes] = useState(true)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -264,7 +263,6 @@ const containerStyle = {
   delay={2000}
 />
 
- <PageHead guestName={guestName} />
  
       {/* FLOATING BUTTONS */}
       <button
