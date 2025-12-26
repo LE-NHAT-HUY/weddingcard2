@@ -27,12 +27,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     }
   }
 
-  const baseTitle = "Thiệp Cưới Khánh Nam & Lan Nhi"
+  // Title theo yêu cầu
   const title = guestName === "Quý khách"
-    ? baseTitle
-    : `Thiệp Mời ${guestName} - ${baseTitle}`
+    ? "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi"
+    : `Thân mời ${guestName} | Tham dự đám cưới của Nam & Nhi`
 
-  const description = `${guestName} thân mến, trân trọng kính mời đến dự lễ cưới của Khánh Nam & Lan Nhi.`
+  // Description cố định
+  const description = "Mời bạn tham dự lễ cưới của chúng tôi"
 
   return {
     title,
@@ -41,7 +42,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       title,
       description,
       url: "https://wedding-khanhnam-lannhi.vercel.app",
-      siteName: baseTitle,
+      siteName: "Tham dự đám cưới của Nam & Nhi",
       images: [
         {
           url: "https://wedding-khanhnam-lannhi.vercel.app/result_DSC07102.jpg",
