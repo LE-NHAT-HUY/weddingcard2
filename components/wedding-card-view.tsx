@@ -99,6 +99,7 @@ export const defaultData: WeddingData = {
 
 // Thêm type props
 type WeddingCardViewProps = {
+  guestCode?: string
   initialGuestName: string
   // các props cũ khác nếu có
 }
@@ -487,6 +488,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   onToggleMusic={toggleMusic}
   onShowWishModal={() => setShowWishModal(true)}
   initialGuestName={initialGuestName}
+ 
 />
     </div>
   )
