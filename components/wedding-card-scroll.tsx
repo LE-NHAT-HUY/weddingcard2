@@ -279,166 +279,192 @@ const containerStyle = {
         />
       </button>
 
- <section
+
+<section
   id="main-photo-start"
   data-animate
   className={`relative w-full min-h-screen flex flex-col justify-start transition-all duration-1700 ease-out ${
-    isVisible("main-photo-start")
-      ? "opacity-100 translate-y-0"
-      : "opacity-0 translate-y-6"
-  }`}
+    isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+  } overflow-hidden`}
   style={{ willChange: "opacity, transform" }}
 >
   {/* ===== PHẦN CHỮ ===== */}
-  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12">
-    {/* SAVE THE DATE */}
-    <div className="w-full text-center mb-4">
-      <p
-        className={`text-sm transition-all duration-700 ${
-          isVisible("main-photo-start")
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-4"
-        }`}
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          letterSpacing: "1.5px",
-          color: "#3c3535ff",
-        }}
-      >
-        SAVE THE DATE
-      </p>
-    </div>
-
-    {/* ===== NAMES ===== */}
-    <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px]">
-      <p
-        className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 -translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#804b4bff",
-        }}
-      >
-        {data.groomName}
-      </p>
-
-      <span
-        className="text-3xl opacity-50"
-        style={{ fontFamily: "'Great Vibes', cursive" }}
-      >
-        &
-      </span>
-
-      <p
-        className={`absolute right-5 sm:right-5 top-[47%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#804b4bff",
-        }}
-      >
-        {data.brideName}
-      </p>
-    </div>
+<div className="flex flex-col px-4 pt-12 pb-8 md:pb-8 z-10">
+  {/* SAVE THE DATE */}
+  <div className="w-full text-center mb-4">
+    <p
+      className={`text-xl transition-all duration-700 ${
+        isVisible("main-photo-start")
+          ? "opacity-70 translate-y-0"
+          : "opacity-0 -translate-y-4"
+      }`}
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        letterSpacing: "1.5px",
+        color: "#111111",
+      }}
+    >
+      SAVE THE DATE
+    </p>
   </div>
 
-  {/* ===== KHOẢNG CÁCH AN TOÀN ===== */}
-  <div className="min-h-[40px] md:min-h-[60px] flex-shrink-0"></div>
+  {/* ===== NAMES ===== */}
+  <div className="relative w-full min-h-[240px] md:min-h-[200px] mb-8 md:mb-8">
+    {/* Groom */}
+    <p
+      className={`absolute left-4 text-center text-[2.8rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
+        isVisible("main-photo-start")
+          ? "opacity-70 translate-x-0"
+          : "opacity-0 -translate-x-12"
+      }`}
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        color: "#111111",
+        top: "30%",
+        transform: "translateY(-50%)",
+        width: "45%",
+        maxWidth: "200px",
+        letterSpacing: "-0.4px",
+        WebkitTextStroke: "0.25px rgba(128,75,75,0.45)",
+      }}
+    >
+      {data.groomName}
+    </p>
 
-  {/* ===== PHẦN ẢNH ===== */}
-  <div className="w-full flex justify-center px-4 pb-12 mt-auto">
-    <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
-      {/* LEFT IMAGE */}
-      <div className="h-[420px] flex items-end justify-center">
-        <img
-          src="/anh15cat4.jpg"
-          alt="Left image"
-          loading="lazy"
-          className="h-full w-auto object-contain object-bottom"
-        />
-      </div>
+    {/* & */}
+    <span
+      className="absolute left-1/2 text-4xl opacity-70"
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        top: "55%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      &amp;
+    </span>
 
-      {/* CENTER IMAGE - ẢNH CHÍNH */}
-      <div className="h-[420px] flex items-end justify-center translate-y-4">
-        <img
-          src="/anh15cat3.jpg"
-          alt="Main center image"
-          loading="lazy"
-          className="h-full w-auto object-contain object-bottom"
-        />
-      </div>
-
-      {/* RIGHT IMAGE */}
-      <div className="h-[420px] flex items-end justify-center">
-        <img
-          src="/anh15cat2.jpg"
-          alt="Right image"
-          loading="lazy"
-          className="h-full w-auto object-contain object-bottom"
-        />
-      </div>
-    </div>
+    {/* Bride */}
+    <p
+      className={`absolute right-4 text-right text-[3rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
+        isVisible("main-photo-start")
+          ? "opacity-70 translate-x-0"
+          : "opacity-0 translate-x-12"
+      }`}
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        color: "#111111",
+        top: "75%",
+        transform: "translateY(-50%)",
+        width: "45%",
+        maxWidth: "200px",
+      }}
+    >
+      {data.brideName}
+    </p>
   </div>
+</div>
+{/* ===== KHOẢNG CÁCH AN TOÀN ===== */}
+<div className="min-h-[40px] md:min-h-[60px] lg:min-h-[80px] flex-shrink-0"></div>
+
+{/* ===== PHẦN ẢNH ===== */}
+<div className="w-full flex justify-center px-4 pb-12">
+  <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
+    
+    {/* LEFT IMAGE */}
+    <div className="h-[420px] flex items-end justify-center">
+      <img
+        src="/anh15cat4.jpg"
+        alt="Left image"
+        loading="lazy"
+        className="h-full w-auto object-contain object-bottom"
+      />
+    </div>
+
+    {/* CENTER IMAGE */}
+    <div className="h-[420px] flex items-end justify-center translate-y-4">
+      <img
+        src="/anh15cat3.jpg"
+        alt="Main center image"
+        loading="lazy"
+        className="h-full w-auto object-contain object-bottom"
+      />
+    </div>
+
+    {/* RIGHT IMAGE */}
+    <div className="h-[420px] flex items-end justify-center">
+      <img
+        src="/anh15cat2.jpg"
+        alt="Right image"
+        loading="lazy"
+        className="h-full w-auto object-contain object-bottom"
+      />
+    </div>
+
+  </div>
+</div>
+
+
 </section>
+
 
  {/* Quote chính */}
 <section
   id="quote1"
   data-animate
-  className={`px-2 sm:px-2 py-2 text-center transition-all duration-700 ${
+  className={`px-2 py-2 text-center transition-all duration-700 ${
     isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
-    className="text-xl sm:text-xl mb-2 mt-2"
+    className="text-[clamp(1.3rem,5vw,1.9rem)] mb-2 mt-2 mx-auto max-w-[90vw]"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
-      letterSpacing: "2px",
-      whiteSpace: "nowrap",
+      letterSpacing: "1.5px",
+      whiteSpace: "normal",     // ✅ cho phép xuống dòng
+      wordBreak: "break-word",
     }}
   >
-    "Hôn nhân là chuyện cả đời,"
+    “Hôn nhân là chuyện cả đời,”
   </p>
+
   <p
-    className="text-xl sm:text-xl mb-3 mt-2"
+    className="text-[clamp(1.3rem,5vw,1.9rem)] mb-3 mt-2 mx-auto max-w-[90vw]"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
-      letterSpacing: "2px",
-      whiteSpace: "nowrap",
+      letterSpacing: "1.5px",
+      whiteSpace: "normal",
+      wordBreak: "break-word",
     }}
   >
-    "Yêu người vừa ý, cưới người mình thương..."
+    “Yêu người vừa ý, cưới người mình thương...”
   </p>
 </section>
+
 
 {/* Thông báo */}
 <section
   id="quote2"
   data-animate
-  className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 delay-300 ${
+  className={`px-7 py-2 text-center transition-all duration-700 delay-300 ${
     isVisible("quote2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
-    className="text-sm sm:text-sm mb-2 mt-2"
+    className="text-sm sm:text-sm mb-2 mt-2 mx-auto max-w-[90vw]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#5d2c2cff",
       letterSpacing: "2px",
-      whiteSpace: "nowrap",
+      whiteSpace: "normal",   // 🔑 cho phép xuống dòng
+      wordBreak: "break-word",
     }}
   >
     TRÂN TRỌNG THÔNG BÁO LỄ THÀNH HÔN
   </p>
 </section>
+
 
 {/* Parents */}
 <section
@@ -694,7 +720,7 @@ const containerStyle = {
   }`}
 >
   <p
-    className="text-[15px] sm:text-[15px] mt-2 relative inline-block transition-all duration-700 delay-200"
+    className="text-xl sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-200"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -875,7 +901,7 @@ const containerStyle = {
   }`}
 >
   <p
-    className="text-[15px] sm:text-[15px] mt-2 relative inline-block transition-all duration-700 delay-100"
+    className="text-xl sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-100"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -1078,7 +1104,7 @@ const containerStyle = {
   className={`px-7 sm:px-7 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
 >
   <p
-    className="text-[17px] sm:text-[17px] mt-2 relative inline-block" // relative để pseudo-element hoạt động
+    className="text-xl sm:text-xl mt-2 relative inline-block" // relative để pseudo-element hoạt động
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
@@ -1862,7 +1888,6 @@ const containerStyle = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",       // căn giữa ngang
-    justifyContent: "center",   // căn giữa dọc
     marginTop: "20px",          // dịch chữ lên nếu cần
     textAlign: "center",
   }}
@@ -1875,7 +1900,8 @@ const containerStyle = {
       lineHeight: "normal",
       fontWeight: "normal",
       letterSpacing: "4px",
-      margin: "40px 0"
+      margin: "40px 0",
+      transform: "translateY(-30px)",
     }}
   >
     Gửi quà mừng cưới
