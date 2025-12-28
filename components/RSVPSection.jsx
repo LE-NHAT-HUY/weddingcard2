@@ -224,8 +224,8 @@ if (form.wishMessage.trim()) {
     backgroundColor: "transparent", // ✅ nền trong suốt
   }}
 >
-      <p className="text-sm sm:text-sm text-center font-medium tracking-wide  mb-8">
-        Đừng quyên gửi xác nhận tham dự để chúng mình đón tiếp một cách chu đáo hơn!
+      <p className="text-2sm sm:text-2sm text-center font-medium tracking-wide  mb-8">
+        Đừng quên gửi xác nhận tham dự để chúng mình đón tiếp một cách chu đáo hơn!
       </p>
 
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-6">

@@ -1,11 +1,40 @@
-// app/page.tsx – chỉ làm trang giới thiệu hoặc redirect
-import WeddingCardView from '@/components/wedding-card-view'
+// app/page.tsx
+import WeddingCardView from "@/components/wedding-card-view"
+import type { Metadata } from "next"
 
-export const metadata = {
-  title: "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi",
-  description: "Mời bạn tham dự lễ cưới của chúng tôi",
+// === generateMetadata: luôn có ảnh, không cần code ===
+export async function generateMetadata(): Promise<Metadata> {
+  const title = "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi ❤️"
+  const description = "Mời bạn tham dự đám cưới của chúng tôi"
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://weddingnamnhi.vercel.app",
+      siteName: "Mời bạn tham dự đám cưới của chúng tôi",
+      images: [
+        {
+          url: "https://weddingnamnhi.vercel.app/result_DSC07102.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Thiệp cưới Khánh Nam & Lan Nhi",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://weddingnamnhi.vercel.app/result_DSC07102.jpg"],
+    },
+  }
 }
 
+// === Trang giới thiệu / trang share chung ===
 export default function Home() {
   return <WeddingCardView initialGuestName="quý khách" />
 }

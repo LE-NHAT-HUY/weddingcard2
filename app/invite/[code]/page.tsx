@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Thân mời Quý khách | Tham dự đám cưới của Nam & Nhi ❤️"
     : `Thân mời ${guestName} | Tham dự đám cưới của Nam & Nhi ❤️`
 
-  const description = "Mời bạn tham dự lễ cưới của chúng tôi"
+  const description = "Mời bạn tham dự đám cưới của chúng tôi"
 
   // ← QUAN TRỌNG: Luôn dùng ảnh cố định, không phụ thuộc code
   return {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: "https://weddingnamnhi.vercel.app",  // link chung hoặc để trống cũng được
-      siteName: "Tham dự đám cưới của Nam & Nhi",
+      siteName: "Mời bạn tham dự đám cưới của chúng tôi",
       images: [
         {
           url: "https://weddingnamnhi.vercel.app/result_DSC07102.jpg",
