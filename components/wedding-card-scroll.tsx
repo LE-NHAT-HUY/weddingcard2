@@ -287,88 +287,93 @@ const containerStyle = {
   } overflow-hidden`}
   style={{ willChange: "opacity, transform" }}
 >
-  {/* ===== PHẦN CHỮ ===== */}
-  <div className="flex flex-col px-4 pt-12 pb-2 md:pb-2 z-10">
-    {/* SAVE THE DATE */}
-    <div className="w-full text-center mb-4">
-      <p
-        className={`text-xl transition-all duration-700 ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-y-0"
-            : "opacity-0 -translate-y-4"
-        }`}
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          letterSpacing: "1.5px",
-          color: "#111111",
-        }}
-      >
-        SAVE THE DATE
-      </p>
-    </div>
-
-    {/* ===== NAMES ===== */}
-    <div className="relative w-full min-h-[240px] md:min-h-[200px] mb-8 md:mb-8">
-      {/* Groom */}
-      <p
-        className={`absolute left-4 text-center text-[2.8rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 -translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#111111",
-          top: "30%",
-          transform: "translateY(-50%)",
-          width: "45%",
-          maxWidth: "200px",
-          letterSpacing: "-0.4px",
-          WebkitTextStroke: "0.25px rgba(128,75,75,0.45)",
-        }}
-      >
-        {data.groomName}
-      </p>
-
-      {/* & */}
-      <span
-  className="absolute left-1/2 text-4xl opacity-70"
-  style={{
-    fontFamily: "'Great Vibes', cursive",
-    top: "55%",
-    transform: "translate(-50%, -50%)",
-    lineHeight: "1.4",
-    paddingTop: "0.2em",
-  }}
->
-  &amp;
-</span>
-
-
-      {/* Bride */}
-      <p
-        className={`absolute right-10 text-right text-[3rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#111111",
-          top: "78%",
-          transform: "translateY(-50%)",
-          width: "45%",
-          maxWidth: "200px",
-          lineHeight: "1.4",
-
-        }}
-      >
-        {data.brideName}
-      </p>
-    </div>
+ {/* ===== PHẦN CHỮ ===== */}
+<div className="flex flex-col px-4 pt-12 pb-2 md:pb-2 z-10">
+  {/* SAVE THE DATE */}
+  <div className="w-full text-center mb-4">
+    <p
+      className={`text-xl transition-all duration-700 ${
+        isVisible("main-photo-start")
+          ? "opacity-80 translate-y-0"
+          : "opacity-0 -translate-y-4"
+      }`}
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        letterSpacing: "1.5px",
+        color: "#111111",
+        WebkitFontSmoothing: "antialiased",
+        MozOsxFontSmoothing: "grayscale",
+      }}
+    >
+      SAVE THE DATE
+    </p>
   </div>
- 
 
+  {/* ===== NAMES ===== */}
+  <div className="relative w-full min-h-[280px] md:min-h-[240px] mb-8 md:mb-8">
+    {/* Groom */}
+    <p
+      className={`absolute left-4 text-center text-[2.8rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
+        isVisible("main-photo-start")
+          ? "opacity-80 translate-x-0"
+          : "opacity-0 -translate-x-12"
+      }`}
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        color: "#111111",
+        top: "30%",
+        transform: "translateY(-50%)",
+        width: "45%",
+        maxWidth: "200px",
+        letterSpacing: "-0.4px",
+        textShadow: "0 0 1px rgba(128,75,75,0.45)", // Thay thế WebkitTextStroke bằng text-shadow để tránh lỗi render
+        WebkitFontSmoothing: "antialiased",
+        MozOsxFontSmoothing: "grayscale",
+        lineHeight: "1.4",
+      }}
+    >
+      {data.groomName}
+    </p>
+
+    {/* & */}
+    <span
+      className="absolute left-1/2 text-4xl opacity-70"
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        top: "55%",
+        transform: "translate(-50%, -50%)",
+        lineHeight: "1.4",
+        paddingTop: "0.2em",
+        WebkitFontSmoothing: "antialiased",
+        MozOsxFontSmoothing: "grayscale",
+      }}
+    >
+      &amp;
+    </span>
+
+    {/* Bride */}
+    <p
+      className={`absolute right-10 text-right text-[3rem] italic whitespace-nowrap transition-all duration-1000 delay-[700ms] ${
+        isVisible("main-photo-start")
+          ? "opacity-80 translate-x-0"
+          : "opacity-0 translate-x-12"
+      }`}
+      style={{
+        fontFamily: "'Great Vibes', cursive",
+        color: "#111111",
+        top: "78%",
+        transform: "translateY(-50%)",
+        width: "45%",
+        maxWidth: "200px",
+        lineHeight: "1.4",
+        WebkitFontSmoothing: "antialiased",
+        MozOsxFontSmoothing: "grayscale",
+      }}
+    >
+      {data.brideName}
+    </p>
+  </div>
+</div>
     {/* ===== PHẦN ẢNH ===== */}
   <div className="w-full flex justify-center px-4 pb-[10px]">
     <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
