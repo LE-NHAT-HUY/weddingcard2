@@ -1,5 +1,6 @@
 "use client"
 
+import NamesOverlay from "./NamesOverlay"
 import AutoScrollToBottom from "../components/AutoScrollToBottom";
 import LoveCardTrigger from '../components/LoveCardTrigger';
 import CustomImage2 from '../components/CustomImage2';
@@ -279,7 +280,6 @@ const containerStyle = {
         />
       </button>
 
-
 <section
   id="main-photo-start"
   data-animate
@@ -289,7 +289,7 @@ const containerStyle = {
   style={{ willChange: "opacity, transform" }}
 >
   {/* ===== PHẦN CHỮ ===== */}
-  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12">
+  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12 overflow-visible">
     {/* SAVE THE DATE */}
     <div className="w-full text-center mb-4">
       <p
@@ -309,66 +309,58 @@ const containerStyle = {
     </div>
 
     {/* ===== NAMES ===== */}
-    <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px]">
+    <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px] overflow-visible">
+      {/* Groom Name */}
       <p
-        className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 -translate-x-12"
+        className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
+          isVisible("main-photo-start")
+            ? "opacity-80 translate-x-0"
+            : "opacity-0 -translate-x-12"
         }`}
         style={{
           fontFamily: "'Great Vibes', cursive",
           color: "#111111",
-          // Tăng line-height để tránh cắt đuôi chữ (không thay đổi kích cỡ chữ)
           lineHeight: "1.25",
-          // Cho phép phần glyph vượt ra vẫn hiển thị bên trong p
+          textShadow: "0 0 1px transparent",
+          maxWidth: "calc(50% - 1.5rem)",
           overflow: "visible",
-          // đảm bảo đuôi chữ không va chạm & ở center
-          paddingRight: "0.5rem",
-          // tăng z-index để không bị che bởi các phần tử khác
           zIndex: 20,
         }}
       >
         {data.groomName}
       </p>
 
+      {/* Ampersand */}
       <span
-        className="text-3xl opacity-80 inline-block"
+        className="text-3xl opacity-80 relative z-30"
         style={{
           fontFamily: "'Great Vibes', cursive",
-          // đảm bảo glyph & có đủ khoảng an toàn bên phải/trái
-          lineHeight: "1.25",
-          paddingLeft: "0.25rem",
-          paddingRight: "0.25rem",
-          // cao hơn để không bị che
-          zIndex: 30,
-          // đặt display inline-block để padding có hiệu lực mà không đổi vị trí
-          display: "inline-block",
+          lineHeight: "1",
+          transform: "translateY(-0.1em)",
         }}
-        aria-hidden
       >
         &
       </span>
 
+      {/* Bride Name */}
       <p
-  className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-    isVisible("main-photo-start")
-      ? "opacity-80 translate-x-0"
-      : "opacity-0 translate-x-12"
-  }`}
-  style={{
-    fontFamily: "'Great Vibes', cursive",
-    color: "#111111",
-
-    /* === FIX CHO CHỮ i (Safari iOS) === */
-    lineHeight: "1.5",          // tăng nhẹ hơn groom
-    paddingTop: "0.15em",       // tạo khoảng an toàn cho dấu chấm i
-    display: "inline-block",    // BẮT BUỘC để padding có hiệu lực
-    overflow: "visible",
-    zIndex: 20,
-  }}
->
-  {data.brideName}
-</p>
-
+        className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
+          isVisible("main-photo-start")
+            ? "opacity-80 translate-x-0"
+            : "opacity-0 translate-x-12"
+        }`}
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          color: "#111111",
+          lineHeight: "1.5",
+          textShadow: "0 0 1px transparent",
+          maxWidth: "calc(50% - 1.5rem)",
+          overflow: "visible",
+          zIndex: 20,
+        }}
+      >
+        {data.brideName}
+      </p>
     </div>
   </div>
 
@@ -409,8 +401,6 @@ const containerStyle = {
     </div>
   </div>
 </section>
-
-
 
 
  {/* Quote chính */}
