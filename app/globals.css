@@ -366,3 +366,11 @@ html, body, #__next {
   will-change: scroll-position;
   backface-visibility: hidden;
 }
+
+@font-face {
+  font-family: "VNI15Chops";
+  src: url("/fonts/vni-15-chops-normal.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

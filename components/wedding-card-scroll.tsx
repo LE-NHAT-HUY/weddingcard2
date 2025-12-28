@@ -319,7 +319,7 @@ const containerStyle = {
           : "opacity-0 -translate-x-12"
       }`}
       style={{
-        fontFamily: "'Great Vibes', cursive",
+        fontFamily: "'Edwardian Script ITC', cursive",
         color: "#111111",
         top: "30%",
         transform: "translateY(-50%)",
@@ -359,7 +359,7 @@ const containerStyle = {
           : "opacity-0 translate-x-12"
       }`}
       style={{
-        fontFamily: "'Great Vibes', cursive",
+        fontFamily: "'Edwardian Script ITC', cursive",
         color: "#111111",
         top: "78%",
         transform: "translateY(-50%)",
@@ -542,7 +542,7 @@ const containerStyle = {
       </h4>
       <h4
         className="text-3xl sm:text-3xl font-normal mb-2 sm:mb-3"
-        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
+        style={{ color: "#934040ff", fontFamily: "'Edwardian Script ITC', cursive" }}
       >
         Khánh Nam
       </h4>
@@ -556,7 +556,7 @@ const containerStyle = {
       </h4>
       <h4
         className="text-4xl sm:text-4xl font-normal mb-2 sm:mb-2"
-        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
+        style={{ color: "#934040ff", fontFamily: "'Edwardian Script ITC', cursive" }}
       >
         Lan Nhi
       </h4>
@@ -619,7 +619,7 @@ const containerStyle = {
       isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
     }`}
     style={{
-      fontFamily: "'Great Vibes', cursive",
+      fontFamily: "'Great Vibes', cursive", 
       color: "#874141ff",
       letterSpacing: "2px",
       whiteSpace: "nowrap",
