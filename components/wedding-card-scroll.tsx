@@ -279,6 +279,7 @@ const containerStyle = {
         />
       </button>
 
+
 <section
   id="main-photo-start"
   data-animate
@@ -287,8 +288,8 @@ const containerStyle = {
   } overflow-hidden`}
   style={{ willChange: "opacity, transform" }}
 >
- {/* ===== PHẦN CHỮ ===== */}
- <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12">
+  {/* ===== PHẦN CHỮ ===== */}
+  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12">
     {/* SAVE THE DATE */}
     <div className="w-full text-center mb-4">
       <p
@@ -311,41 +312,63 @@ const containerStyle = {
     <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px]">
       <p
         className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 -translate-x-12"
+          isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 -translate-x-12"
         }`}
         style={{
           fontFamily: "'Great Vibes', cursive",
           color: "#111111",
+          // Tăng line-height để tránh cắt đuôi chữ (không thay đổi kích cỡ chữ)
+          lineHeight: "1.25",
+          // Cho phép phần glyph vượt ra vẫn hiển thị bên trong p
+          overflow: "visible",
+          // đảm bảo đuôi chữ không va chạm & ở center
+          paddingRight: "0.5rem",
+          // tăng z-index để không bị che bởi các phần tử khác
+          zIndex: 20,
         }}
       >
         {data.groomName}
       </p>
 
       <span
-        className="text-3xl opacity-80"
-        style={{ fontFamily: "'Great Vibes', cursive" }}
+        className="text-3xl opacity-80 inline-block"
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          // đảm bảo glyph & có đủ khoảng an toàn bên phải/trái
+          lineHeight: "1.25",
+          paddingLeft: "0.25rem",
+          paddingRight: "0.25rem",
+          // cao hơn để không bị che
+          zIndex: 30,
+          // đặt display inline-block để padding có hiệu lực mà không đổi vị trí
+          display: "inline-block",
+        }}
+        aria-hidden
       >
         &
       </span>
 
       <p
-        className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 translate-x-12"
+        className={`absolute right-9 sm:right-9 top-[55%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
+          isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 translate-x-12"
         }`}
         style={{
           fontFamily: "'Great Vibes', cursive",
           color: "#111111",
+          // tăng line-height để tránh cắt đầu chữ i
+          lineHeight: "1.25",
+          overflow: "visible",
+          // tránh va chạm với & ở center
+          paddingLeft: "0.5rem",
+          zIndex: 20,
         }}
       >
         {data.brideName}
       </p>
     </div>
   </div>
-    {/* ===== PHẦN ẢNH ===== */}
+
+  {/* ===== PHẦN ẢNH ===== */}
   <div className="w-full flex justify-center px-4 pb-[10px]">
     <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
       
