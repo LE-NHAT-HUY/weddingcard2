@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Mời bạn tham dự đám cưới của chúng tôi",
       images: [
         {
-          url: "https://weddingnamnhi.vercel.app/result_DSC07102.jpg",
+          url: "https://weddingnamnhi.vercel.app/result_anh9_2.jpg",
           width: 1200,
           height: 630,
           alt: "Thiệp cưới Khánh Nam & Lan Nhi",
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["https://weddingnamnhi.vercel.app/result_DSC07102.jpg"],
+      images: ["https://weddingnamnhi.vercel.app/result_anh9_2.jpg"],
     },
   }
 }
