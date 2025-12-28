@@ -332,15 +332,18 @@ const containerStyle = {
 
       {/* & */}
       <span
-        className="absolute left-1/2 text-4xl opacity-70"
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          top: "55%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        &amp;
-      </span>
+  className="absolute left-1/2 text-4xl opacity-70"
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    top: "55%",
+    transform: "translate(-50%, -50%)",
+    lineHeight: "1.4",
+    paddingTop: "0.2em",
+  }}
+>
+  &amp;
+</span>
+
 
       {/* Bride */}
       <p
@@ -356,6 +359,8 @@ const containerStyle = {
           transform: "translateY(-50%)",
           width: "45%",
           maxWidth: "200px",
+          lineHeight: "1.4",
+
         }}
       >
         {data.brideName}
