@@ -349,22 +349,26 @@ const containerStyle = {
       </span>
 
       <p
-        className={`absolute right-9 sm:right-9 top-[55%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
-          isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#111111",
-          // tăng line-height để tránh cắt đầu chữ i
-          lineHeight: "1.25",
-          overflow: "visible",
-          // tránh va chạm với & ở center
-          paddingLeft: "0.5rem",
-          zIndex: 20,
-        }}
-      >
-        {data.brideName}
-      </p>
+  className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] ${
+    isVisible("main-photo-start")
+      ? "opacity-80 translate-x-0"
+      : "opacity-0 translate-x-12"
+  }`}
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    color: "#111111",
+
+    /* === FIX CHO CHỮ i (Safari iOS) === */
+    lineHeight: "1.5",          // tăng nhẹ hơn groom
+    paddingTop: "0.15em",       // tạo khoảng an toàn cho dấu chấm i
+    display: "inline-block",    // BẮT BUỘC để padding có hiệu lực
+    overflow: "visible",
+    zIndex: 20,
+  }}
+>
+  {data.brideName}
+</p>
+
     </div>
   </div>
 
