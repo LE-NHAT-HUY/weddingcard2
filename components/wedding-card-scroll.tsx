@@ -285,7 +285,7 @@ const containerStyle = {
   data-animate
   className={`w-full flex flex-col justify-start transition-all duration-1700 ease-out ${
     isVisible("main-photo-start") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-  } overflow-hidden`}
+  }`}
   style={{ willChange: "opacity, transform" }}
 >
   {/* ===== PHẦN CHỮ ===== */}
@@ -373,7 +373,7 @@ const containerStyle = {
   </div>
 
   {/* ===== PHẦN ẢNH ===== */}
-  <div className="w-full flex justify-center px-4 pb-[10px]">
+  <div className="w-full flex justify-center px-4 pb-[10px] overflow-hidden">
     <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
       
       {/* LEFT IMAGE */}
