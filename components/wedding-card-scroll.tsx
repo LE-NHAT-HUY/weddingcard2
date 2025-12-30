@@ -530,7 +530,7 @@ const containerStyle = {
       </h4>
       <h4
         className="text-3xl sm:text-3xl font-normal mb-2 sm:mb-3"
-        style={{ color: "#934040ff", fontFamily: "'Edwardian Script ITC', cursive" }}
+        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
       >
         Khánh Nam
       </h4>
@@ -544,7 +544,7 @@ const containerStyle = {
       </h4>
       <h4
         className="text-4xl sm:text-4xl font-normal mb-2 sm:mb-2"
-        style={{ color: "#934040ff", fontFamily: "'Edwardian Script ITC', cursive" }}
+        style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
       >
         Lan Nhi
       </h4>
