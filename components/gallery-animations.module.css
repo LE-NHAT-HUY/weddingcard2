@@ -1,0 +1,42 @@
+/* gallery-animations.module.css */
+
+/* keyframes */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeZoomIn {
+  from { transform: scale(0.98); opacity: 0; }
+  to   { transform: scale(1.0); opacity: 1; }
+}
+@keyframes centerImageZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+/* classes */
+.animateSlideInLeft {
+  animation-name: slideInLeft;
+  animation-timing-function: cubic-bezier(.22,.9,.36,1);
+  animation-fill-mode: both;
+}
+.animateSlideInRight {
+  animation-name: slideInRight;
+  animation-timing-function: cubic-bezier(.22,.9,.36,1);
+  animation-fill-mode: both;
+}
+.animateFadeZoom {
+  animation-name: fadeZoomIn;
+  animation-timing-function: cubic-bezier(.22,.9,.36,1);
+  animation-fill-mode: both;
+}
+.animateCenterImgZoom {
+  animation-name: centerImageZoom;
+  animation-timing-function: cubic-bezier(.22,.9,.36,1);
+  animation-fill-mode: both;
+  animation-fill-mode: forwards;
+}

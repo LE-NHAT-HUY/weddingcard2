@@ -1,5 +1,5 @@
 "use client"
-
+import styles from '../components/gallery-animations.module.css';
 import NamesOverlay from "./NamesOverlay"
 import AutoScrollToBottom from "../components/AutoScrollToBottom";
 import LoveCardTrigger from '../components/LoveCardTrigger';
@@ -173,8 +173,35 @@ useEffect(() => {
   fetchGuest()
 }, [codeToUse, supabase])
 
+const [touchStartX, setTouchStartX] = useState<number | null>(null);
+const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+const SWIPE_THRESHOLD = 50; // px – vuốt tối thiểu
 
 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const openFullscreen = () => setIsFullscreen(true);
+  const closeFullscreen = () => setIsFullscreen(false);
+
+  
+
+ useEffect(() => {
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeFullscreen();
+    }
+    if (isFullscreen && e.key === "ArrowRight") {
+      next();
+    }
+    if (isFullscreen && e.key === "ArrowLeft") {
+      prev();
+    }
+  };
+
+  window.addEventListener("keydown", onKey);
+  return () => window.removeEventListener("keydown", onKey);
+}, [isFullscreen]);
 
   const handleToggleMusic = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -245,9 +272,31 @@ const containerStyle = {
   backgroundPosition: "center",
 };
 
+//---hàm xử lí vuốt---
+const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  setTouchEndX(null);
+  setTouchStartX(e.targetTouches[0].clientX);
+};
 
+const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  setTouchEndX(e.targetTouches[0].clientX);
+};
 
+const handleTouchEnd = () => {
+  if (touchStartX === null || touchEndX === null) return;
 
+  const distance = touchStartX - touchEndX;
+
+  if (distance > SWIPE_THRESHOLD) {
+    // vuốt trái → next
+    next();
+  } else if (distance < -SWIPE_THRESHOLD) {
+    // vuốt phải → prev
+    prev();
+  }
+};
+
+  
   // ---------- render ----------
   return (
     
@@ -289,8 +338,8 @@ const containerStyle = {
   style={{ willChange: "opacity, transform" }}
 >
   {/* ===== PHẦN CHỮ ===== */}
-  <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12 overflow-visible">
-    {/* SAVE THE DATE */}
+        <div className="h-auto min-h-[295px] flex flex-col justify-center px-4 pt-12 overflow-visible">
+          {/* SAVE THE DATE */}
     <div className="w-full text-center mb-4">
       <p
         className={`text-sm transition-all duration-700 ${
@@ -307,62 +356,60 @@ const containerStyle = {
         SAVE THE DATE
       </p>
     </div>
+          {/* ===== NAMES ===== */}
+          <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px] overflow-visible">
+            {/* Groom Name */}
+            <p
+              className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
+                isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 -translate-x-12"
+              }`}
+              style={{
+                fontFamily: "'Great Vibes', cursive",
+                color: "#111111",
+                lineHeight: "1.6",
+                padding: "10px 0",
+                textShadow: "0 0 1px transparent",
+                maxWidth: "calc(50% - 1.5rem)",
+                overflow: "visible",
+                zIndex: 20,
+              }}
+            >
+              {data.groomName}
+            </p>
 
-    {/* ===== NAMES ===== */}
-    <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px] overflow-visible">
-      {/* Groom Name */}
-      <p
-        className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 -translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#111111",
-          lineHeight: "1.25",
-          textShadow: "0 0 1px transparent",
-          maxWidth: "calc(50% - 1.5rem)",
-          overflow: "visible",
-          zIndex: 20,
-        }}
-      >
-        {data.groomName}
-      </p>
+            {/* Ampersand */}
+            <span
+              className="text-3xl opacity-80 relative z-30"
+              style={{
+                fontFamily: "'Great Vibes', cursive",
+                lineHeight: "1.6",
+                padding: "0 5px",
+                transform: "translateY(-0.1em)",
+              }}
+            >
+              &
+            </span>
 
-      {/* Ampersand */}
-      <span
-        className="text-3xl opacity-80 relative z-30"
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          lineHeight: "1",
-          transform: "translateY(-0.1em)",
-        }}
-      >
-        &
-      </span>
-
-      {/* Bride Name */}
-      <p
-        className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
-          isVisible("main-photo-start")
-            ? "opacity-80 translate-x-0"
-            : "opacity-0 translate-x-12"
-        }`}
-        style={{
-          fontFamily: "'Great Vibes', cursive",
-          color: "#111111",
-          lineHeight: "1.5",
-          textShadow: "0 0 1px transparent",
-          maxWidth: "calc(50% - 1.5rem)",
-          overflow: "visible",
-          zIndex: 20,
-        }}
-      >
-        {data.brideName}
-      </p>
-    </div>
-  </div>
+            {/* Bride Name */}
+            <p
+              className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
+                isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 translate-x-12"
+              }`}
+              style={{
+                fontFamily: "'Great Vibes', cursive",
+                color: "#111111",
+                lineHeight: "1.6",
+                padding: "10px 0",
+                textShadow: "0 0 1px transparent",
+                maxWidth: "calc(50% - 1.5rem)",
+                overflow: "visible",
+                zIndex: 20,
+              }}
+            >
+              {data.brideName}
+            </p>
+          </div>
+        </div>
 
   {/* ===== PHẦN ẢNH ===== */}
   <div className="w-full flex justify-center px-4 pb-[10px] overflow-hidden">
@@ -560,7 +607,7 @@ const containerStyle = {
           {[data.gallery?.[11], data.gallery?.[7]].map((photo, index) => {
             const { src, blur } = optimizedPathFor(photo)
             return (
-              <div key={index} className={`w-full flex items-center justify-center transition-opacity transition-transform duration-700 ${isVisible("gallery-grid-1") ? "translate-x-0 opacity-100" : index === 0 ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"}`} style={{ transitionDelay: `${index * 100}ms`, willChange: "transform, opacity" }}>
+              <div key={index} className={`w-full flex items-center justify-center transition-opacity transition-transform duration-1700 ${isVisible("gallery-grid-1") ? "translate-x-0 opacity-100" : index === 0 ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"}`} style={{ transitionDelay: `${index * 100}ms`, willChange: "transform, opacity" }}>
                 <div className="relative w-full">
                   <Image
                     src={src}
@@ -603,18 +650,22 @@ const containerStyle = {
 
   {/* Tên khách - từ phải vào */}
   <p
-    className={`text-2xl sm:text-2xl mb-6 transition-all duration-700 delay-200 ${
-      isVisible("quote1") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
-    }`}
-    style={{
-      fontFamily: "'Great Vibes', cursive", 
-      color: "#874141ff",
-      letterSpacing: "2px",
-      whiteSpace: "nowrap",
-    }}
-  >
-    {guestName ?? "quý khách"}
-  </p>
+  className={`mb-6 transition-all duration-700 delay-200 ${
+    isVisible("quote1")
+      ? "opacity-100 translate-x-0"
+      : "opacity-0 translate-x-12"
+  } ${
+    guestName ? "text-2xl sm:text-2xl" : "text-4xl sm:text-4xl"
+  }`}
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    color: "#874141ff",
+    letterSpacing: "2px",
+  }}
+>
+  {guestName ?? "quý khách"}
+</p>
+
 
   {/* Text phụ - fade-in từ dưới */}
   <p
@@ -631,8 +682,15 @@ const containerStyle = {
   </p>
 </section>
 
+
 {/* Gallery Images */}
-<section id="gallery-grid" className="px-4 py-6 overflow-hidden">
+<section
+  id="gallery-grid"
+  data-animate
+  className={`px-4 py-6 overflow-hidden transition-all duration-1700 ${
+    isVisible("gallery-grid") ? "opacity-100" : "opacity-0"
+  }`}
+>
   <div className="flex justify-center items-end gap-2 md:gap-2 max-w-[1200px] mx-auto">
     {(() => {
       const photos = [data.gallery?.[18], data.gallery?.[16], data.gallery?.[17]];
@@ -640,45 +698,47 @@ const containerStyle = {
         const { src, blur } = optimizedPathFor(photo);
         const isCenter = idx === 1;
 
-        // Animation thứ tự
-        const animationDelay = isCenter ? "delay-[800ms]" : "delay-[500ms]";
-        const fromClass = isCenter
-          ? "opacity-0"
-          : idx === 0
-          ? "-translate-x-full opacity-0"
-          : "translate-x-full opacity-0";
-        const toClass = isCenter ? "opacity-100" : "translate-x-0 opacity-100";
-
-        // Kích thước
         const width = isCenter ? "50%" : "40%";
 
-        // Filter + shadow
         const styleEffect = isCenter
-          ? {
-              boxShadow: "0 12px 40px rgba(0,0,0,0.25)",
-              filter: "None",
-            }
-          : {
-              boxShadow: "0 8px 30px rgba(0,0,0,0.18)",
-              filter: "None",
-            };
+          ? { boxShadow: "0 12px 40px rgba(0,0,0,0.25)" }
+          : { boxShadow: "0 8px 30px rgba(0,0,0,0.18)" };
 
-        // Object position cho hai ảnh hai bên
         const objectPosition = isCenter
           ? "center center"
           : idx === 0
           ? "30% center"
           : "70% center";
 
+        const delay = isCenter ? "800ms" : "500ms";
+
         return (
-          <div key={idx} style={{ width }} className={`relative transition-all duration-700 ${animationDelay}`}>
+          <div
+            key={idx}
+            style={{ width, transitionDelay: delay }}
+            className={`relative transition-all duration-1700 ease-out ${
+              isVisible("gallery-grid")
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
             <div
-              className={`overflow-hidden rounded-md transition-all duration-700 ${isVisible("quote1") ? toClass : fromClass}`}
+              className={`overflow-hidden rounded-md transition-all duration-1700 ease-out ${
+                isVisible("gallery-grid")
+                  ? "translate-x-0"
+                  : idx === 0
+                  ? "-translate-x-12"
+                  : idx === 2
+                  ? "translate-x-12"
+                  : ""
+              }`}
               style={{
                 width: "100%",
                 paddingBottom: "135%",
                 position: "relative",
                 ...styleEffect,
+                transitionDelay: delay,
+                willChange: "transform, opacity",
               }}
             >
               <Image
@@ -691,11 +751,17 @@ const containerStyle = {
                     ? "(max-width: 768px) 65vw, 500px"
                     : "(max-width: 768px) 32vw, 280px"
                 }
-                className="object-cover transition-transform duration-700 ease-out"
+                className="object-cover transition-transform duration-1700 ease-out"
                 {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
                 style={{
-                  transform: isCenter ? "scale(1.05)" : "scale(1.02)",
+                  transform: isCenter
+                    ? isVisible("gallery-grid")
+                      ? "scale(1.12)"
+                      : "scale(0.96)"
+                    : "scale(1.02)",
                   objectPosition,
+                  transitionDelay: delay,
+                  willChange: "transform",
                 }}
               />
             </div>
@@ -705,6 +771,8 @@ const containerStyle = {
     })()}
   </div>
 </section>
+
+
 
 {/* Tiệc cưới Nhà Gái */}
 <section
@@ -1762,109 +1830,163 @@ const containerStyle = {
   </section>
 
 <div
-  data-transition-key="qu4_wt2pM9-fade-in-1.6-0-ease-out-false"
-  data-node-id="qu4_wt2pM9"
-  style={{
-    transform: "none",
-    opacity: 1,
-    width: "auto",
-    height: "auto",
-    maxWidth: "420px",
-    margin: "10px auto 0",
-  }}
->
-  {/* khung ngoài */}
-  <div
-    style={{
-      position: "relative",
-      width: "100%",
-      boxSizing: "border-box",
-      padding: "10px",
-      border: "4px solid #4870a3",
-      borderRadius: "8px",
-    }}
-  >
-    <div className="photo-gallery-wrapper flex flex-col gap-3">
-      {/* ẢNH CHÍNH */}
+      data-transition-key="qu4_wt2pM9-fade-in-1.6-0-ease-out-false"
+      data-node-id="qu4_wt2pM9"
+      style={{
+        transform: "none",
+        opacity: 1,
+        width: "auto",
+        height: "auto",
+        maxWidth: "420px",
+        margin: "10px auto 0",
+      }}
+    >
+      {/* khung ngoài */}
       <div
-        className="relative flex-1 min-h-[200px] overflow-hidden rounded-2xl bg-gray-100"
-        style={{ minHeight: 200 }}
+        style={{
+          position: "relative",
+          width: "100%",
+          boxSizing: "border-box",
+          padding: "10px",
+          border: "4px solid #4870a3",
+          borderRadius: "8px",
+        }}
       >
-        {(() => {
-          const photo = photos[selectedIndex]
-          const { src, blur } = optimizedPathFor(photo)
+        <div className="photo-gallery-wrapper flex flex-col gap-3">
+          {/* ẢNH CHÍNH */}
+          <div
+            className="relative flex-1 min-h-[200px] overflow-hidden rounded-2xl bg-gray-100"
+            style={{ minHeight: 200 }}
+            onDoubleClick={openFullscreen} // <-- mở fullscreen khi double click
+            aria-label="Main photo viewer"
+          >
+            {(() => {
+              const photo = photos[selectedIndex];
+              const { src, blur } = optimizedPathFor(photo);
 
-          return (
-            <Image
-              src={src}
-              alt={`Photo ${selectedIndex + 1}`}
-              fill
-              sizes="(max-width: 768px) 90vw, 400px"
-              className="object-contain"
-              priority
-              {...(blur
-                ? { placeholder: "blur", blurDataURL: blur }
-                : {})}
-            />
-          )
-        })()}
+              return (
+                <Image
+                  src={src || "/placeholder.svg"}
+                  alt={`Photo ${selectedIndex + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 400px"
+                  className="object-contain"
+                  priority
+                  {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
+                />
+              );
+            })()}
 
-        {/* prev */}
-        <button
-          onClick={prev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
-        >
-          ‹
-        </button>
+            {/* prev */}
+            <button
+              onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
+              aria-label="Previous photo"
+            >
+              ‹
+            </button>
 
-        {/* next */}
-        <button
-          onClick={next}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
-        >
-          ›
-        </button>
+            {/* next */}
+            <button
+              onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/85"
+              aria-label="Next photo"
+            >
+              ›
+            </button>
 
-        {/* counter */}
-        <div className="absolute top-2 right-2 text-xs bg-white/85 px-2 py-1 rounded-full">
-          {selectedIndex + 1}/{photos.length}
+            {/* counter */}
+            <div className="absolute top-2 right-2 text-xs bg-white/85 px-2 py-1 rounded-full">
+              {selectedIndex + 1}/{photos.length}
+            </div>
+          </div>
+
+          {/* THUMBNAILS */}
+          <div className="flex gap-2 overflow-x-auto">
+            {photos.map((photo, i) => {
+              const { src, blur } = optimizedPathFor(photo);
+
+              return (
+                <button
+                  key={i}
+                  onClick={() => setSelectedIndex(i)}
+                  className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0"
+                  style={{
+                    border:
+                      i === selectedIndex ? "2px solid #3b82f6" : "2px solid transparent",
+                  }}
+                  aria-label={`Select photo ${i + 1}`}
+                >
+                  <Image
+                    src={src || "/placeholder.svg"}
+                    alt={`Thumb ${i + 1}`}
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                    {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
+                  />
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* THUMBNAILS */}
-      <div className="flex gap-2 overflow-x-auto">
-        {photos.map((photo, i) => {
-          const { src, blur } = optimizedPathFor(photo)
+      {/* ======= FULLSCREEN MODAL ======= */}
+      {isFullscreen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+          onClick={closeFullscreen} // click ngoài đóng
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative w-[95vw] max-w-[1200px] h-[85vh] max-h-[95vh]"
+            onClick={(e) => e.stopPropagation()} // ngăn đóng khi click bên trong
+          >
+            
 
-          return (
+            {/* prev (fullscreen) */}
             <button
-              key={i}
-              onClick={() => setSelectedIndex(i)}
-              className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0"
-              style={{
-                border:
-                  i === selectedIndex
-                    ? "2px solid #3b82f6"
-                    : "2px solid transparent",
-              }}
+              onClick={prev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90"
+              aria-label="Previous photo (fullscreen)"
             >
-              <Image
-                src={src}
-                alt={`Thumb ${i + 1}`}
-                fill
-                sizes="64px"
-                className="object-cover"
-                {...(blur
-                  ? { placeholder: "blur", blurDataURL: blur }
-                  : {})}
-              />
+              ‹
             </button>
-          )
-        })}
-      </div>
+
+            {/* next (fullscreen) */}
+            <button
+              onClick={next}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90"
+              aria-label="Next photo (fullscreen)"
+            >
+              ›
+            </button>
+
+            {/* ảnh fullscreen */}
+            {(() => {
+              const photo = photos[selectedIndex];
+              const { src, blur } = optimizedPathFor(photo);
+
+              return (
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src={src || "/placeholder.svg"}
+                    alt={`Photo fullscreen ${selectedIndex + 1}`}
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                    priority
+                    {...(blur ? { placeholder: "blur", blurDataURL: blur } : {})}
+                  />
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-</div>
 
 <div style={{ marginTop: 35, fontSize: "110%" }}>
   <RSVPSection />
