@@ -126,43 +126,34 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       })
 
       wishIndexRef.current++
-    }, 1200) 
+    }, 900) 
 
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
   // 3. Logic "Cuộn Thông Minh" (Smart Scroll with Brake)
+  // 3. Logic "Cuộn Thông Minh" (Smart Scroll)
   useEffect(() => {
     let animationFrameId: number
-    // Biến lưu vị trí thực (float) để cuộn mượt từng pixel nhỏ
     let preciseScrollTop = 0; 
 
     const autoScroll = () => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current
         
-        // Đồng bộ lần đầu
+        // Đồng bộ vị trí lần đầu
         if (preciseScrollTop === 0 && container.scrollTop > 0) {
             preciseScrollTop = container.scrollTop;
         }
 
-        // Tính toán điểm cực đại có thể cuộn
-        // scrollHeight: Chiều cao toàn bộ nội dung
-        // clientHeight: Chiều cao khung nhìn
-        const maxScroll = container.scrollHeight - container.clientHeight;
+        // Luôn luôn cộng thêm, không cần kiểm tra điều kiện dừng
+        // Trình duyệt sẽ tự xử lý việc kịch kim đáy
+        preciseScrollTop += 0.5; 
+        container.scrollTop = preciseScrollTop;
         
-        // --- CƠ CHẾ PHANH ---
-        // Chỉ cuộn nếu chưa chạm đáy (hoặc gần chạm đáy)
-        // Cho phép sai số 1px để đảm bảo luôn bám sát
-        if (preciseScrollTop < maxScroll - 1) {
-            // Tốc độ cuộn: 0.8px mỗi frame (khoảng 50px/giây) -> Rất mượt
-            preciseScrollTop += 0.8; 
-            container.scrollTop = preciseScrollTop;
-        } else {
-            // Nếu đã chạm đáy, giữ nguyên vị trí, chờ tin nhắn mới xuất hiện
-            // Khi tin mới xuất hiện -> scrollHeight tăng -> maxScroll tăng -> điều kiện if ở trên lại đúng -> lại trôi tiếp
-            preciseScrollTop = maxScroll;
-            container.scrollTop = maxScroll;
+        // Mẹo: Nếu lỡ cuộn quá tay (do user can thiệp), đồng bộ lại biến đếm
+        if (Math.abs(container.scrollTop - preciseScrollTop) > 50) {
+           preciseScrollTop = container.scrollTop;
         }
       }
       animationFrameId = requestAnimationFrame(autoScroll)
@@ -173,7 +164,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
 
     return () => cancelAnimationFrame(animationFrameId)
-  }, [showFloatingWishes, activeWishes]) // Phụ thuộc activeWishes để tính lại maxScroll chuẩn
+  }, [showFloatingWishes]) // Phụ thuộc activeWishes để tính lại maxScroll chuẩn
 
   // Các hàm xử lý
   const toggleMusic = () => {
@@ -220,7 +211,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       {/* --- PHẦN LỜI CHÚC TRÔI (FLOATING WISHES) --- */}
       {showFloatingWishes && activeWishes.length > 0 && (
         <div 
-          className="fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
+          className="fixed left-2 sm:left-4 bottom-4 pb-10 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
             // Mask mờ dần ở cạnh trên
             maskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
