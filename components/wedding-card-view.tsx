@@ -258,15 +258,41 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       {/* --- BUTTONS & UI GIỮ NGUYÊN --- */}
       
       <button
-        onClick={toggleFloatingWishes}
-        className="fixed bottom-6 right-4 z-50 bg-white shadow-lg rounded-full p-2.5 hover:scale-105 transition"
-        title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
-      >
-        <MessageCircleHeart 
-            className={`w-5 h-5 transition-opacity duration-300 ${showFloatingWishes ? 'opacity-100' : 'opacity-40'}`} 
-            style={{ color: data.primaryColor }}
-        />
-      </button>
+  onClick={toggleFloatingWishes}
+  aria-pressed={showFloatingWishes}
+  className="
+    fixed
+    bottom-6
+    right-4
+    z-50
+    bg-white
+    shadow-lg
+    rounded-full
+    p-2.5
+    hover:scale-105
+    transition
+  "
+  title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
+>
+  <svg
+    viewBox="0 0 512 512"
+    width="22"
+    height="22"
+    fill="none"
+    stroke="currentColor"
+    className={`transition-all duration-300 ${
+      showFloatingWishes ? "opacity-100" : "opacity-40"
+    }`}
+    style={{ color: data.primaryColor }}
+  >
+    <path
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="48"
+      d="M88 152h336M88 256h336M88 360h336"
+    />
+  </svg>
+</button>
 
       {!showMusicPrompt && (
         <>
