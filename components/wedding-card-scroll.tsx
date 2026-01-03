@@ -51,7 +51,7 @@ const TypewriterEffect = ({ text, startDelay, isVisible, showCursor = true }: Ty
     if (hasStarted && displayedText.length < text.length) {
       const timeout = setTimeout(() => {
         setDisplayedText(text.slice(0, displayedText.length + 1));
-      }, 20); 
+      }, 40); 
       return () => clearTimeout(timeout);
     }
   }, [hasStarted, displayedText, text]);
@@ -1512,7 +1512,7 @@ const handleTouchEnd = () => {
     }}
   >
     {/* Đoạn 1: Nam & Nhi! (CSS thuần, đã chỉnh timing) */}
-    <p style={{ fontSize: "17px", fontWeight: "normal", marginBottom: "0.3rem" }}>
+    <p style={{ fontSize: "17px", marginBottom: "0.3rem" }}>
       <span className="typing-line line-1">Nam & Nhi!</span>
     </p>
 
@@ -1530,7 +1530,7 @@ const handleTouchEnd = () => {
     <p style={{ marginTop: "-0.3rem" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={193000} 
+        startDelay={27000} 
         showCursor={true} 
         text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
       />
