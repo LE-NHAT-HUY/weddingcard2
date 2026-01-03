@@ -1408,10 +1408,13 @@ const handleTouchEnd = () => {
   </a>
 </section>
 
-{/* --- BẮT ĐẦU SECTION CÂU CHUYỆN (Logic mới + Style cũ) --- */}
+
+
+
+{/* --- BẮT ĐẦU SECTION CÂU CHUYỆN --- */}
 <section id="love-story" data-animate className="overflow-hidden py-10">
   
-  {/* --- PHẦN 1: CÁC TIÊU ĐỀ (Giữ logic bay, sửa màu giống bản gốc) --- */}
+  {/* --- PHẦN 1: CÁC TIÊU ĐỀ (Đã xóa delay để chạy cùng lúc) --- */}
   
   {/* Dòng 1 */}
   <div
@@ -1419,13 +1422,12 @@ const handleTouchEnd = () => {
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
-      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      color: "rgba(75, 75, 71, 1)", 
       lineHeight: "normal", 
       fontWeight: "normal", 
       letterSpacing: "4px",
       marginLeft: "20px", 
       marginTop: "20px",
-      // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
     }}
@@ -1439,7 +1441,7 @@ const handleTouchEnd = () => {
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
-      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      color: "rgba(75, 75, 71, 1)", 
       lineHeight: "normal", 
       fontWeight: "normal", 
       letterSpacing: "4px",
@@ -1447,7 +1449,6 @@ const handleTouchEnd = () => {
       marginRight: "20px", 
       marginTop: "20px", 
       textAlign: "right",
-      // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(50px)",
     }}
@@ -1461,13 +1462,12 @@ const handleTouchEnd = () => {
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
-      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      color: "rgba(75, 75, 71, 1)", 
       lineHeight: "normal", 
       fontWeight: "normal", 
       letterSpacing: "4px",
       marginLeft: "20px", 
       marginTop: "20px",
-      // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
     }}
@@ -1476,9 +1476,9 @@ const handleTouchEnd = () => {
   </div>
 
 
-  {/* --- PHẦN 3: HÌNH ẢNH (Giữ nguyên) --- */}
+  {/* --- PHẦN 3: HÌNH ẢNH (Giảm delay còn 1000ms) --- */}
   <div
-    className={`transition-opacity duration-1000 delay-[2500ms]`}
+    className={`transition-opacity duration-1000 delay-1000`}
     style={{
       backgroundImage: "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/37db6e41-b641-49da-ab9c-e32958637d53.png')",
       backgroundSize: "cover", 
@@ -1487,13 +1487,13 @@ const handleTouchEnd = () => {
       height: "75px",
       marginLeft: "300px", 
       marginTop: "-50px",
-      // Chỉ hiện và float khi đã lướt tới
       opacity: isVisible("love-story") ? 1 : 0,
       animation: isVisible("love-story") ? "floatUpDown 3s ease-in-out infinite" : "none"
     }}
   ></div>
 
-{/* --- PHẦN 4: NỘI DUNG VĂN BẢN --- */}
+
+  {/* --- PHẦN 4: NỘI DUNG VĂN BẢN --- */}
   <div
     className={isVisible("love-story") ? "start-typing" : ""} 
     style={{
@@ -1511,27 +1511,27 @@ const handleTouchEnd = () => {
       marginTop: "-13px"
     }}
   >
-    {/* Đoạn 1: Nam & Nhi! */}
+    {/* Đoạn 1: Nam & Nhi! (CSS thuần, đã chỉnh timing) */}
     <p style={{ fontSize: "17px", fontWeight: "normal", marginBottom: "0.3rem" }}>
       <span className="typing-line line-1">Nam & Nhi!</span>
     </p>
 
-    {/* Đoạn 2: TẮT HOÀN TOÀN CON TRỎ (showCursor={false}) */}
+    {/* Đoạn 2: TẮT CON TRỎ, BẮT ĐẦU SỚM (4000ms) */}
     <p style={{ marginBottom: "0.5rem", minHeight: "120px" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={5500} 
-        showCursor={false} // <--- Thêm dòng này để ẩn con trỏ
+        startDelay={4000} 
+        showCursor={false} 
         text="Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào."
       />
     </p>
 
-    {/* Đoạn 3: Vẫn giữ con trỏ cho đoạn kết */}
+    {/* Đoạn 3: HIỆN CON TRỎ, BẮT ĐẦU KHI ĐỌC XONG (16000ms) */}
     <p style={{ marginTop: "-0.3rem" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={19200} 
-        showCursor={true} // Đoạn cuối vẫn để con trỏ cho đẹp
+        startDelay={193000} 
+        showCursor={true} 
         text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
       />
     </p>
@@ -1539,27 +1539,19 @@ const handleTouchEnd = () => {
   </div>
 </section>
 
+
 <style jsx>{`
-  
-  
-  /* Dòng 1 */
-  .start-typing .line-1 {
-    clip-path: inset(0 100% 0 0);
-    animation: typeReveal 2s steps(15, end) 3.2s forwards;
-  }
   /* --- KEYFRAMES --- */
   @keyframes floatUpDown {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
   
-  /* Animation cho dòng tiêu đề Nam & Nhi (Giữ nguyên) */
   @keyframes typeReveal {
     from { clip-path: inset(0 100% 0 0); }
     to { clip-path: inset(0 -5px 0 0); }
   }
   
-  /* Hiệu ứng nhấp nháy con trỏ */
   @keyframes cursorBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
@@ -1571,7 +1563,6 @@ const handleTouchEnd = () => {
 
   /* --- ANIMATION LOGIC --- */
   
-  /* Dòng 1: Nam & Nhi (CSS thuần) */
   .typing-line.line-1 {
     display: inline-block;
     position: relative;
@@ -1581,10 +1572,12 @@ const handleTouchEnd = () => {
     clip-path: inset(0 100% 0 0); 
   }
 
+  /* Dòng 1: Nam & Nhi - Sửa thời gian bắt đầu thành 1.5s */
   .start-typing .line-1 {
-    animation: typeReveal 2s steps(15, end) 3.2s forwards;
+    animation: typeReveal 2s steps(15, end) 1.5s forwards;
   }
   
+  /* Con trỏ dòng Nam & Nhi - Sửa thời gian ẩn thành 4.0s */
   .start-typing .line-1::after {
     content: '|';
     position: absolute; right: -2px; bottom: 0;
@@ -1592,10 +1585,9 @@ const handleTouchEnd = () => {
     color: rgba(62, 62, 59, 0.9);
     opacity: 0;
     animation: 
-      cursorBlink 0.5s step-end 3.2s infinite,
-      hideCursor 0.1s linear 5.5s forwards; /* Ẩn con trỏ dòng 1 khi dòng 2 bắt đầu */
+      cursorBlink 0.5s step-end 1.5s infinite,
+      hideCursor 0.1s linear 4.0s forwards;
   }
-
 `}</style>
 
 {/* Container bọc toàn bộ */}
