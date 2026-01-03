@@ -126,7 +126,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       })
 
       wishIndexRef.current++
-    }, 900) 
+    }, 1700) 
 
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])

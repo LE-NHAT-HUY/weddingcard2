@@ -7,23 +7,25 @@ type Props = {
   params: Promise<{ code: string }>
 }
 
-// === generateMetadata: luôn có ảnh, dù code đúng/sai/không tồn tại ===
+// === generateMetadata: Xử lý title và description động ===
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
   const supabase = createClient()
 
   let guestName = "Quý khách"
   let honorific = "Thân mời"
+  let inviteNote = "Mời bạn" // Giá trị mặc định nếu không có note
 
   if (code) {
     const { data } = await supabase
       .from("guests")
-      .select("name, honorific")
+      .select("name, honorific, note") // <--- Thêm cột note vào đây
       .eq("code", code.toLowerCase().trim())
       .single()
 
     if (data?.name) guestName = data.name.trim()
     if (data?.honorific) honorific = data.honorific.trim()
+    if (data?.note) inviteNote = data.note.trim() // <--- Lấy giá trị note
   }
 
   const title =
@@ -31,7 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `${honorific} Quý khách | Tham dự lễ cưới của Nam & Nhi ❤️`
       : `${honorific} ${guestName} | Tham dự lễ cưới của Nam & Nhi ❤️`
 
-  const description = "Mời bạn tham dự lễ cưới của chúng tôi"
+  // Thay thế "Mời bạn" bằng giá trị inviteNote lấy từ DB
+  const description = `${inviteNote} tham dự lễ cưới của Nam & Nhi`
 
   return {
     title,
@@ -40,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: "https://weddingnamnhi.vercel.app",
-      siteName: "Mời bạn tham dự lễ cưới của chúng tôi",
+      siteName: "Mời bạn tham dự lễ cưới của Nam & Nhi",
       images: [
         {
           url: "https://weddingnamnhi.vercel.app/anh6.jpg",
@@ -60,8 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-
-// === Trang mời cá nhân: vẫn xử lý tên khách bình thường ===
+// === Trang mời cá nhân ===
 export default async function InvitePage({ params }: Props) {
   const { code } = await params
   const supabase = createClient()
