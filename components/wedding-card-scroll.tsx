@@ -1355,20 +1355,23 @@ const handleTouchEnd = () => {
   </a>
 </section>
 
-
-{/* --- BẮT ĐẦU SECTION CÂU CHUYỆN (Đã thêm ID và Logic hiển thị) --- */}
+{/* --- BẮT ĐẦU SECTION CÂU CHUYỆN (Logic mới + Style cũ) --- */}
 <section id="love-story" data-animate className="overflow-hidden py-10">
   
-  {/* --- PHẦN 1: CÁC TIÊU ĐỀ BAY VÀO --- */}
-  {/* Áp dụng logic transition giống mẫu Wedding Info thay vì keyframes cứng */}
+  {/* --- PHẦN 1: CÁC TIÊU ĐỀ (Giữ logic bay, sửa màu giống bản gốc) --- */}
   
-  {/* Dòng 1: Từ giảng đường... (Bay từ trái) */}
+  {/* Dòng 1 */}
   <div
     className={`transition-all duration-1000 ease-out`}
     style={{
-      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(11, 11, 11, 1)",
-      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
-      marginLeft: "20px", marginTop: "20px",
+      fontFamily: "'Great Vibes', cursive", 
+      fontSize: "30px", 
+      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      lineHeight: "normal", 
+      fontWeight: "normal", 
+      letterSpacing: "4px",
+      marginLeft: "20px", 
+      marginTop: "20px",
       // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
@@ -1377,13 +1380,20 @@ const handleTouchEnd = () => {
     Từ giảng đường...
   </div>
 
-  {/* Dòng 2: ...Đến lễ đường (Bay từ phải, delay 1s) */}
+  {/* Dòng 2 */}
   <div
     className={`transition-all duration-1000 ease-out delay-1000`} 
     style={{
-      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(17, 17, 17, 1)",
-      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
-      marginLeft: "auto", marginRight: "20px", marginTop: "20px", textAlign: "right",
+      fontFamily: "'Great Vibes', cursive", 
+      fontSize: "30px", 
+      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      lineHeight: "normal", 
+      fontWeight: "normal", 
+      letterSpacing: "4px",
+      marginLeft: "auto", 
+      marginRight: "20px", 
+      marginTop: "20px", 
+      textAlign: "right",
       // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(50px)",
@@ -1392,13 +1402,18 @@ const handleTouchEnd = () => {
     ...Đến lễ đường
   </div>
 
-  {/* Dòng 3: Chuyện kể rằng... (Bay từ trái, delay 2s) */}
+  {/* Dòng 3 */}
   <div
     className={`transition-all duration-1000 ease-out delay-[2000ms]`}
     style={{
-      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(16, 16, 15, 1)",
-      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
-      marginLeft: "20px", marginTop: "20px",
+      fontFamily: "'Great Vibes', cursive", 
+      fontSize: "30px", 
+      color: "rgba(75, 75, 71, 1)", // Đã sửa về màu bản gốc
+      lineHeight: "normal", 
+      fontWeight: "normal", 
+      letterSpacing: "4px",
+      marginLeft: "20px", 
+      marginTop: "20px",
       // Logic hiển thị:
       opacity: isVisible("love-story") ? 1 : 0,
       transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
@@ -1408,13 +1423,17 @@ const handleTouchEnd = () => {
   </div>
 
 
-  {/* --- PHẦN 3: HÌNH ẢNH (Floating) --- */}
+  {/* --- PHẦN 3: HÌNH ẢNH (Giữ nguyên) --- */}
   <div
     className={`transition-opacity duration-1000 delay-[2500ms]`}
     style={{
       backgroundImage: "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/37db6e41-b641-49da-ab9c-e32958637d53.png')",
-      backgroundSize: "cover", backgroundPosition: "center", width: "75px", height: "75px",
-      marginLeft: "300px", marginTop: "-50px",
+      backgroundSize: "cover", 
+      backgroundPosition: "center", 
+      width: "75px", 
+      height: "75px",
+      marginLeft: "300px", 
+      marginTop: "-50px",
       // Chỉ hiện và float khi đã lướt tới
       opacity: isVisible("love-story") ? 1 : 0,
       animation: isVisible("love-story") ? "floatUpDown 3s ease-in-out infinite" : "none"
@@ -1422,15 +1441,25 @@ const handleTouchEnd = () => {
   ></div>
 
 
-  {/* --- PHẦN 4: NỘI DUNG VĂN BẢN (Text Story) --- */}
-  {/* Thêm class "start-typing" khi visible để kích hoạt CSS animation */}
+  {/* --- PHẦN 4: NỘI DUNG VĂN BẢN (Đã chỉnh lại cho rõ nét) --- */}
   <div
     className={isVisible("love-story") ? "start-typing" : ""} 
     style={{
-      fontFamily: "'Roboto', sans-serif", fontWeight: 100, fontSize: "14px",
-      textAlign: "justify", lineHeight: "1.6", letterSpacing: "1px",
-      maxWidth: "800px", margin: "0 auto", padding: "1rem",
-      marginLeft: "10px", marginTop: "-13px"
+      fontFamily: "'Roboto', sans-serif", 
+      
+      // SỬA TẠI ĐÂY:
+      fontWeight: "300", // Đổi từ 100 -> normal để chữ dày và rõ hơn
+      color: "rgba(62, 62, 59, 0.9)", // Đổi từ 0.9 -> 1 để chữ không bị trong suốt
+      
+      fontSize: "14px",
+      textAlign: "left",
+      lineHeight: "1.6", 
+      letterSpacing: "1px",
+      maxWidth: "800px", 
+      margin: "0 auto", 
+      padding: "1rem",
+      marginLeft: "10px", 
+      marginTop: "-13px"
     }}
   >
     {/* Đoạn 1 */}
@@ -1452,7 +1481,7 @@ const handleTouchEnd = () => {
 </section>
 
 <style jsx>{`
-  /* --- KEYFRAMES GIỮ NGUYÊN --- */
+  /* --- KEYFRAMES --- */
   @keyframes floatUpDown {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -1477,16 +1506,15 @@ const handleTouchEnd = () => {
     display: inline-block;
     position: relative;
     white-space: pre-wrap;
-    color: rgba(0, 0, 0, 0.9);
+    /* SỬA: Dùng inherit để nhận màu xám từ cha, thay vì màu đen đậm */
+    color: inherit; 
     vertical-align: bottom;
-    /* Mặc định ẩn hoàn toàn khi chưa chạy animation */
     clip-path: inset(0 100% 0 0); 
   }
 
-  /* --- QUAN TRỌNG: CHỈ CHẠY KHI CÓ CLASS .start-typing (KHI LƯỚT TỚI) --- */
+  /* --- ANIMATION LOGIC --- */
   
-  /* Dòng 1: Nam & Nhi! */
-  /* Delay ban đầu = 3.2s sau khi lướt tới (khớp với tổng thời gian các tiêu đề bay vào) */
+  /* Dòng 1 */
   .start-typing .line-1 {
     clip-path: inset(0 100% 0 0);
     animation: typeReveal 2s steps(15, end) 3.2s forwards;
@@ -1496,15 +1524,14 @@ const handleTouchEnd = () => {
     content: '|';
     position: absolute; right: -2px; bottom: 0;
     font-weight: 100;
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(62, 62, 59, 0.9); /* Sửa màu con trỏ cho đồng bộ */
     opacity: 0;
     animation: 
       cursorBlink 0.5s step-end 3.2s infinite,
       hideCursor 0.1s linear 5.5s forwards;
   }
 
-  /* Dòng 2: Đoạn văn chính */
-  /* Ban đầu ẩn bằng polygon(0 0, 0 0, 0 0) */
+  /* Dòng 2 & 3 */
   .typing-line.line-2, .typing-line.line-3 {
      clip-path: polygon(0 0, 0 0, 0 0);
   }
@@ -1513,7 +1540,6 @@ const handleTouchEnd = () => {
     animation: diagonalReveal 5s ease-out 5.5s forwards;
   }
 
-  /* Dòng 3: Đoạn kết */
   .start-typing .line-3 {
     animation: diagonalReveal 3s ease-out 10.5s forwards;
   }
