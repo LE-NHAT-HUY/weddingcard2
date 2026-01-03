@@ -211,7 +211,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       {/* --- PHẦN LỜI CHÚC TRÔI (FLOATING WISHES) --- */}
       {showFloatingWishes && activeWishes.length > 0 && (
         <div 
-          className="fixed left-2 sm:left-4 bottom-4 pb-10 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
+          className="fixed left-2 sm:left-4 bottom-4 pb-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
             // Mask mờ dần ở cạnh trên
             maskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
