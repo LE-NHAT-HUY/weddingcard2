@@ -106,7 +106,7 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const [guestName, setGuestName] = useState<string>(initialGuestName)
 
 
-  const [guestHonorific, setGuestHonorific] = useState<string | null>(null)
+  const [Honorific, setHonorific] = useState<string | null>(null)
   const [showFloatingWishes, setShowFloatingWishes] = useState(true)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const unlockedRef = useRef(false)
@@ -161,17 +161,24 @@ useEffect(() => {
   const fetchGuest = async () => {
     const { data, error } = await supabase
       .from("guests")
-      .select("name")
+      .select("name, honorific")
       .eq("code", codeToUse)
       .single()
-    
+
     console.log("Supabase result:", { data, error })
 
-    if (data?.name) setGuestName(data.name)
+    if (data?.name) {
+      setGuestName(data.name)
+    }
+
+    if (data?.honorific) {
+      setHonorific(data.honorific)
+    }
   }
 
   fetchGuest()
 }, [codeToUse, supabase])
+
 
 const [touchStartX, setTouchStartX] = useState<number | null>(null);
 const [touchEndX, setTouchEndX] = useState<number | null>(null);
