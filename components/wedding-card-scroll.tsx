@@ -384,7 +384,7 @@ const handleTouchEnd = () => {
                 fontFamily: "'Great Vibes', cursive",
                 lineHeight: "1.6",
                 padding: "0 5px",
-                transform: "translateY(-0.1em)",
+                transform: "translateY(0.2em)",
               }}
             >
               &
