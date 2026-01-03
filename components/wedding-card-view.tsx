@@ -107,57 +107,61 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
   }, [])
 
-  // 2. Logic "Bơm" tin nhắn vào danh sách hiển thị
+  // 1. Sửa lại logic "bơm" tin nhắn: BỎ SLICE (Cắt bớt tin)
   useEffect(() => {
     if (!showFloatingWishes || wishes.length === 0) return
 
-    // Cứ 3 giây thêm một tin nhắn mới vào danh sách
+    // Tốc độ xuất hiện tin mới (1.5 giây/tin là vừa đẹp)
     const interval = setInterval(() => {
       const currentWish = wishes[wishIndexRef.current % wishes.length]
       
-      // Tạo key mới để React biết đây là phần tử mới
       const newActiveWish = {
         ...currentWish,
         uniqueKey: `${Date.now()}-${wishIndexRef.current}`,
       }
 
       setActiveWishes((prev) => {
-        // Giữ lại tối đa 20 tin nhắn gần nhất để tạo dòng chảy dài
-        // Không cần xóa quá nhanh, để user kịp đọc khi nó trôi lên
-        const updated = [...prev, newActiveWish]
-        if (updated.length > 20) {
-          return updated.slice(updated.length - 20)
-        }
-        return updated
+        // 👇 QUAN TRỌNG: Không dùng .slice() nữa. 
+        // Hãy cứ để danh sách dài ra. React xử lý 100-200 div text rất nhẹ nhàng.
+        // Việc xóa tin cũ chính là nguyên nhân gây giật hình.
+        return [...prev, newActiveWish] 
       })
 
       wishIndexRef.current++
-    }, 1700)
+    }, 1500) 
 
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
-  // 3. Logic "Băng chuyền" (Auto Scroll) - QUAN TRỌNG NHẤT
+  // 2. Sửa lại logic cuộn: Dùng số lẻ (Float) để mượt hơn
   useEffect(() => {
     let animationFrameId: number
+    // Biến tạm để lưu vị trí chính xác (vì scrollTop của DOM tự làm tròn số)
+    let currentScrollTop = 0 
 
     const autoScroll = () => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current
-        // Mỗi khung hình cuộn xuống 0.5px => Tạo hiệu ứng nội dung trôi lên
-        // Tăng số này nếu muốn trôi nhanh hơn (ví dụ 0.8 hoặc 1.0)
-        container.scrollTop += 1.0; 
+        
+        // Nếu biến tạm chưa được đồng bộ, lấy mốc từ container
+        if (currentScrollTop === 0 && container.scrollTop > 0) {
+           currentScrollTop = container.scrollTop
+        }
+
+        // Tốc độ cuộn: 0.8 là tốc độ rất mượt cho mắt (tương đương 50px/giây)
+        // Muốn nhanh hơn thì tăng lên 1.0 hoặc 1.2
+        currentScrollTop += 0.8 
+        container.scrollTop = currentScrollTop
       }
       animationFrameId = requestAnimationFrame(autoScroll)
     }
 
-    // Bắt đầu chạy
     if (showFloatingWishes) {
       animationFrameId = requestAnimationFrame(autoScroll)
     }
 
     return () => cancelAnimationFrame(animationFrameId)
-  }, [showFloatingWishes]) // Chỉ chạy lại khi bật/tắt tính năng
+  }, [showFloatingWishes])
 
   // Các hàm xử lý nhạc và submit
   const toggleMusic = () => {
@@ -204,34 +208,31 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       {/* --- PHẦN LỜI CHÚC TRÔI (FLOATING WISHES) --- */}
       {showFloatingWishes && activeWishes.length > 0 && (
         <div 
-          className="fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[30vh] pointer-events-none"
+          className="fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
-            // Mask tạo hiệu ứng mờ dần ở đỉnh để tin nhắn biến mất đẹp mắt
             maskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)"
           }}
         >
-          {/* Container này sẽ được auto-scroll */}
           <div
             ref={scrollContainerRef}
+            // 👇 QUAN TRỌNG: scrollBehavior: "auto" để đè lên CSS global, chống giật
+            style={{ scrollBehavior: "auto" }} 
             className="w-full h-full overflow-hidden flex flex-col gap-1 pb-4"
           >
-            {/* Div ảo này cực kỳ quan trọng:
-               Nó chiếm chỗ trống ban đầu để các lời chúc xuất hiện từ đáy màn hình 
-               thay vì dồn cục ở trên đỉnh.
-            */}
-            <div className="flex-shrink-0 min-h-[40vh]"></div>
+            {/* Div đệm để tin nhắn bắt đầu từ đáy */}
+            <div className="flex-shrink-0 min-h-[25vh]"></div>
 
             {activeWishes.map((wish) => (
               <div
                 key={wish.uniqueKey}
-                // animate-fade-in-up: Hiệu ứng nảy nhẹ khi mới sinh ra
+                // Chỉ animate lúc xuất hiện, sau đó để nó trôi theo dòng
                 className="w-full flex justify-start px-1 animate-fade-in-up flex-shrink-0"
               >
                 <div
-                  className="px-4 py-2.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
+                  className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
                   style={{
-                    maxWidth: "100%", // Cho phép tin nhắn dài
+                    maxWidth: "100%",
                     width: "fit-content",
                     backgroundColor: "rgba(243, 121, 121, 0.85)",
                     border: `1px solid ${data.primaryColor}30`,
