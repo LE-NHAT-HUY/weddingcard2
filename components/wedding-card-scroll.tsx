@@ -24,6 +24,7 @@ interface WeddingCardScrollProps {
   initialGuestName: string
 }
 
+
 export default function WeddingCardScroll({
   guestCode,
   data,
@@ -41,6 +42,7 @@ export default function WeddingCardScroll({
     return nameOnly.replace(/-\d+$/, "")
   }
 
+  
   // ---------- map blurDataURL (hardcode) ----------
   // Thay các chuỗi "data:image/..." bằng nội dung thực tế từ file *-blur.txt của bạn
   const galleryBlurMap: Record<string, string> = {
@@ -69,6 +71,7 @@ export default function WeddingCardScroll({
     return { src, blur }
   }
 
+  
   // Hero cover (nếu data.coverPhoto rỗng thì fallback ảnh anh-nen1)
   const coverCandidate = data.coverPhoto || "/anh15.jpg"
   const { src: coverPhotoOptimized, blur: coverBlur } = optimizedPathFor(coverCandidate)
@@ -115,6 +118,7 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const [activeWishes, setActiveWishes] = useState<Array<Wish & { uniqueKey: string; position: number }>>([])
   const wishIndexRef = useRef(0)
   const [isMusicOn, setIsMusicOn] = useState(false)
+
 
   useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
@@ -723,7 +727,7 @@ const handleTouchEnd = () => {
           <div
             key={idx}
             style={{ width, transitionDelay: delay }}
-            className={`relative transition-all duration-1700 ease-out ${
+            className={`relative transition-all duration-2000 ease-out ${
               isVisible("gallery-grid")
                 ? "opacity-100"
                 : "opacity-0"
@@ -1338,126 +1342,168 @@ const handleTouchEnd = () => {
 </section>
 
 
+{/* --- BẮT ĐẦU SECTION CÂU CHUYỆN (Đã thêm ID và Logic hiển thị) --- */}
+<section id="love-story" data-animate className="overflow-hidden py-10">
+  
+  {/* --- PHẦN 1: CÁC TIÊU ĐỀ BAY VÀO --- */}
+  {/* Áp dụng logic transition giống mẫu Wedding Info thay vì keyframes cứng */}
+  
+  {/* Dòng 1: Từ giảng đường... (Bay từ trái) */}
+  <div
+    className={`transition-all duration-1000 ease-out`}
+    style={{
+      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(11, 11, 11, 1)",
+      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
+      marginLeft: "20px", marginTop: "20px",
+      // Logic hiển thị:
+      opacity: isVisible("love-story") ? 1 : 0,
+      transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
+    }}
+  >
+    Từ giảng đường...
+  </div>
 
-<div
-  className="falling-title"
-  style={{
-    fontFamily: "'Great Vibes', cursive",
-    fontSize: "30px",
-    color: "rgba(75, 75, 71, 1)",
-    lineHeight: "normal",
-    fontWeight: "normal",
-    letterSpacing: "4px",
-    marginLeft: "20px",
-    marginTop: "20px",
-  }}
->
-  Từ giảng đường...
-</div>
+  {/* Dòng 2: ...Đến lễ đường (Bay từ phải, delay 1s) */}
+  <div
+    className={`transition-all duration-1000 ease-out delay-1000`} 
+    style={{
+      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(17, 17, 17, 1)",
+      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
+      marginLeft: "auto", marginRight: "20px", marginTop: "20px", textAlign: "right",
+      // Logic hiển thị:
+      opacity: isVisible("love-story") ? 1 : 0,
+      transform: isVisible("love-story") ? "translateX(0)" : "translateX(50px)",
+    }}
+  >
+    ...Đến lễ đường
+  </div>
 
-<div
-  className="falling-title"
-  style={{
-    fontFamily: "'Great Vibes', cursive",
-    fontSize: "30px",
-    color: "rgba(75, 75, 71, 1)",
-    lineHeight: "normal",
-    fontWeight: "normal",
-    letterSpacing: "4px",
-    marginLeft: "auto",   // đẩy sang phải
-    marginRight: "20px",  // khoảng cách từ cạnh phải
-    marginTop: "20px",
-    textAlign: "right",   // căn chữ bên trong sang phải
-  }}
->
-  ...Đến lễ đường
-</div>
+  {/* Dòng 3: Chuyện kể rằng... (Bay từ trái, delay 2s) */}
+  <div
+    className={`transition-all duration-1000 ease-out delay-[2000ms]`}
+    style={{
+      fontFamily: "'Great Vibes', cursive", fontSize: "30px", color: "rgba(16, 16, 15, 1)",
+      lineHeight: "normal", fontWeight: "normal", letterSpacing: "4px",
+      marginLeft: "20px", marginTop: "20px",
+      // Logic hiển thị:
+      opacity: isVisible("love-story") ? 1 : 0,
+      transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
+    }}
+  >
+    Chuyện kể rằng.....
+  </div>
 
 
-<div
-  className="falling-title"
-  style={{
-    fontFamily: "'Great Vibes', cursive",
-    fontSize: "30px",
-    color: "rgba(75, 75, 71, 1)",
-    lineHeight: "normal",
-    fontWeight: "normal",
-    letterSpacing: "4px",
-    marginLeft: "20px",
-    marginTop: "20px",
-  }}
->
-  Chuyện kể rằng.....
-</div>
+  {/* --- PHẦN 3: HÌNH ẢNH (Floating) --- */}
+  <div
+    className={`transition-opacity duration-1000 delay-[2500ms]`}
+    style={{
+      backgroundImage: "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/37db6e41-b641-49da-ab9c-e32958637d53.png')",
+      backgroundSize: "cover", backgroundPosition: "center", width: "75px", height: "75px",
+      marginLeft: "300px", marginTop: "-50px",
+      // Chỉ hiện và float khi đã lướt tới
+      opacity: isVisible("love-story") ? 1 : 0,
+      animation: isVisible("love-story") ? "floatUpDown 3s ease-in-out infinite" : "none"
+    }}
+  ></div>
+
+
+  {/* --- PHẦN 4: NỘI DUNG VĂN BẢN (Text Story) --- */}
+  {/* Thêm class "start-typing" khi visible để kích hoạt CSS animation */}
+  <div
+    className={isVisible("love-story") ? "start-typing" : ""} 
+    style={{
+      fontFamily: "'Roboto', sans-serif", fontWeight: 100, fontSize: "14px",
+      textAlign: "justify", lineHeight: "1.6", letterSpacing: "1px",
+      maxWidth: "800px", margin: "0 auto", padding: "1rem",
+      marginLeft: "10px", marginTop: "-13px"
+    }}
+  >
+    {/* Đoạn 1 */}
+    <p style={{ fontSize: "17px", fontWeight: "normal", marginBottom: "0.3rem" }}>
+      <span className="typing-line line-1">Nam & Nhi!</span>
+    </p>
+
+    {/* Đoạn 2 */}
+    <p style={{ marginBottom: "0.5rem" }}>
+      <span className="typing-line line-2">Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.</span>
+    </p>
+
+    {/* Đoạn 3 */}
+    <p style={{ marginTop: "-0.3rem" }}>
+      <span className="typing-line line-3">Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy băng một lời hứa chung đường, chung nhà, chung tương lai.</span>
+    </p>
+
+  </div>
+</section>
 
 <style jsx>{`
-  @keyframes fallDown {
-    0% {
-      transform: translateY(-50px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .falling-title {
-    animation: fallDown 1s ease-out forwards;
-  }
-`}</style>
-
-
-<div
-  style={{
-    backgroundImage: "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/37db6e41-b641-49da-ab9c-e32958637d53.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    width: "75px",       // chỉnh kích thước theo ý bạn
-    height: "75px",
-    borderRadius: "0px",
-    animation: "floatUpDown 3s ease-in-out infinite",
-    marginLeft: "300px", // di chuyển sang phải
-    marginTop: "-50px"   
-  }}
-></div>
-
-<style jsx>{`
+  /* --- KEYFRAMES GIỮ NGUYÊN --- */
   @keyframes floatUpDown {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); } /* di chuyển lên 10px */
-    100% { transform: translateY(0); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes typeReveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 -5px 0 0); }
+  }
+  @keyframes diagonalReveal {
+    from { clip-path: polygon(0 0, 0 0, 0 0); }
+    to { clip-path: polygon(0 0, 250% 0, 0 250%); }
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  @keyframes hideCursor {
+    to { opacity: 0; }
+  }
+
+  .typing-line {
+    display: inline-block;
+    position: relative;
+    white-space: pre-wrap;
+    color: rgba(0, 0, 0, 0.9);
+    vertical-align: bottom;
+    /* Mặc định ẩn hoàn toàn khi chưa chạy animation */
+    clip-path: inset(0 100% 0 0); 
+  }
+
+  /* --- QUAN TRỌNG: CHỈ CHẠY KHI CÓ CLASS .start-typing (KHI LƯỚT TỚI) --- */
+  
+  /* Dòng 1: Nam & Nhi! */
+  /* Delay ban đầu = 3.2s sau khi lướt tới (khớp với tổng thời gian các tiêu đề bay vào) */
+  .start-typing .line-1 {
+    clip-path: inset(0 100% 0 0);
+    animation: typeReveal 2s steps(15, end) 3.2s forwards;
+  }
+  
+  .start-typing .line-1::after {
+    content: '|';
+    position: absolute; right: -2px; bottom: 0;
+    font-weight: 100;
+    color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    animation: 
+      cursorBlink 0.5s step-end 3.2s infinite,
+      hideCursor 0.1s linear 5.5s forwards;
+  }
+
+  /* Dòng 2: Đoạn văn chính */
+  /* Ban đầu ẩn bằng polygon(0 0, 0 0, 0 0) */
+  .typing-line.line-2, .typing-line.line-3 {
+     clip-path: polygon(0 0, 0 0, 0 0);
+  }
+
+  .start-typing .line-2 {
+    animation: diagonalReveal 5s ease-out 5.5s forwards;
+  }
+
+  /* Dòng 3: Đoạn kết */
+  .start-typing .line-3 {
+    animation: diagonalReveal 3s ease-out 10.5s forwards;
   }
 `}</style>
-
-<div
-  style={{
-    fontFamily: "'Roboto', sans-serif fontWeight: 100",
-    fontSize: "14px",                    
-    color: "rgba(62, 62, 59, 0.9)",      
-    textAlign: "left",                   // căn lề phải
-    lineHeight: "1.6",                    
-    letterSpacing: "1px",                 
-    maxWidth: "800px",                    
-    margin: "0 auto",                     
-    padding: "1rem",   
-    marginLeft: "10px", // di chuyển sang phải
-    marginTop: "-13px"                   
-  }}
-><p style={{ fontSize: "17px", fontWeight: "normal", marginBottom: "0.3rem" }}>
-  Nam & Nhi!
-</p>
-
-<p style={{ marginBottom: "0.5rem" }}>
- Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.
-</p>
-
-<p style={{ marginTop: "-0.3rem" }}>
- Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy băng một lời hứa chung đường, chung nhà, chung tương lai.
-</p>
-
-</div>
-
 
 {/* Container bọc toàn bộ */}
       <div
