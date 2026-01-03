@@ -28,10 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title =
     guestName === "Quý khách"
-      ? `${honorific} Quý khách | Tham dự đám cưới của Nam & Nhi ❤️`
-      : `${honorific} ${guestName} | Tham dự đám cưới của Nam & Nhi ❤️`
+      ? `${honorific} Quý khách | Tham dự lễ cưới của Nam & Nhi ❤️`
+      : `${honorific} ${guestName} | Tham dự lễ cưới của Nam & Nhi ❤️`
 
-  const description = "Mời bạn tham dự đám cưới của chúng tôi"
+  const description = "Mời bạn tham dự lễ cưới của chúng tôi"
 
   return {
     title,
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: "https://weddingnamnhi.vercel.app",
-      siteName: "Mời bạn tham dự đám cưới của chúng tôi",
+      siteName: "Mời bạn tham dự lễ cưới của chúng tôi",
       images: [
         {
           url: "https://weddingnamnhi.vercel.app/anh6.jpg",
