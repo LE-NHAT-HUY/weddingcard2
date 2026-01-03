@@ -7,7 +7,7 @@ import type { WeddingData, Wish } from "@/lib/types"
 import { Volume2, VolumeX, MessageCircleHeart, Send, X, Heart } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 
-// Dữ liệu mặc định
+// Dữ liệu mặc định (Giữ nguyên như cũ)
 export const defaultData: WeddingData = {
   groomName: "Khánh Nam",
   brideName: "Lan Nhi",
@@ -62,11 +62,14 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   const [wishForm, setWishForm] = useState({ name: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   
-  // Refs cho logic cuộn băng chuyền
+  // Refs cho logic cuộn
   const wishIndexRef = useRef(0)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  // Ref này sẽ trỏ vào cái div chứa nội dung để di chuyển nó
+  const contentRef = useRef<HTMLDivElement>(null)
+  // Ref lưu vị trí hiện tại (pixel)
+  const translateRef = useRef(0)
 
-  // 1. Load dữ liệu và Realtime
+  // 1. Load dữ liệu
   useEffect(() => {
     const savedData = localStorage.getItem("weddingData")
     if (savedData) {
@@ -107,11 +110,11 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
   }, [])
 
-  // 1. Sửa lại logic "bơm" tin nhắn: BỎ SLICE (Cắt bớt tin)
+  // 2. Logic "Bơm" tin nhắn (Thêm tin vào danh sách)
   useEffect(() => {
     if (!showFloatingWishes || wishes.length === 0) return
 
-    // Tốc độ xuất hiện tin mới (1.5 giây/tin là vừa đẹp)
+    // Tốc độ xuất hiện tin mới (1.2 giây/tin)
     const interval = setInterval(() => {
       const currentWish = wishes[wishIndexRef.current % wishes.length]
       
@@ -121,49 +124,42 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       }
 
       setActiveWishes((prev) => {
-        // 👇 QUAN TRỌNG: Không dùng .slice() nữa. 
-        // Hãy cứ để danh sách dài ra. React xử lý 100-200 div text rất nhẹ nhàng.
-        // Việc xóa tin cũ chính là nguyên nhân gây giật hình.
+        // Chỉ thêm vào, không bao giờ xóa bớt để tránh giật layout
+        // Trình duyệt xử lý translate rất tốt kể cả danh sách dài
         return [...prev, newActiveWish] 
       })
 
       wishIndexRef.current++
-    }, 1500) 
+    }, 1200) 
 
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
-  // 2. Sửa lại logic cuộn: Dùng số lẻ (Float) để mượt hơn
+  // 3. Logic "GPU Scrolling" (Sử dụng Transform thay vì scrollTop)
   useEffect(() => {
     let animationFrameId: number
-    // Biến tạm để lưu vị trí chính xác (vì scrollTop của DOM tự làm tròn số)
-    let currentScrollTop = 0 
 
-    const autoScroll = () => {
-      if (scrollContainerRef.current) {
-        const container = scrollContainerRef.current
-        
-        // Nếu biến tạm chưa được đồng bộ, lấy mốc từ container
-        if (currentScrollTop === 0 && container.scrollTop > 0) {
-           currentScrollTop = container.scrollTop
-        }
+    const animate = () => {
+      if (contentRef.current) {
+        // Tăng vị trí lên 0.6 pixel mỗi frame (khoảng 36px/giây)
+        // Đây là tốc độ di chuyển của dòng chữ
+        translateRef.current += 0.6
 
-        // Tốc độ cuộn: 0.8 là tốc độ rất mượt cho mắt (tương đương 50px/giây)
-        // Muốn nhanh hơn thì tăng lên 1.0 hoặc 1.2
-        currentScrollTop += 0.8 
-        container.scrollTop = currentScrollTop
+        // Dùng translate3d để kích hoạt GPU, mượt hơn translate thường
+        // Di chuyển nội dung LÊN TRÊN (dấu âm)
+        contentRef.current.style.transform = `translate3d(0, -${translateRef.current}px, 0)`
       }
-      animationFrameId = requestAnimationFrame(autoScroll)
+      animationFrameId = requestAnimationFrame(animate)
     }
 
     if (showFloatingWishes) {
-      animationFrameId = requestAnimationFrame(autoScroll)
+      animationFrameId = requestAnimationFrame(animate)
     }
 
     return () => cancelAnimationFrame(animationFrameId)
   }, [showFloatingWishes])
 
-  // Các hàm xử lý nhạc và submit
+  // Helpers
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -210,88 +206,68 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
         <div 
           className="fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
-            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)"
+            // Tạo mặt nạ mờ dần ở cạnh trên
+            maskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
+            // Quan trọng: Ngăn trình duyệt tự động scroll
+            overflowAnchor: "none" 
           }}
         >
-          <div
-            ref={scrollContainerRef}
-            // 👇 QUAN TRỌNG: scrollBehavior: "auto" để đè lên CSS global, chống giật
-            style={{ scrollBehavior: "auto" }} 
-            className="w-full h-full overflow-hidden flex flex-col gap-1 pb-4"
-          >
-            {/* Div đệm để tin nhắn bắt đầu từ đáy */}
-            <div className="flex-shrink-0 min-h-[25vh]"></div>
-
-            {activeWishes.map((wish) => (
-              <div
-                key={wish.uniqueKey}
-                // Chỉ animate lúc xuất hiện, sau đó để nó trôi theo dòng
-                className="w-full flex justify-start px-1 animate-fade-in-up flex-shrink-0"
-              >
+          {/* Container này cố định, nội dung bên trong sẽ trôi */}
+          <div className="w-full h-full overflow-hidden relative">
+            
+            {/* Đây là phần di chuyển (Moving Layer) */}
+            <div
+              ref={contentRef}
+              className="flex flex-col gap-1.5 w-full"
+              style={{ 
+                willChange: "transform", // Gợi ý cho trình duyệt tối ưu render
+                // Padding top lớn bằng chiều cao khung nhìn để tin nhắn đầu tiên xuất hiện từ đáy
+                paddingTop: "25vh" 
+              }} 
+            >
+              {activeWishes.map((wish) => (
                 <div
-                  className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
-                  style={{
-                    maxWidth: "100%",
-                    width: "fit-content",
-                    backgroundColor: "rgba(243, 121, 121, 0.85)",
-                    border: `1px solid ${data.primaryColor}30`,
-                    color: "#ffffff",
-                    fontFamily: "'Playfair Display', serif",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-                  }}
+                  key={wish.uniqueKey}
+                  className="w-full flex justify-start px-1 flex-shrink-0 animate-fade-in-up"
                 >
-                  <div className="text-[13px] sm:text-sm leading-snug break-words">
-                    <span className="font-bold mr-1">{wish.name}:</span>
-                    <span>{wish.message}</span>
+                  <div
+                    className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
+                    style={{
+                      maxWidth: "100%",
+                      width: "fit-content",
+                      backgroundColor: "rgba(243, 121, 121, 0.85)",
+                      border: `1px solid ${data.primaryColor}30`,
+                      color: "#ffffff",
+                      fontFamily: "'Playfair Display', serif",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+                    }}
+                  >
+                    <div className="text-[13px] sm:text-sm leading-snug break-words">
+                      <span className="font-bold mr-1">{wish.name}:</span>
+                      <span>{wish.message}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* --- CÁC NÚT ĐIỀU KHIỂN & MODAL --- */}
+      {/* --- BUTTONS & UI GIỮ NGUYÊN --- */}
       
       <button
-  onClick={toggleFloatingWishes}
-  aria-pressed={showFloatingWishes}
-  className="
-    fixed
-    bottom-6
-    right-4
-    z-50
-    bg-white
-    shadow-lg
-    rounded-full
-    p-2.5
-    hover:scale-105
-    transition
-  "
-  title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
->
-  <svg
-    viewBox="0 0 512 512"
-    width="22"
-    height="22"
-    fill="none"
-    stroke="currentColor"
-    className={`transition-all duration-300 ${
-      showFloatingWishes ? "opacity-100" : "opacity-40"
-    }`}
-    style={{ color: data.primaryColor }}
-  >
-    <path
-      strokeLinecap="round"
-      strokeMiterlimit="10"
-      strokeWidth="48"
-      d="M88 152h336M88 256h336M88 360h336"
-    />
-  </svg>
-</button>
+        onClick={toggleFloatingWishes}
+        className="fixed bottom-6 right-4 z-50 bg-white shadow-lg rounded-full p-2.5 hover:scale-105 transition"
+        title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
+      >
+        <MessageCircleHeart 
+            className={`w-5 h-5 transition-opacity duration-300 ${showFloatingWishes ? 'opacity-100' : 'opacity-40'}`} 
+            style={{ color: data.primaryColor }}
+        />
+      </button>
 
-      {/* Nút Music và Group nút bên phải */}
       {!showMusicPrompt && (
         <>
           <button
@@ -310,7 +286,6 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
           </button>
 
           <div className="fixed bottom-4 right-2 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-1.5 sm:gap-3 pointer-events-none">
-            {/* Chỉ hiển thị số lượng tim (View Only) */}
             {wishes.length > 0 && (
               <div
                 className="bg-white/90 backdrop-blur-sm shadow-md rounded-full px-2 py-0.5 sm:px-3 sm:py-1.5 flex items-center gap-1 text-[10px] sm:text-sm mb-1 pointer-events-auto"
@@ -321,9 +296,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
               </div>
             )}
             
-            {/* Group nút hành động (cần pointer-events-auto) */}
             <div className="flex items-center gap-2 pointer-events-auto">
-                 {/* Nút mở Modal gửi lời chúc */}
                 <button
                 onClick={() => setShowWishModal(true)}
                 className="bg-white shadow-lg rounded-full p-2 sm:p-3 hover:shadow-xl transition-all hover:scale-105"
@@ -331,7 +304,6 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
                     color: "white",
                     backgroundColor: data.primaryColor,
                 }}
-                title="Gửi lời chúc mới"
                 >
                 <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
@@ -340,7 +312,6 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
         </>
       )}
 
-      {/* MODAL GỬI LỜI CHÚC */}
       {showWishModal && (
         <div className="fixed inset-0 z-[100] bg-black/60 flex items-end justify-center backdrop-blur-sm p-4 sm:items-center">
           <div
