@@ -183,7 +183,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       })
 
       wishIndexRef.current++
-    }, 1700)
+    }, 2000)
 
     const cleanupInterval = setInterval(() => {
       setActiveWishes((prev) => {
@@ -272,36 +272,45 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f0eb]">
       <audio ref={audioRef} src="/music.mp3" loop preload="auto" />
+
+
+
+
 {showFloatingWishes && activeWishes.length > 0 && (
-  <div
-    className="floating-wishes-container fixed left-1/2 -translate-x-1/2 bottom-3 z-40 w-[92vw] sm:w-[88vw] md:w-[420px] h-[55vh] overflow-hidden"
-  >
-    {activeWishes.map((wish) => (
-      <div
-        key={wish.uniqueKey}
-        className="floating-wish absolute left-0 px-3 py-1 sm:px-3 sm:py-1 rounded-lg"
-        style={{
-          bottom: 0,
-          maxWidth: "85%",
-          backgroundColor: "rgba(243, 121, 121, 0.65)",
-          border: `1px solid ${data.primaryColor}25`,
-          boxShadow: `0 2px 10px ${data.primaryColor}15`,
-          color: "#ffffff",
-          fontFamily: "'Playfair Display', serif",
-        }}
-      >
-        <div className="flex">
-          <span className="text-[13px] sm:text-sm leading-snug line-clamp-2 break-words">
-            <span className="font-semibold">
-              {wish.name}
-            </span>
-            : {wish.message}
-          </span>
+        <div
+          // 👇 CÁC THAY ĐỔI QUAN TRỌNG:
+          // 1. Bỏ 'left-1/2 -translate-x-1/2' (bỏ căn giữa màn hình)
+          // 2. Thêm 'left-2 sm:left-4' (cách lề trái một đoạn nhỏ: 8px ở mobile, 16px ở desktop)
+          // 3. Sửa 'items-center' thành 'items-start' (căn tin nhắn về phía trái của khung)
+          // 4. Giữ 'bottom-20' để nó nằm phía trên nút nhạc (tránh bị che)
+          className="wish-flow-container fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[45vh] items-start pb-2 overflow-hidden"
+        >
+          {activeWishes.map((wish) => (
+            <div
+              key={wish.uniqueKey}
+              // 👇 Sửa 'justify-center' thành 'justify-start'
+              className="wish-smooth-item relative w-full flex justify-start"
+            >
+              <div
+                // 👇 Sửa 'text-center' thành 'text-left' cho nội dung dễ đọc khi ở góc trái
+                className="px-4 py-2 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
+                style={{
+                  maxWidth: "100%", /* Cho phép bong bóng tin nhắn dài ra nếu cần */
+                  backgroundColor: "rgba(243, 121, 121, 0.8)",
+                  border: `1px solid ${data.primaryColor}30`,
+                  color: "#ffffff",
+                  fontFamily: "'Playfair Display', serif",
+                }}
+              >
+                <div className="text-[13px] sm:text-sm leading-snug break-words">
+                  <span className="font-bold mr-1">{wish.name}:</span>
+                  <span>{wish.message}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
-)}
+      )}
 
 <button
   onClick={toggleFloatingWishes}

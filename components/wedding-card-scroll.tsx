@@ -120,43 +120,57 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const [isMusicOn, setIsMusicOn] = useState(false)
 
 
+// --- SỬA ĐỔI: Thêm sự kiện 'scroll' để lướt là phát nhạc ---
   useEffect(() => {
+    // 1. Cấu hình Audio
     audioRef.current = new Audio('/music.mp3')
     audioRef.current.loop = true
-    audioRef.current.volume = 0.3
+    audioRef.current.volume = 0.3 
     audioRef.current.preload = 'auto'
+
+    // 2. Hàm kích hoạt nhạc (chạy 1 lần rồi tự hủy)
+    const activeMusic = () => {
+      // Nếu nhạc đã bật hoặc chưa khởi tạo thì thôi
+      if (!audioRef.current || unlockedRef.current) return
+      
+      audioRef.current.play()
+        .then(() => {
+          setIsMusicOn(true)
+          unlockedRef.current = true
+          
+          // QUAN TRỌNG: Gỡ bỏ tất cả sự kiện để không chạy lại nữa
+          window.removeEventListener("click", activeMusic)
+          window.removeEventListener("touchstart", activeMusic)
+          window.removeEventListener("scroll", activeMusic) // Gỡ sự kiện cuộn
+          window.removeEventListener("keydown", activeMusic)
+        })
+        .catch((err) => {
+           // Nếu trình duyệt chặn, cứ để yên sự kiện đó chờ lần tương tác sau
+           console.log("Chờ tương tác tiếp theo để phát nhạc...")
+        })
+    }
+
+    // 3. Thử phát ngay lập tức (cho Android/PC/Messenger)
+    activeMusic()
+
+    // 4. Bắt tất cả các hành động của người dùng
+    window.addEventListener("click", activeMusic)      // Bắt sự kiện click chuột
+    window.addEventListener("touchstart", activeMusic) // Bắt sự kiện chạm màn hình
+    window.addEventListener("scroll", activeMusic)     // <--- DÒNG QUAN TRỌNG: Bắt sự kiện LƯỚT/CUỘN
+    window.addEventListener("keydown", activeMusic)    // Bắt sự kiện gõ phím
+
+    // Cleanup khi thoát trang
     return () => {
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current = null
       }
+      window.removeEventListener("click", activeMusic)
+      window.removeEventListener("touchstart", activeMusic)
+      window.removeEventListener("scroll", activeMusic)
+      window.removeEventListener("keydown", activeMusic)
     }
   }, [])
-
-  useEffect(() => {
-    const enableMusicOnFirstTap = (e: Event) => {
-      if (unlockedRef.current || !audioRef.current) return
-      const target = e.target as HTMLElement
-      const isMusicButton =
-        target.closest('button[title*="nhạc"]') ||
-        target.closest('button[aria-pressed]')
-      if (isMusicButton) {
-        unlockedRef.current = true
-      } else {
-        unlockedRef.current = true
-        audioRef.current.play().then(() => setIsMusicOn(true)).catch(() => {})
-      }
-      window.removeEventListener("click", enableMusicOnFirstTap, true)
-      window.removeEventListener("touchstart", enableMusicOnFirstTap, true)
-    }
-    window.addEventListener("click", enableMusicOnFirstTap, { capture: true })
-    window.addEventListener("touchstart", enableMusicOnFirstTap, { capture: true })
-    return () => {
-      window.removeEventListener("click", enableMusicOnFirstTap, true)
-      window.removeEventListener("touchstart", enableMusicOnFirstTap, true)
-    }
-  }, [])
-
 
 useEffect(() => {
   console.log("Fetching guest for code:", codeToUse)
@@ -1581,16 +1595,16 @@ const handleTouchEnd = () => {
   {/* Ảnh đè lên chính giữa phong thư */}
   <div
     style={{
-      width: "43px",
-      height: "44px",
+      width: "50px",
+      height: "50px",
       backgroundImage:
         "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/01e5dde4-fed6-4248-9157-59aac5e1d7b3.png')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       borderRadius: "0px",
       position: "absolute",
-      top: "50%",
-      left: "71%",
+      top: "48%",
+      left: "75%",
       transform: "translate(-50%, -50%)", // căn giữa chính xác
       zIndex: 4, // đảm bảo nằm trên phong thư
     }}

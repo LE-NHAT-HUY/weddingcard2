@@ -219,30 +219,90 @@ html {
 }
 
 
-.floating-wish {
+
+
+/* Xóa hoặc comment lại đoạn cũ này */
+/* .floating-wish {
   position: absolute;
-  left: 0;
-  pointer-events: none;
-  will-change: transform, clip-path;
+  ...
   animation: floatUpBlock 8.5s linear forwards;
 }
+@keyframes floatUpBlock { ... } 
+*/
 
-@keyframes floatUpBlock {
+/* Thêm đoạn mới này */
+.wish-stack-container {
+  /* Tạo hiệu ứng mờ dần ở đỉnh để lời chúc biến mất tự nhiên */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+  pointer-events: none; /* Để có thể bấm vào nút nhạc/tim bên dưới */
+}
+
+.wish-item {
+  /* Animation khi xuất hiện */
+  animation: wishSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes wishSlideUp {
   0% {
-    transform: translateY(0);
-    clip-path: inset(0 0 0 0);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
   }
-
-  70% {
-    transform: translateY(-26vh);
-    clip-path: inset(0 0 0 0); /* vẫn nguyên */
-  }
-
   100% {
-    transform: translateY(-30vh);
-    clip-path: inset(100% 0 0 0); /* bị "chắn" cắt hết */
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
+
+
+/* Animation đẩy lời chúc lên mượt mà */
+@keyframes smoothPushUp {
+  0% {
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    transform: scale(0.9);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 200px; /* Đủ lớn để chứa nội dung dài nhất */
+    margin-bottom: 0.0rem; /* Tương đương gap-3 */
+    transform: scale(1);
+    padding-top: 0.15rem; /* Tương đương py-2 */
+    padding-bottom: 0.15rem;
+  }
+}
+
+.wish-smooth-item {
+  /* Gọi animation này khi item vừa xuất hiện */
+  animation: smoothPushUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: max-height, opacity, margin, padding;
+  overflow: hidden; /* Bắt buộc để ẩn nội dung khi max-height đang tăng */
+}
+
+/* Container chứa danh sách */
+.wish-flow-container {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Luôn neo ở đáy */
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes heartBeat {
   0%,
