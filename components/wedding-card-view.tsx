@@ -7,7 +7,7 @@ import type { WeddingData, Wish } from "@/lib/types"
 import { Volume2, VolumeX, MessageCircleHeart, Send, X, Heart } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 
-// Dữ liệu mặc định (Giữ nguyên như cũ)
+// Dữ liệu mặc định
 export const defaultData: WeddingData = {
   groomName: "Khánh Nam",
   brideName: "Lan Nhi",
@@ -64,12 +64,9 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   
   // Refs cho logic cuộn
   const wishIndexRef = useRef(0)
-  // Ref này sẽ trỏ vào cái div chứa nội dung để di chuyển nó
-  const contentRef = useRef<HTMLDivElement>(null)
-  // Ref lưu vị trí hiện tại (pixel)
-  const translateRef = useRef(0)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // 1. Load dữ liệu
+  // 1. Load dữ liệu và Realtime
   useEffect(() => {
     const savedData = localStorage.getItem("weddingData")
     if (savedData) {
@@ -110,11 +107,11 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
   }, [])
 
-  // 2. Logic "Bơm" tin nhắn (Thêm tin vào danh sách)
+  // 2. Logic "Bơm" tin nhắn (Tốc độ cân bằng với tốc độ cuộn)
   useEffect(() => {
     if (!showFloatingWishes || wishes.length === 0) return
 
-    // Tốc độ xuất hiện tin mới (1.2 giây/tin)
+    // 1.2s thêm một tin nhắn -> Đủ nhanh để tạo đường chạy cho thanh cuộn
     const interval = setInterval(() => {
       const currentWish = wishes[wishIndexRef.current % wishes.length]
       
@@ -124,8 +121,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       }
 
       setActiveWishes((prev) => {
-        // Chỉ thêm vào, không bao giờ xóa bớt để tránh giật layout
-        // Trình duyệt xử lý translate rất tốt kể cả danh sách dài
+        // Cho phép danh sách dài vô tận, trình duyệt hiện nay xử lý tốt
         return [...prev, newActiveWish] 
       })
 
@@ -135,31 +131,51 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
-  // 3. Logic "GPU Scrolling" (Sử dụng Transform thay vì scrollTop)
+  // 3. Logic "Cuộn Thông Minh" (Smart Scroll with Brake)
   useEffect(() => {
     let animationFrameId: number
+    // Biến lưu vị trí thực (float) để cuộn mượt từng pixel nhỏ
+    let preciseScrollTop = 0; 
 
-    const animate = () => {
-      if (contentRef.current) {
-        // Tăng vị trí lên 0.6 pixel mỗi frame (khoảng 36px/giây)
-        // Đây là tốc độ di chuyển của dòng chữ
-        translateRef.current += 0.6
+    const autoScroll = () => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current
+        
+        // Đồng bộ lần đầu
+        if (preciseScrollTop === 0 && container.scrollTop > 0) {
+            preciseScrollTop = container.scrollTop;
+        }
 
-        // Dùng translate3d để kích hoạt GPU, mượt hơn translate thường
-        // Di chuyển nội dung LÊN TRÊN (dấu âm)
-        contentRef.current.style.transform = `translate3d(0, -${translateRef.current}px, 0)`
+        // Tính toán điểm cực đại có thể cuộn
+        // scrollHeight: Chiều cao toàn bộ nội dung
+        // clientHeight: Chiều cao khung nhìn
+        const maxScroll = container.scrollHeight - container.clientHeight;
+        
+        // --- CƠ CHẾ PHANH ---
+        // Chỉ cuộn nếu chưa chạm đáy (hoặc gần chạm đáy)
+        // Cho phép sai số 1px để đảm bảo luôn bám sát
+        if (preciseScrollTop < maxScroll - 1) {
+            // Tốc độ cuộn: 0.8px mỗi frame (khoảng 50px/giây) -> Rất mượt
+            preciseScrollTop += 0.8; 
+            container.scrollTop = preciseScrollTop;
+        } else {
+            // Nếu đã chạm đáy, giữ nguyên vị trí, chờ tin nhắn mới xuất hiện
+            // Khi tin mới xuất hiện -> scrollHeight tăng -> maxScroll tăng -> điều kiện if ở trên lại đúng -> lại trôi tiếp
+            preciseScrollTop = maxScroll;
+            container.scrollTop = maxScroll;
+        }
       }
-      animationFrameId = requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(autoScroll)
     }
 
     if (showFloatingWishes) {
-      animationFrameId = requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(autoScroll)
     }
 
     return () => cancelAnimationFrame(animationFrameId)
-  }, [showFloatingWishes])
+  }, [showFloatingWishes, activeWishes]) // Phụ thuộc activeWishes để tính lại maxScroll chuẩn
 
-  // Helpers
+  // Các hàm xử lý
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -206,57 +222,55 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
         <div 
           className="fixed left-2 sm:left-4 bottom-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
-            // Tạo mặt nạ mờ dần ở cạnh trên
+            // Mask mờ dần ở cạnh trên
             maskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
-            // Quan trọng: Ngăn trình duyệt tự động scroll
-            overflowAnchor: "none" 
+            // Quan trọng: Tắt tính năng tự neo của trình duyệt để JS toàn quyền kiểm soát
+            overflowAnchor: "none"
           }}
         >
-          {/* Container này cố định, nội dung bên trong sẽ trôi */}
-          <div className="w-full h-full overflow-hidden relative">
-            
-            {/* Đây là phần di chuyển (Moving Layer) */}
-            <div
-              ref={contentRef}
-              className="flex flex-col gap-1.5 w-full"
-              style={{ 
-                willChange: "transform", // Gợi ý cho trình duyệt tối ưu render
-                // Padding top lớn bằng chiều cao khung nhìn để tin nhắn đầu tiên xuất hiện từ đáy
-                paddingTop: "25vh" 
-              }} 
-            >
-              {activeWishes.map((wish) => (
+          <div
+            ref={scrollContainerRef}
+            // Quan trọng: Tắt scroll-behavior smooth của CSS để tránh xung đột với JS
+            style={{ scrollBehavior: "auto" }}
+            className="w-full h-full overflow-hidden flex flex-col gap-1.5"
+          >
+            {/* Div đệm ở đầu danh sách. 
+               Tác dụng: Đẩy tin nhắn đầu tiên xuống dưới đáy khung nhìn.
+               Khi cuộn, khoảng trắng này sẽ trôi qua, sau đó mới đến tin nhắn.
+            */}
+            <div className="flex-shrink-0" style={{ height: "25vh" }}></div>
+
+            {activeWishes.map((wish) => (
+              <div
+                key={wish.uniqueKey}
+                // Animate fade-in-up chỉ chạy 1 lần lúc xuất hiện
+                className="w-full flex justify-start px-1 animate-fade-in-up flex-shrink-0"
+              >
                 <div
-                  key={wish.uniqueKey}
-                  className="w-full flex justify-start px-1 flex-shrink-0 animate-fade-in-up"
+                  className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
+                  style={{
+                    maxWidth: "100%",
+                    width: "fit-content",
+                    backgroundColor: "rgba(243, 121, 121, 0.85)",
+                    border: `1px solid ${data.primaryColor}30`,
+                    color: "#ffffff",
+                    fontFamily: "'Playfair Display', serif",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+                  }}
                 >
-                  <div
-                    className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
-                    style={{
-                      maxWidth: "100%",
-                      width: "fit-content",
-                      backgroundColor: "rgba(243, 121, 121, 0.85)",
-                      border: `1px solid ${data.primaryColor}30`,
-                      color: "#ffffff",
-                      fontFamily: "'Playfair Display', serif",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-                    }}
-                  >
-                    <div className="text-[13px] sm:text-sm leading-snug break-words">
-                      <span className="font-bold mr-1">{wish.name}:</span>
-                      <span>{wish.message}</span>
-                    </div>
+                  <div className="text-[13px] sm:text-sm leading-snug break-words">
+                    <span className="font-bold mr-1">{wish.name}:</span>
+                    <span>{wish.message}</span>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* --- BUTTONS & UI GIỮ NGUYÊN --- */}
-      
+      {/* --- BUTTONS & UI --- */}
       <button
   onClick={toggleFloatingWishes}
   aria-pressed={showFloatingWishes}

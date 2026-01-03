@@ -24,6 +24,59 @@ interface WeddingCardScrollProps {
   initialGuestName: string
 }
 
+interface TypewriterProps {
+  text: string;
+  startDelay: number;
+  isVisible: boolean;
+  showCursor?: boolean; // Thêm biến này để bật/tắt con trỏ
+}
+
+const TypewriterEffect = ({ text, startDelay, isVisible, showCursor = true }: TypewriterProps) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timeout = setTimeout(() => {
+        setHasStarted(true);
+      }, startDelay);
+      return () => clearTimeout(timeout);
+    } else {
+      setDisplayedText("");
+      setHasStarted(false);
+    }
+  }, [isVisible, startDelay]);
+
+  useEffect(() => {
+    if (hasStarted && displayedText.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, displayedText.length + 1));
+      }, 20); 
+      return () => clearTimeout(timeout);
+    }
+  }, [hasStarted, displayedText, text]);
+
+  return (
+    <span>
+      {displayedText}
+      {/* Chỉ hiển thị con trỏ nếu showCursor = true */}
+      {showCursor && (
+        <span 
+          style={{ 
+            display: 'inline-block', 
+            marginLeft: '2px', 
+            fontWeight: '100',
+            color: 'rgba(62, 62, 59, 0.9)',
+            opacity: hasStarted ? 1 : 0,
+            animation: 'cursorBlink 0.8s infinite'
+          }}
+        >
+          |
+        </span>
+      )}
+    </span>
+  );
+};
 
 export default function WeddingCardScroll({
   guestCode,
@@ -1382,7 +1435,7 @@ const handleTouchEnd = () => {
 
   {/* Dòng 2 */}
   <div
-    className={`transition-all duration-1000 ease-out delay-1000`} 
+    className={`transition-all duration-1000 ease-out`} 
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
@@ -1404,7 +1457,7 @@ const handleTouchEnd = () => {
 
   {/* Dòng 3 */}
   <div
-    className={`transition-all duration-1000 ease-out delay-[2000ms]`}
+    className={`transition-all duration-1000 ease-out`}
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
@@ -1440,17 +1493,13 @@ const handleTouchEnd = () => {
     }}
   ></div>
 
-
-  {/* --- PHẦN 4: NỘI DUNG VĂN BẢN (Đã chỉnh lại cho rõ nét) --- */}
+{/* --- PHẦN 4: NỘI DUNG VĂN BẢN --- */}
   <div
     className={isVisible("love-story") ? "start-typing" : ""} 
     style={{
       fontFamily: "'Roboto', sans-serif", 
-      
-      // SỬA TẠI ĐÂY:
-      fontWeight: "300", // Đổi từ 100 -> normal để chữ dày và rõ hơn
-      color: "rgba(62, 62, 59, 0.9)", // Đổi từ 0.9 -> 1 để chữ không bị trong suốt
-      
+      fontWeight: "300",
+      color: "rgba(62, 62, 59, 1)", 
       fontSize: "14px",
       textAlign: "left",
       lineHeight: "1.6", 
@@ -1462,61 +1511,77 @@ const handleTouchEnd = () => {
       marginTop: "-13px"
     }}
   >
-    {/* Đoạn 1 */}
+    {/* Đoạn 1: Nam & Nhi! */}
     <p style={{ fontSize: "17px", fontWeight: "normal", marginBottom: "0.3rem" }}>
       <span className="typing-line line-1">Nam & Nhi!</span>
     </p>
 
-    {/* Đoạn 2 */}
-    <p style={{ marginBottom: "0.5rem" }}>
-      <span className="typing-line line-2">Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.</span>
+    {/* Đoạn 2: TẮT HOÀN TOÀN CON TRỎ (showCursor={false}) */}
+    <p style={{ marginBottom: "0.5rem", minHeight: "120px" }}>
+      <TypewriterEffect 
+        isVisible={isVisible("love-story")}
+        startDelay={5500} 
+        showCursor={false} // <--- Thêm dòng này để ẩn con trỏ
+        text="Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào."
+      />
     </p>
 
-    {/* Đoạn 3 */}
+    {/* Đoạn 3: Vẫn giữ con trỏ cho đoạn kết */}
     <p style={{ marginTop: "-0.3rem" }}>
-      <span className="typing-line line-3">Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy băng một lời hứa chung đường, chung nhà, chung tương lai.</span>
+      <TypewriterEffect 
+        isVisible={isVisible("love-story")}
+        startDelay={19200} 
+        showCursor={true} // Đoạn cuối vẫn để con trỏ cho đẹp
+        text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
+      />
     </p>
 
   </div>
 </section>
 
 <style jsx>{`
+  
+  
+  /* Dòng 1 */
+  .start-typing .line-1 {
+    clip-path: inset(0 100% 0 0);
+    animation: typeReveal 2s steps(15, end) 3.2s forwards;
+  }
   /* --- KEYFRAMES --- */
   @keyframes floatUpDown {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
+  
+  /* Animation cho dòng tiêu đề Nam & Nhi (Giữ nguyên) */
   @keyframes typeReveal {
     from { clip-path: inset(0 100% 0 0); }
     to { clip-path: inset(0 -5px 0 0); }
   }
-  @keyframes diagonalReveal {
-    from { clip-path: polygon(0 0, 0 0, 0 0); }
-    to { clip-path: polygon(0 0, 250% 0, 0 250%); }
-  }
+  
+  /* Hiệu ứng nhấp nháy con trỏ */
   @keyframes cursorBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+  
   @keyframes hideCursor {
     to { opacity: 0; }
   }
 
-  .typing-line {
+  /* --- ANIMATION LOGIC --- */
+  
+  /* Dòng 1: Nam & Nhi (CSS thuần) */
+  .typing-line.line-1 {
     display: inline-block;
     position: relative;
     white-space: pre-wrap;
-    /* SỬA: Dùng inherit để nhận màu xám từ cha, thay vì màu đen đậm */
     color: inherit; 
     vertical-align: bottom;
     clip-path: inset(0 100% 0 0); 
   }
 
-  /* --- ANIMATION LOGIC --- */
-  
-  /* Dòng 1 */
   .start-typing .line-1 {
-    clip-path: inset(0 100% 0 0);
     animation: typeReveal 2s steps(15, end) 3.2s forwards;
   }
   
@@ -1524,25 +1589,13 @@ const handleTouchEnd = () => {
     content: '|';
     position: absolute; right: -2px; bottom: 0;
     font-weight: 100;
-    color: rgba(62, 62, 59, 0.9); /* Sửa màu con trỏ cho đồng bộ */
+    color: rgba(62, 62, 59, 0.9);
     opacity: 0;
     animation: 
       cursorBlink 0.5s step-end 3.2s infinite,
-      hideCursor 0.1s linear 5.5s forwards;
+      hideCursor 0.1s linear 5.5s forwards; /* Ẩn con trỏ dòng 1 khi dòng 2 bắt đầu */
   }
 
-  /* Dòng 2 & 3 */
-  .typing-line.line-2, .typing-line.line-3 {
-     clip-path: polygon(0 0, 0 0, 0 0);
-  }
-
-  .start-typing .line-2 {
-    animation: diagonalReveal 5s ease-out 5.5s forwards;
-  }
-
-  .start-typing .line-3 {
-    animation: diagonalReveal 3s ease-out 10.5s forwards;
-  }
 `}</style>
 
 {/* Container bọc toàn bộ */}
@@ -2177,3 +2230,4 @@ const handleTouchEnd = () => {
     </div>
   )
 }
+
