@@ -1530,7 +1530,7 @@ const handleTouchEnd = () => {
     <p style={{ marginTop: "-0.3rem" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={27000} 
+        startDelay={28300} 
         showCursor={true} 
         text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
       />
