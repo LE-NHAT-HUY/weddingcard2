@@ -165,7 +165,7 @@ export default function RSVPSection({
     "w-full sm:w-80 border border-[#111111] rounded-full px-4 py-2 focus:outline-none focus:ring-0 transition-all duration-300";
 
   const radioClass =
-    "w-5 h-4 border-2 border-[#111111] rounded-full cursor-pointer transition-all duration-200";
+    "w-5 h-5 border-2 border-[#111111] rounded-full cursor-pointer transition-all duration-200 flex-shrink-0";
 
   // --- MẢNG FIELDS ĐÃ ĐƯỢC CẬP NHẬT ---
   const fields = [

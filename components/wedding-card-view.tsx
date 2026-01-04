@@ -62,9 +62,11 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   const [wishForm, setWishForm] = useState({ name: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   
-  // Refs cho logic cuộn
+  // --- Refs cho logic cuộn GPU ---
   const wishIndexRef = useRef(0)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null) // Khung nhìn (Viewport)
+  const scrollContentRef = useRef<HTMLDivElement>(null)   // Nội dung chạy (Track)
+  const currentTranslateY = useRef(0)                     // Giá trị cuộn hiện tại
 
   // 1. Load dữ liệu và Realtime
   useEffect(() => {
@@ -107,11 +109,10 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
   }, [])
 
-  // 2. Logic "Bơm" tin nhắn (Tốc độ cân bằng với tốc độ cuộn)
+  // 2. Logic "Bơm" tin nhắn
   useEffect(() => {
     if (!showFloatingWishes || wishes.length === 0) return
 
-    // 1.7s thêm một tin nhắn -> Đủ nhanh để tạo đường chạy cho thanh cuộn
     const interval = setInterval(() => {
       const currentWish = wishes[wishIndexRef.current % wishes.length]
       
@@ -121,7 +122,6 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
       }
 
       setActiveWishes((prev) => {
-        // Cho phép danh sách dài vô tận, trình duyệt hiện nay xử lý tốt
         return [...prev, newActiveWish] 
       })
 
@@ -131,26 +131,29 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
-  // 3. Logic "Cuộn Thông Minh" (Smart Scroll with Accumulator) -> SỬA ĐỂ HẾT GIẬT
+  // 3. Logic "Cuộn Siêu Mượt" (GPU Translation)
   useEffect(() => {
     let animationFrameId: number
-    let accumulator = 0; // Bộ đệm tích lũy pixel lẻ
-    const SCROLL_SPEED = 0.6; // Tốc độ cuộn (pixel mỗi frame)
+    const SCROLL_SPEED = 0.5; // Tốc độ (px/frame) - số lẻ vẫn mượt nhờ GPU
 
     const autoScroll = () => {
-      if (scrollContainerRef.current) {
-        const container = scrollContainerRef.current
-        
-        // Kiểm tra xem có thể cuộn được không
-        if (container.scrollHeight - container.scrollTop > container.clientHeight) {
-            accumulator += SCROLL_SPEED;
-            
-            // Chỉ cuộn khi tích lũy đủ >= 1 pixel để tránh lỗi sub-pixel rendering (nguyên nhân gây rung)
-            if (accumulator >= 1) {
-                const pixelsToScroll = Math.floor(accumulator);
-                container.scrollTop += pixelsToScroll;
-                accumulator -= pixelsToScroll; // Giữ lại phần lẻ (nếu có) cho lần sau
-            }
+      if (scrollContainerRef.current && scrollContentRef.current) {
+        const containerHeight = scrollContainerRef.current.offsetHeight
+        const contentHeight = scrollContentRef.current.offsetHeight
+
+        // Chỉ cuộn nếu nội dung dài hơn khung nhìn
+        if (contentHeight > containerHeight) {
+           // Tính giới hạn cuộn (hiệu số chiều cao)
+           const maxScroll = contentHeight - containerHeight;
+
+           // Nếu chưa chạm đáy thì cuộn tiếp
+           if (currentTranslateY.current < maxScroll) {
+              currentTranslateY.current += SCROLL_SPEED;
+              
+              // Sử dụng translate3d để ép trình duyệt dùng GPU -> MƯỢT MÀ
+              scrollContentRef.current.style.transform = `translate3d(0, -${currentTranslateY.current}px, 0)`;
+           } 
+           // Lưu ý: Khi tin nhắn mới vào, contentHeight tăng -> maxScroll tăng -> tự động cuộn tiếp
         }
       }
       animationFrameId = requestAnimationFrame(autoScroll)
@@ -161,7 +164,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
 
     return () => cancelAnimationFrame(animationFrameId)
-  }, [showFloatingWishes, activeWishes]) // Reset khi danh sách thay đổi
+  }, [showFloatingWishes, activeWishes]) 
 
   // Các hàm xử lý
   const toggleMusic = () => {
@@ -205,51 +208,55 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f0eb]">
       <audio ref={audioRef} src="/music.mp3" loop preload="auto" />
 
-      {/* --- PHẦN LỜI CHÚC TRÔI (FLOATING WISHES) --- */}
+      {/* --- PHẦN LỜI CHÚC TRÔI (FLOATING WISHES) - ĐÃ TỐI ƯU --- */}
       {showFloatingWishes && activeWishes.length > 0 && (
         <div 
           className="fixed left-2 sm:left-4 bottom-4 pb-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
-            // Mask mờ dần ở cạnh trên
+            // Tạo hiệu ứng mờ dần ở cạnh trên
             maskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
-            // Quan trọng: Tắt tính năng tự neo của trình duyệt để JS toàn quyền kiểm soát
-            overflowAnchor: "none"
           }}
         >
+          {/* VIEWPORT: Khung nhìn tĩnh, ẩn phần tràn */}
           <div
             ref={scrollContainerRef}
-            // THÊM CLASS: js-scroll-container (để tắt smooth scroll CSS)
-            className="w-full h-full overflow-hidden flex flex-col gap-2 js-scroll-container"
+            className="w-full h-full overflow-hidden relative"
           >
-            {/* Div đệm ở đầu danh sách. */}
-            <div className="flex-shrink-0" style={{ height: "25vh" }}></div>
+            {/* CONTENT TRACK: Phần nội dung di chuyển bằng GPU */}
+            <div 
+              ref={scrollContentRef}
+              className="w-full flex flex-col gap-2 absolute top-0 left-0 will-change-transform"
+              // will-change-transform giúp trình duyệt tối ưu hóa layer trước
+            >
+                {/* Div đệm: Đẩy tin nhắn đầu tiên xuống dưới đáy khi mới load */}
+                <div className="flex-shrink-0" style={{ height: "25vh" }}></div>
 
-            {activeWishes.map((wish) => (
-              <div
-                key={wish.uniqueKey}
-                // SỬA: Dùng wish-item-enter để animation mượt hơn
-                className="w-full flex justify-start px-1 wish-item-enter flex-shrink-0"
-              >
-                <div
-                  className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
-                  style={{
-                    maxWidth: "100%",
-                    width: "fit-content",
-                    backgroundColor: "rgba(243, 121, 121, 0.85)",
-                    border: `1px solid ${data.primaryColor}30`,
-                    color: "#ffffff",
-                    fontFamily: "'Playfair Display', serif",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-                  }}
-                >
-                  <div className="text-[13px] sm:text-sm leading-snug break-words">
-                    <span className="font-bold mr-1">{wish.name}:</span>
-                    <span>{wish.message}</span>
+                {activeWishes.map((wish) => (
+                  <div
+                    key={wish.uniqueKey}
+                    className="w-full flex justify-start px-1 wish-item-enter flex-shrink-0"
+                  >
+                    <div
+                      className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
+                      style={{
+                        maxWidth: "100%",
+                        width: "fit-content",
+                        backgroundColor: "rgba(243, 121, 121, 0.85)",
+                        border: `1px solid ${data.primaryColor}30`,
+                        color: "#ffffff",
+                        fontFamily: "'Playfair Display', serif",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+                      }}
+                    >
+                      <div className="text-[13px] sm:text-sm leading-snug break-words">
+                        <span className="font-bold mr-1">{wish.name}:</span>
+                        <span>{wish.message}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                ))}
+            </div>
           </div>
         </div>
       )}
