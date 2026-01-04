@@ -2100,23 +2100,31 @@ const handleTouchEnd = () => {
       </div>
 
       {/* ======= FULLSCREEN MODAL ======= */}
+      {/* ======= FULLSCREEN MODAL ======= */}
       {isFullscreen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
-          onClick={closeFullscreen} // click ngoài đóng
+          onClick={closeFullscreen} // click vùng đen để đóng
           role="dialog"
           aria-modal="true"
         >
           <div
             className="relative w-[95vw] max-w-[1200px] h-[85vh] max-h-[95vh]"
-            onClick={(e) => e.stopPropagation()} // ngăn đóng khi click bên trong
+            onClick={(e) => e.stopPropagation()} // ngăn đóng khi click vào ảnh/nút
           >
-            
+            {/* --- NÚT ĐÓNG (X) --- */}
+            <button
+              onClick={closeFullscreen}
+              className="absolute top-4 right-4 z-50 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 text-gray-800 shadow-sm transition-transform hover:scale-110"
+              aria-label="Close fullscreen"
+            >
+              ✕
+            </button>
 
             {/* prev (fullscreen) */}
             <button
               onClick={prev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center pb-1 text-xl"
               aria-label="Previous photo (fullscreen)"
             >
               ‹
@@ -2125,7 +2133,7 @@ const handleTouchEnd = () => {
             {/* next (fullscreen) */}
             <button
               onClick={next}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center pb-1 text-xl"
               aria-label="Next photo (fullscreen)"
             >
               ›

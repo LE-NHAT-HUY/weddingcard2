@@ -343,72 +343,90 @@ if (form.wishMessage.trim()) {
     </div>
 
     {/* Nội dung textarea */}
-    <div
-      className={`overflow-hidden transition-all duration-500 ${
-        openFields.sendWish ? "max-h-60 opacity-100 mt-3" : "max-h-0 opacity-0"
-      }`}
-    >
-      <div className="px-2  mt-3">
-        <textarea
-          value={form.wishMessage}
-          onChange={(e) => onChange("wishMessage", e.target.value)}
-          placeholder="Viết lời chúc của bạn..."
-          rows={3}
-          className={`w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#042b20] focus:border-transparent resize-none text-sm`}
-        />
-      </div>
-    </div>
+    {/* Nội dung textarea */}
+<div
+  className={`overflow-hidden transition-all duration-500 ${
+    openFields.sendWish ? "max-h-60 opacity-100 mt-3" : "max-h-0 opacity-0"
+  }`}
+>
+  <div className="mt-3">
+    <textarea
+      value={form.wishMessage}
+      onChange={(e) => onChange("wishMessage", e.target.value)}
+      placeholder="Viết lời chúc của bạn..."
+      rows={3}
+      // --- SỬA TẠI ĐÂY ---
+      // 1. border-[#111111]: Đồng nhất màu viền đen
+      // 2. rounded-2xl: Bo góc mềm mại (không dùng rounded-full cho textarea vì sẽ bị mất chữ ở góc)
+      // 3. focus:ring-0: Loại bỏ viền xanh/đen đậm khi nhấn vào
+      className="w-full border border-[#111111] rounded-2xl px-4 py-3 focus:outline-none focus:ring-0 transition-all duration-300 resize-none text-base"
+      style={{ fontFamily: "'Playfair Display', serif" }} // Thêm font cho giống input
+    />
+  </div>
+</div>
   </div>
 </div>
 
 
         {/* Submit button */}
-        <div
-          ref={(el) => (fieldsRef.current[fields.length + 1] = el)}
-          data-index={fields.length + 1}
-          className={`flex justify-center transform transition-all duration-700 ${
-            visibleFields.includes(fields.length + 1) ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-          }`}
-          style={{ transitionDelay: `${(fields.length + 1) * 150}ms` }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="text-white px-31 py-2 rounded-full disabled:opacity-50 transition-all duration-300 font-medium tracking-wide shadow-sm hover:shadow-md"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                backgroundColor: primaryColor,
-                border: `2px solid ${primaryColor}`,
-                opacity: loading ? 0.5 : 1,
-                cursor: loading ? "not-allowed" : "pointer",
-              }}
-              onMouseEnter={(e) => {
-                if (!loading) e.currentTarget.style.backgroundColor = "#030b20ff";
-              }}
-              onMouseLeave={(e) => {
-                if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
-              }}
-            >
-              {loading ? "Đang gửi..." : " Gửi xác nhận"}
-            </button>
+        {/* Submit button */}
+<div
+  ref={(el) => (fieldsRef.current[fields.length + 1] = el)}
+  data-index={fields.length + 1}
+  className={`flex justify-center transform transition-all duration-700 ${
+    visibleFields.includes(fields.length + 1)
+      ? "translate-y-0 opacity-100"
+      : "translate-y-8 opacity-0"
+  }`}
+  style={{ transitionDelay: `${(fields.length + 1) * 150}ms` }}
+>
+  {/* SỬA: Luôn dùng flex-col để xếp dọc, items-center để căn giữa */}
+  <div className="flex flex-col items-center gap-3 mt-4 w-full">
+    <button
+      type="submit"
+      disabled={loading}
+      // SỬA: whitespace-nowrap (không xuống dòng), px-12 (độ rộng vừa phải)
+      className="text-white px-12 py-2 rounded-full disabled:opacity-50 transition-all duration-300 font-medium tracking-wide shadow-sm hover:shadow-md whitespace-nowrap"
+      style={{
+        fontFamily: "'Playfair Display', serif",
+        backgroundColor: primaryColor,
+        border: `2px solid ${primaryColor}`,
+        opacity: loading ? 0.5 : 1,
+        cursor: loading ? "not-allowed" : "pointer",
+      }}
+      onMouseEnter={(e) => {
+        if (!loading) e.currentTarget.style.backgroundColor = "#030b20ff";
+      }}
+      onMouseLeave={(e) => {
+        if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
+      }}
+    >
+      {loading ? "Đang gửi..." : "Gửi xác nhận"}
+    </button>
 
-            {/* --- Thông báo lỗi / thành công --- */}
-            {errorMsg && (
-              <p className="mt-2 text-red-600 text-sm font-medium text-center w-full sm:w-auto">
-                {errorMsg}
-              </p>
-            )}
-            {status === "success" && (
-              <p className="text-sm font-medium text-center mx-auto" style={{ color: successColor }}>
-                💖 Cảm ơn bạn đã xác nhận!
-              </p>
-            )}
-            {status === "error" && (
-              <p className="text-sm font-medium text-center mx-auto text-red-600">❌ Gửi RSVP thất bại.</p>
-            )}
-          </div>
-        </div>
+    {/* --- Thông báo lỗi / thành công (Luôn nằm dưới) --- */}
+    <div className="min-h-[24px] flex justify-center items-center w-full px-2">
+      {errorMsg && (
+        <p className="text-red-600 text-sm font-medium text-center break-words w-full">
+          {errorMsg}
+        </p>
+      )}
+      {status === "success" && (
+        <p
+          className="text-sm font-medium text-center"
+          style={{ color: successColor }}
+        >
+          💖 Cảm ơn bạn đã xác nhận!
+        </p>
+      )}
+      {status === "error" && (
+        <p className="text-sm font-medium text-center text-red-600">
+          ❌ Gửi RSVP thất bại.
+        </p>
+      )}
+    </div>
+  </div>
+</div>
 
         {/* --- Thông báo riêng cho việc gửi lời chúc (sau khi gửi) --- */}
         {wishStatus === "success" && (
