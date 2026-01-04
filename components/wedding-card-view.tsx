@@ -111,7 +111,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
   useEffect(() => {
     if (!showFloatingWishes || wishes.length === 0) return
 
-    // 1.2s thêm một tin nhắn -> Đủ nhanh để tạo đường chạy cho thanh cuộn
+    // 1.7s thêm một tin nhắn -> Đủ nhanh để tạo đường chạy cho thanh cuộn
     const interval = setInterval(() => {
       const currentWish = wishes[wishIndexRef.current % wishes.length]
       
@@ -131,29 +131,26 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     return () => clearInterval(interval)
   }, [showFloatingWishes, wishes])
 
-  // 3. Logic "Cuộn Thông Minh" (Smart Scroll with Brake)
-  // 3. Logic "Cuộn Thông Minh" (Smart Scroll)
+  // 3. Logic "Cuộn Thông Minh" (Smart Scroll with Accumulator) -> SỬA ĐỂ HẾT GIẬT
   useEffect(() => {
     let animationFrameId: number
-    let preciseScrollTop = 0; 
+    let accumulator = 0; // Bộ đệm tích lũy pixel lẻ
+    const SCROLL_SPEED = 0.6; // Tốc độ cuộn (pixel mỗi frame)
 
     const autoScroll = () => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current
         
-        // Đồng bộ vị trí lần đầu
-        if (preciseScrollTop === 0 && container.scrollTop > 0) {
-            preciseScrollTop = container.scrollTop;
-        }
-
-        // Luôn luôn cộng thêm, không cần kiểm tra điều kiện dừng
-        // Trình duyệt sẽ tự xử lý việc kịch kim đáy
-        preciseScrollTop += 0.5; 
-        container.scrollTop = preciseScrollTop;
-        
-        // Mẹo: Nếu lỡ cuộn quá tay (do user can thiệp), đồng bộ lại biến đếm
-        if (Math.abs(container.scrollTop - preciseScrollTop) > 50) {
-           preciseScrollTop = container.scrollTop;
+        // Kiểm tra xem có thể cuộn được không
+        if (container.scrollHeight - container.scrollTop > container.clientHeight) {
+            accumulator += SCROLL_SPEED;
+            
+            // Chỉ cuộn khi tích lũy đủ >= 1 pixel để tránh lỗi sub-pixel rendering (nguyên nhân gây rung)
+            if (accumulator >= 1) {
+                const pixelsToScroll = Math.floor(accumulator);
+                container.scrollTop += pixelsToScroll;
+                accumulator -= pixelsToScroll; // Giữ lại phần lẻ (nếu có) cho lần sau
+            }
         }
       }
       animationFrameId = requestAnimationFrame(autoScroll)
@@ -164,7 +161,7 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
     }
 
     return () => cancelAnimationFrame(animationFrameId)
-  }, [showFloatingWishes]) // Phụ thuộc activeWishes để tính lại maxScroll chuẩn
+  }, [showFloatingWishes, activeWishes]) // Reset khi danh sách thay đổi
 
   // Các hàm xử lý
   const toggleMusic = () => {
@@ -214,29 +211,25 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
           className="fixed left-2 sm:left-4 bottom-4 pb-4 z-40 w-[85vw] sm:w-[350px] h-[25vh] pointer-events-none"
           style={{
             // Mask mờ dần ở cạnh trên
-            maskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 100%)",
+            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 100%)",
             // Quan trọng: Tắt tính năng tự neo của trình duyệt để JS toàn quyền kiểm soát
             overflowAnchor: "none"
           }}
         >
           <div
             ref={scrollContainerRef}
-            // Quan trọng: Tắt scroll-behavior smooth của CSS để tránh xung đột với JS
-            style={{ scrollBehavior: "auto" }}
-            className="w-full h-full overflow-hidden flex flex-col gap-1.5"
+            // THÊM CLASS: js-scroll-container (để tắt smooth scroll CSS)
+            className="w-full h-full overflow-hidden flex flex-col gap-2 js-scroll-container"
           >
-            {/* Div đệm ở đầu danh sách. 
-               Tác dụng: Đẩy tin nhắn đầu tiên xuống dưới đáy khung nhìn.
-               Khi cuộn, khoảng trắng này sẽ trôi qua, sau đó mới đến tin nhắn.
-            */}
+            {/* Div đệm ở đầu danh sách. */}
             <div className="flex-shrink-0" style={{ height: "25vh" }}></div>
 
             {activeWishes.map((wish) => (
               <div
                 key={wish.uniqueKey}
-                // Animate fade-in-up chỉ chạy 1 lần lúc xuất hiện
-                className="w-full flex justify-start px-1 animate-fade-in-up flex-shrink-0"
+                // SỬA: Dùng wish-item-enter để animation mượt hơn
+                className="w-full flex justify-start px-1 wish-item-enter flex-shrink-0"
               >
                 <div
                   className="px-3 py-1.5 rounded-xl text-left shadow-sm backdrop-blur-[2px]"
@@ -263,41 +256,30 @@ export default function WeddingCardView({ initialGuestName }: WeddingCardViewPro
 
       {/* --- BUTTONS & UI --- */}
       <button
-  onClick={toggleFloatingWishes}
-  aria-pressed={showFloatingWishes}
-  className="
-    fixed
-    bottom-6
-    right-4
-    z-50
-    bg-white
-    shadow-lg
-    rounded-full
-    p-2.5
-    hover:scale-105
-    transition
-  "
-  title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
->
-  <svg
-    viewBox="0 0 512 512"
-    width="22"
-    height="22"
-    fill="none"
-    stroke="currentColor"
-    className={`transition-all duration-300 ${
-      showFloatingWishes ? "opacity-100" : "opacity-40"
-    }`}
-    style={{ color: data.primaryColor }}
-  >
-    <path
-      strokeLinecap="round"
-      strokeMiterlimit="10"
-      strokeWidth="48"
-      d="M88 152h336M88 256h336M88 360h336"
-    />
-  </svg>
-</button>
+        onClick={toggleFloatingWishes}
+        aria-pressed={showFloatingWishes}
+        className="fixed bottom-6 right-4 z-50 bg-white shadow-lg rounded-full p-2.5 hover:scale-105 transition"
+        title={showFloatingWishes ? "Tắt bình luận" : "Bật bình luận"}
+      >
+        <svg
+            viewBox="0 0 512 512"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="currentColor"
+            className={`transition-all duration-300 ${
+            showFloatingWishes ? "opacity-100" : "opacity-40"
+            }`}
+            style={{ color: data.primaryColor }}
+        >
+            <path
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="48"
+            d="M88 152h336M88 256h336M88 360h336"
+            />
+        </svg>
+    </button>
 
       {!showMusicPrompt && (
         <>

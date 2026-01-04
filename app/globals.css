@@ -419,3 +419,38 @@ html, body, #__next {
   font-style: normal;
   font-display: swap;
 }
+
+
+/* FILE: globals.css */
+/* ... (giữ nguyên phần trên) ... */
+
+/* Thêm vào cuối file */
+
+/* CLASS QUAN TRỌNG: Dùng cho các khung có Auto-scroll bằng JS */
+.js-scroll-container {
+  scroll-behavior: auto !important; /* Tắt smooth CSS để tránh xung đột với JS */
+  will-change: scroll-position;     /* Báo trước cho browser tối ưu GPU */
+  transform: translateZ(0);         /* Kích hoạt Hardware Acceleration */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tắt scroll snap khi đang dùng auto scroll để tránh bị khựng */
+.no-snap {
+  scroll-snap-type: none !important;
+}
+
+/* Tối ưu hiệu ứng trôi tin nhắn */
+.wish-item-enter {
+  animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

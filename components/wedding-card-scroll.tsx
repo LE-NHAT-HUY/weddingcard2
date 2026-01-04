@@ -173,58 +173,72 @@ const [selectedIndex, setSelectedIndex] = useState(0);
   const wishIndexRef = useRef(0)
   const [isMusicOn, setIsMusicOn] = useState(false)
 
+  // FILE: wedding-card-scroll.tsx
 
-// --- SỬA ĐỔI: Thêm sự kiện 'scroll' để lướt là phát nhạc ---
+  // --- SỬA ĐỔI: Logic phát nhạc tối ưu cho cả lần đầu và khi mở lại ---
   useEffect(() => {
-    // 1. Cấu hình Audio
-    audioRef.current = new Audio('/music.mp3')
-    audioRef.current.loop = true
-    audioRef.current.volume = 0.3 
-    audioRef.current.preload = 'auto'
-
-    // 2. Hàm kích hoạt nhạc (chạy 1 lần rồi tự hủy)
-    const activeMusic = () => {
-      // Nếu nhạc đã bật hoặc chưa khởi tạo thì thôi
-      if (!audioRef.current || unlockedRef.current) return
-      
-      audioRef.current.play()
-        .then(() => {
-          setIsMusicOn(true)
-          unlockedRef.current = true
-          
-          // QUAN TRỌNG: Gỡ bỏ tất cả sự kiện để không chạy lại nữa
-          window.removeEventListener("click", activeMusic)
-          window.removeEventListener("touchstart", activeMusic)
-          window.removeEventListener("scroll", activeMusic) // Gỡ sự kiện cuộn
-          window.removeEventListener("keydown", activeMusic)
-        })
-        .catch((err) => {
-           // Nếu trình duyệt chặn, cứ để yên sự kiện đó chờ lần tương tác sau
-           console.log("Chờ tương tác tiếp theo để phát nhạc...")
-        })
+    // 1. Cấu hình Audio nếu chưa có
+    if (!audioRef.current) {
+      audioRef.current = new Audio('/music.mp3')
+      audioRef.current.loop = true
+      audioRef.current.volume = 0.3
+      audioRef.current.preload = 'auto'
     }
 
-    // 3. Thử phát ngay lập tức (cho Android/PC/Messenger)
+    // 2. Hàm kích hoạt nhạc
+    const activeMusic = () => {
+      // Nếu không có audio hoặc nhạc ĐANG PHÁT rồi thì không cần làm gì nữa
+      if (!audioRef.current || !audioRef.current.paused) {
+        // Nếu đang phát, đảm bảo state cập nhật đúng
+        if (!isMusicOn) setIsMusicOn(true)
+        return
+      }
+
+      // Thử phát nhạc
+      const playPromise = audioRef.current.play()
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // PHÁT THÀNH CÔNG
+            setIsMusicOn(true)
+            unlockedRef.current = true
+            
+            // Chỉ khi phát thành công mới gỡ bỏ sự kiện để tối ưu
+            window.removeEventListener("click", activeMusic)
+            window.removeEventListener("touchstart", activeMusic)
+            window.removeEventListener("scroll", activeMusic)
+            window.removeEventListener("keydown", activeMusic)
+          })
+          .catch((err) => {
+            // NẾU LỖI (do trình duyệt chặn):
+            // Giữ nguyên các sự kiện lắng nghe (click, scroll...) để thử lại ở lần tương tác sau
+            console.log("Chờ tương tác người dùng để phát nhạc...")
+          })
+      }
+    }
+
+    // 3. Thử phát ngay lập tức (cho trường hợp trình duyệt đã nhớ quyền từ lần trước)
     activeMusic()
 
-    // 4. Bắt tất cả các hành động của người dùng
-    window.addEventListener("click", activeMusic)      // Bắt sự kiện click chuột
-    window.addEventListener("touchstart", activeMusic) // Bắt sự kiện chạm màn hình
-    window.addEventListener("scroll", activeMusic)     // <--- DÒNG QUAN TRỌNG: Bắt sự kiện LƯỚT/CUỘN
-    window.addEventListener("keydown", activeMusic)    // Bắt sự kiện gõ phím
+    // 4. Gắn sự kiện để "bắt" tương tác người dùng
+    window.addEventListener("click", activeMusic)
+    window.addEventListener("touchstart", activeMusic)
+    window.addEventListener("scroll", activeMusic) // Sự kiện lướt
+    window.addEventListener("keydown", activeMusic)
 
     // Cleanup khi thoát trang
     return () => {
       if (audioRef.current) {
         audioRef.current.pause()
-        audioRef.current = null
+        // Không set null ở đây để tránh lỗi nếu component re-mount nhanh
       }
       window.removeEventListener("click", activeMusic)
       window.removeEventListener("touchstart", activeMusic)
       window.removeEventListener("scroll", activeMusic)
       window.removeEventListener("keydown", activeMusic)
     }
-  }, [])
+  }, []) // Dependency array rỗng để chạy 1 lần khi mount
 
 useEffect(() => {
   console.log("Fetching guest for code:", codeToUse)
@@ -381,11 +395,13 @@ const handleTouchEnd = () => {
     
     
    <div
-  ref={containerRef}
-  className="relative w-full md:max-w-[390px] mx-auto h-screen md:h-[844px] overflow-y-scroll overflow-x-hidden snap-y snap-mandatory bg-white"
-  style={containerStyle}
->
-
+      ref={containerRef}
+      // SỬA: 
+      // 1. Xóa "snap-y snap-mandatory" (QUAN TRỌNG NHẤT để hết giật)
+      // 2. Thêm "js-scroll-container" để cuộn mượt bằng GPU
+      className="relative w-full md:max-w-[390px] mx-auto h-screen md:h-[844px] overflow-y-scroll overflow-x-hidden bg-white js-scroll-container"
+      style={containerStyle}
+    >
           <AutoScrollToBottom
   containerRef={containerRef}
   speed={80}
@@ -1081,7 +1097,7 @@ const handleTouchEnd = () => {
   </p>
 </section>
 
-{/* Thông tin lễ cưới Nhà Trai - theo đúng mẫu Nhà Gái nhưng đảo ngược hướng animation */}
+{/* Thông tin lễ cưới Nhà Trai */}
 <section
   id="wedding-info-2"
   data-animate
@@ -1117,7 +1133,7 @@ const handleTouchEnd = () => {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
-    {/* 28 - fade + từ trên xuống nhẹ, delay đồng bộ với Tháng */}
+    {/* 28 */}
     <span
       className="text-6xl sm:text-6xl font-bold transition-all duration-1000 ease-out delay-[600ms]"
       style={{
@@ -1147,13 +1163,16 @@ const handleTouchEnd = () => {
     </span>
   </div>
 
-  {/* Tháng 01 - lao nhanh từ PHẢI, quá đà rồi bật lại, không hiện sẵn */}
+  {/* --- SỬA LỖI TẠI ĐÂY --- */}
+  {/* Tháng 01 - lao nhanh từ PHẢI */}
   <p
     className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      opacity: isVisible("wedding-info-2") ? 1 : 0,
+      // QUAN TRỌNG: Để opacity là 0 để nó ẩn trong lúc chờ delay
+      opacity: 0, 
+      // Animation sẽ tự động đưa opacity lên 1 khi kết thúc nhờ 'forwards'
       animation: isVisible("wedding-info-2")
         ? "overshootRightFast 0.9s ease-out 0.6s forwards"
         : "none",
@@ -1162,7 +1181,7 @@ const handleTouchEnd = () => {
     Tháng 01
   </p>
 
-  {/* Lịch âm - đẩy từ bên TRÁI */}
+  {/* Lịch âm */}
   <p
     className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-800 ease-out delay-[1200ms]"
     style={{
@@ -1176,7 +1195,7 @@ const handleTouchEnd = () => {
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
 
-  {/* Địa điểm - đẩy từ bên TRÁI */}
+  {/* Địa điểm */}
   <p
     className="text-lg sm:text-lg font-semibold transition-all duration-800 ease-out delay-[1400ms]"
     style={{
@@ -1205,6 +1224,7 @@ const handleTouchEnd = () => {
     CHỈ ĐƯỜNG
   </a>
 </section>
+
 
 {/* Keyframes cho hiệu ứng overshoot từ bên phải (Nhà Trai) */}
 <style jsx global>{`
