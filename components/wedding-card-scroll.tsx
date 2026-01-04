@@ -435,58 +435,73 @@ const handleTouchEnd = () => {
       </p>
     </div>
           {/* ===== NAMES ===== */}
-          <div className="relative w-full flex items-center justify-center flex-1 min-h-[180px] overflow-visible">
-            {/* Groom Name */}
-            <p
-              className={`absolute left-0 top-[12%] text-[2.5rem] italic transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
-                isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 -translate-x-12"
-              }`}
-              style={{
-                fontFamily: "'Great Vibes', cursive",
-                color: "#111111",
-                lineHeight: "1.6",
-                padding: "10px 0",
-                textShadow: "0 0 1px transparent",
-                maxWidth: "calc(50% - 1.5rem)",
-                overflow: "visible",
-                zIndex: 20,
-              }}
-            >
-              {data.groomName}
-            </p>
+          {/* ===== NAMES ===== */}
+<div className="relative w-full flex items-center justify-center flex-1 min-h-[180px] overflow-visible">
+  
+  {/* Groom Name */}
+  <p
+    // Xóa delay-[700ms], giữ nguyên hiệu ứng hiện
+    className={`absolute left-0 top-[10%] text-[2.5rem] italic transition-all duration-1000 whitespace-nowrap ${
+      isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 -translate-x-12"
+    }`}
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      // TĂNG lineHeight để không cắt đầu chữ 'i' hay dấu mũ
+      lineHeight: "2", 
+      // THÊM padding rộng: Trên 20px, Phải 20px (quan trọng cho chữ m), Dưới/Trái 10px
+      padding: "20px 20px 10px 10px", 
+      textShadow: "0 0 1px transparent",
+      maxWidth: "calc(50% - 1.5rem)",
+      overflow: "visible", // Bắt buộc
+      zIndex: 20,
+      // Hack nhỏ giúp iOS vẽ lại vùng bao quanh chữ tốt hơn
+      filter: "drop-shadow(0 0 0 transparent)", 
+    }}
+  >
+    {data.groomName}
+  </p>
 
-            {/* Ampersand */}
-            <span
-              className="text-3xl opacity-80 relative z-30"
-              style={{
-                fontFamily: "'Great Vibes', cursive",
-                lineHeight: "1.6",
-                padding: "0 5px",
-                transform: "translateY(0.2em)",
-              }}
-            >
-              &
-            </span>
+  {/* Ampersand (&) */}
+  <span
+    // Thêm logic transition giống tên để hiện đồng bộ
+    className={`text-3xl relative z-30 transition-all duration-1000 ${
+        isVisible("main-photo-start") ? "opacity-80 scale-100" : "opacity-0 scale-50"
+    }`}
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      lineHeight: "2", // Tăng line-height cho đồng bộ
+      padding: "10px", // Thêm padding tránh bị cắt góc
+      transform: "translateY(0.55em)",
+      display: "inline-block", // Cần block/inline-block để padding hoạt động tốt
+      overflow: "visible"
+    }}
+  >
+    &
+  </span>
 
-            {/* Bride Name */}
-            <p
-              className={`absolute right-9 sm:right-9 top-[50%] text-[2.7rem] italic text-right transition-all duration-1000 delay-[700ms] whitespace-nowrap ${
-                isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 translate-x-12"
-              }`}
-              style={{
-                fontFamily: "'Great Vibes', cursive",
-                color: "#111111",
-                lineHeight: "1.6",
-                padding: "10px 0",
-                textShadow: "0 0 1px transparent",
-                maxWidth: "calc(50% - 1.5rem)",
-                overflow: "visible",
-                zIndex: 20,
-              }}
-            >
-              {data.brideName}
-            </p>
-          </div>
+  {/* Bride Name */}
+  <p
+    // Xóa delay-[700ms]
+    className={`absolute right-9 sm:right-9 top-[48%] text-[2.7rem] italic text-right transition-all duration-1000 whitespace-nowrap ${
+      isVisible("main-photo-start") ? "opacity-80 translate-x-0" : "opacity-0 translate-x-12"
+    }`}
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      lineHeight: "2", // Tăng line-height
+      // Padding rộng đặc biệt bên phải và trên
+      padding: "20px 20px 10px 10px",
+      textShadow: "0 0 1px transparent",
+      maxWidth: "calc(50% - 1.5rem)",
+      overflow: "visible",
+      zIndex: 20,
+      filter: "drop-shadow(0 0 0 transparent)",
+    }}
+  >
+    {data.brideName}
+  </p>
+</div>
         </div>
 
   {/* ===== PHẦN ẢNH ===== */}
