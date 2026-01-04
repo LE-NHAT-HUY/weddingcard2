@@ -28,7 +28,7 @@ interface TypewriterProps {
   text: string;
   startDelay: number;
   isVisible: boolean;
-  showCursor?: boolean; // Thêm biến này để bật/tắt con trỏ
+  showCursor?: boolean;
 }
 
 const TypewriterEffect = ({ text, startDelay, isVisible, showCursor = true }: TypewriterProps) => {
@@ -49,6 +49,7 @@ const TypewriterEffect = ({ text, startDelay, isVisible, showCursor = true }: Ty
 
   useEffect(() => {
     if (hasStarted && displayedText.length < text.length) {
+      // Tốc độ 40ms/ký tự
       const timeout = setTimeout(() => {
         setDisplayedText(text.slice(0, displayedText.length + 1));
       }, 40); 
@@ -57,9 +58,9 @@ const TypewriterEffect = ({ text, startDelay, isVisible, showCursor = true }: Ty
   }, [hasStarted, displayedText, text]);
 
   return (
-    <span>
+    // SỬA: Thêm whiteSpace: 'pre-wrap' để nhận diện xuống dòng
+    <span style={{ whiteSpace: 'pre-wrap' }}>
       {displayedText}
-      {/* Chỉ hiển thị con trỏ nếu showCursor = true */}
       {showCursor && (
         <span 
           style={{ 
@@ -1528,28 +1529,19 @@ const handleTouchEnd = () => {
       marginTop: "-13px"
     }}
   >
-    {/* Đoạn 1: Nam & Nhi! (CSS thuần, đã chỉnh timing) */}
+    {/* Đoạn 1: Nam & Nhi! */}
     <p style={{ fontSize: "17px", marginBottom: "0.3rem" }}>
       <span className="typing-line line-1">Nam & Nhi!</span>
     </p>
 
-    {/* Đoạn 2: TẮT CON TRỎ, BẮT ĐẦU SỚM (4000ms) */}
+    {/* Đoạn 2 (Gộp chung): Chạy lúc 3000ms */}
     <p style={{ marginBottom: "0.5rem", minHeight: "120px" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={4000} 
-        showCursor={false} 
-        text="Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào."
-      />
-    </p>
-
-    {/* Đoạn 3: HIỆN CON TRỎ, BẮT ĐẦU KHI ĐỌC XONG (16000ms) */}
-    <p style={{ marginTop: "-0.3rem" }}>
-      <TypewriterEffect 
-        isVisible={isVisible("love-story")}
-        startDelay={26400} 
+        startDelay={3000} // SỬA: Giảm xuống 3000 để chạy ngay
         showCursor={true} 
-        text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
+        // SỬA: Dùng \n thay vì \n\n để giảm khoảng cách
+        text={`Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.\nVà hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai.`}
       />
     </p>
 
@@ -1589,12 +1581,12 @@ const handleTouchEnd = () => {
     clip-path: inset(0 100% 0 0); 
   }
 
-  /* Dòng 1: Nam & Nhi - Sửa thời gian bắt đầu thành 1.5s */
+  /* Dòng 1: Chạy nhanh trong 1s */
   .start-typing .line-1 {
-    animation: typeReveal 2s steps(15, end) 1.5s forwards;
+    animation: typeReveal 1s steps(15, end) 1.5s forwards;
   }
   
-  /* Con trỏ dòng Nam & Nhi - Sửa thời gian ẩn thành 4.0s */
+  /* Con trỏ dòng 1: Ẩn đúng lúc 4.0s khi đoạn văn chính bắt đầu */
   .start-typing .line-1::after {
     content: '|';
     position: absolute; right: -2px; bottom: 0;
@@ -1603,7 +1595,7 @@ const handleTouchEnd = () => {
     opacity: 0;
     animation: 
       cursorBlink 0.5s step-end 1.5s infinite,
-      hideCursor 0.1s linear 4.0s forwards;
+      hideCursor 0.1s linear 3.0s forwards;
   }
 `}</style>
 
