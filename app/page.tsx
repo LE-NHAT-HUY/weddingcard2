@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 // === generateMetadata: luôn có ảnh, không cần code ===
 export async function generateMetadata(): Promise<Metadata> {
   const title = "Thân mời Quý khách | Tham dự lễ cưới của Nam & Nhi ❤️"
-  const description = "Mời bạn tham dự lễ cưới của chúng tôi"
+  const description = "Mời bạn tham dự lễ cưới của Nam & Nhi"
 
   return {
     title,
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: "https://weddingnamnhi.vercel.app",
-      siteName: "Mời bạn tham dự lễ cưới của chúng tôi",
+      siteName: "Mời bạn tham dự lễ cưới của Nam & Nhi",
       images: [
         {
           url: "https://weddingnamnhi.vercel.app/anh12-cat.jpg",

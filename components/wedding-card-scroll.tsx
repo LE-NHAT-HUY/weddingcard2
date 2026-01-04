@@ -564,6 +564,8 @@ const handleTouchEnd = () => {
 </section>
 
 {/* Thông báo */}
+
+
 <section
   id="quote2"
   data-animate
@@ -577,11 +579,11 @@ const handleTouchEnd = () => {
       fontFamily: "'Montserrat', sans-serif",
       color: "#5d2c2cff",
       letterSpacing: "2px",
-      whiteSpace: "normal",   // 🔑 cho phép xuống dòng
+      whiteSpace: "normal",
       wordBreak: "break-word",
     }}
   >
-    TRÂN TRỌNG THÔNG BÁO LỄ THÀNH HÔN
+    TRÂN TRỌNG THÔNG BÁO <br /> LỄ THÀNH HÔN
   </p>
 </section>
 
@@ -668,7 +670,7 @@ const handleTouchEnd = () => {
         Cô Dâu
       </h4>
       <h4
-        className="text-4xl sm:text-4xl font-normal mb-2 sm:mb-2"
+        className="text-3xl sm:text-3xl font-normal mb-2 sm:mb-2"
         style={{ color: "#934040ff", fontFamily: "'Great Vibes', cursive" }}
       >
         Lan Nhi
@@ -1530,7 +1532,7 @@ const handleTouchEnd = () => {
     <p style={{ marginTop: "-0.3rem" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={26000} 
+        startDelay={26400} 
         showCursor={true} 
         text="Và hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai."
       />
