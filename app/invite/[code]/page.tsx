@@ -7,25 +7,27 @@ type Props = {
   params: Promise<{ code: string }>
 }
 
-// === generateMetadata: Xử lý title và description động ===
+// === generateMetadata: Xử lý title link (DÙNG TITLENAME) ===
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params
   const supabase = createClient()
 
   let guestName = "Quý khách"
   let honorific = "Thân mời"
-  let inviteNote = "Mời bạn" // Giá trị mặc định nếu không có note
+  let inviteNote = "Mời bạn"
 
   if (code) {
     const { data } = await supabase
       .from("guests")
-      .select("name, honorific, note") // <--- Thêm cột note vào đây
+      // SỬA: Lấy 'titlename' để hiển thị trên link share/tab trình duyệt
+      .select("titlename, honorific, note") 
       .eq("code", code.toLowerCase().trim())
       .single()
 
-    if (data?.name) guestName = data.name.trim()
+    // Gán biến guestName bằng titlename
+    if (data?.titlename) guestName = data.titlename.trim()
     if (data?.honorific) honorific = data.honorific.trim()
-    if (data?.note) inviteNote = data.note.trim() // <--- Lấy giá trị note
+    if (data?.note) inviteNote = data.note.trim()
   }
 
   const title =
@@ -33,7 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `${honorific} Quý khách | Tham dự lễ cưới của Nam & Nhi ❤️`
       : `${honorific} ${guestName} | Tham dự lễ cưới của Nam & Nhi ❤️`
 
-  // Thay thế "Mời bạn" bằng giá trị inviteNote lấy từ DB
   const description = `${inviteNote} tham dự lễ cưới của Nam & Nhi`
 
   return {
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// === Trang mời cá nhân ===
+// === Trang mời cá nhân: Hiển thị bên trong (DÙNG NAME) ===
 export default async function InvitePage({ params }: Props) {
   const { code } = await params
   const supabase = createClient()
@@ -73,7 +74,8 @@ export default async function InvitePage({ params }: Props) {
   if (code) {
     const { data } = await supabase
       .from("guests")
-      .select("name")
+      // GIỮ NGUYÊN: Lấy 'name' gốc để hiển thị trang trọng bên trong thiệp
+      .select("name") 
       .eq("code", code.toLowerCase().trim())
       .single()
 
