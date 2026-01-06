@@ -1211,7 +1211,7 @@ const handleTouchEnd = () => {
   </p>
 
   <a
-    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    href="https://maps.app.goo.gl/ZA7jmKHUYWUxZR7E7?g_st=ic"
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-800 ease-out delay-[1600ms]"
@@ -1431,7 +1431,7 @@ const handleTouchEnd = () => {
 
   {/* Nút CHỈ ĐƯỜNG - đẩy từ dưới lên cuối cùng */}
   <a
-    href="https://maps.app.goo.gl/QUsVsCprj56Gmcb76"
+    href="https://maps.app.goo.gl/ZA7jmKHUYWUxZR7E7?g_st=ic"
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
