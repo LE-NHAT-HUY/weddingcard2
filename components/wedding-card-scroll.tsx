@@ -1291,7 +1291,7 @@ const handleTouchEnd = () => {
       whiteSpace: "nowrap",
     }}
   >
-    LỄ THÀNH HÔN
+    LỄ VU QUY
     {/* Gạch chân kéo dài bằng pseudo-element */}
     <span
       className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
@@ -1331,6 +1331,159 @@ const handleTouchEnd = () => {
       transition: "opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s",
     }}
   >
+    THỨ BA
+  </p>
+
+  {/* 11H00 | 28 | 2026 */}
+  <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
+    {/* 11H00 - trượt từ bên TRÁI */}
+    <span
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
+        opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-60px)",
+        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
+      }}
+    >
+      9H00
+    </span>
+
+    <span className="border-l-2 border-gray-500 h-13" />
+
+    {/* Số 28 - đẩy từ dưới lên (đơn giản, nổi bật) */}
+    <span
+      className="text-6xl sm:text-6xl font-bold"
+      style={{
+        fontFamily: "'Roboto Mono', monospace",
+        lineHeight: 1,
+        color: "#111",
+        opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(40px)",
+        transition: "opacity 1s ease 1s, transform 1s ease 1s",
+      }}
+    >
+      27
+    </span>
+
+    <span className="border-l-2 border-gray-500 h-13" />
+
+    {/* 2026 - trượt từ bên PHẢI */}
+    <span
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        color: "#564e4eff",
+        opacity: isVisible("wedding-info-1") ? 1 : 0,
+        transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(60px)",
+        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
+      }}
+    >
+      2026
+    </span>
+  </div>
+
+  {/* Tháng 01 - đẩy từ dưới lên */}
+  <p
+    className="text-xl sm:text-2xl font-normal mt-3 mb-4"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#564e4eff",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.9s ease 1.2s, transform 0.9s ease 1.2s",
+    }}
+  >
+    Tháng 01
+  </p>
+
+  {/* Lịch âm - đẩy từ dưới lên */}
+  <p
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#564e4eff",
+      fontStyle: "italic",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s",
+    }}
+  >
+    (Tức ngày 09 tháng 12 năm Ất Tỵ)
+  </p>
+
+  {/* Địa điểm - đẩy từ dưới lên */}
+  <p
+    className="text-lg sm:text-lg font-semibold mb-4"
+    style={{
+      fontFamily: "'Great Vibes', cursive",
+      color: "#111111",
+      letterSpacing: "2px",
+      fontSize: "20px",
+      whiteSpace: "nowrap",
+      fontWeight: 300,
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 1.6s, transform 0.8s ease 1.6s",
+    }}
+  >
+    Tư Gia Nhà Gái
+  </p>
+</section>
+
+<section
+  id="quote1"
+  data-animate
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-1700 ${isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+>
+  <p
+    className="text-xl sm:text-xl mt-2 relative inline-block" // relative để pseudo-element hoạt động
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#342a2aff",
+      letterSpacing: "1px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    LỄ THÀNH HÔN
+    {/* Gạch chân kéo dài bằng pseudo-element */}
+    <span
+      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
+      style={{ transform: "translateY(0px)" }} // đẩy xuống một chút so với chữ
+    />
+  </p>
+</section>
+
+ <div className="relative bg-gray-100">
+  <div className="absolute left-[50%] top-[-100] translate-y-[-50%] z-20">
+    <CustomImage />
+  </div>
+</div>
+
+ <div className="relative bg-gray-100">
+  <div className="absolute left-[5%] top-[-15] translate-y-[-50%] z-20">
+    <CustomImage2 />
+  </div>
+</div>
+
+
+
+
+<section
+  id="wedding-info-1"
+  data-animate
+  className="px-4 sm:px-4 py-4 sm:py-4 text-center"
+>
+  {/* THỨ TƯ - đẩy nhẹ từ dưới lên */}
+  <p
+    className="text-xl sm:text-xl font-normal mb-4"
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      color: "#564e4eff",
+      opacity: isVisible("wedding-info-1") ? 1 : 0,
+      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s",
+    }}
+  >
     THỨ TƯ
   </p>
 
@@ -1346,7 +1499,7 @@ const handleTouchEnd = () => {
         transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
       }}
     >
-      11H00
+      9H00
     </span>
 
     <span className="border-l-2 border-gray-500 h-13" />
@@ -1430,27 +1583,13 @@ const handleTouchEnd = () => {
   </p>
 
   {/* Nút CHỈ ĐƯỜNG - đẩy từ dưới lên cuối cùng */}
-  <a
-    href="https://maps.app.goo.gl/ZA7jmKHUYWUxZR7E7?g_st=ic"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
-    style={{
-      fontFamily: "'Montserrat', sans-serif",
-      opacity: isVisible("wedding-info-1") ? 1 : 0,
-      transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
-      transition: "opacity 0.8s ease 1.8s, transform 0.8s ease 1.8s",
-    }}
-  >
-    CHỈ ĐƯỜNG
-  </a>
 </section>
 
 
 
 
 {/* --- BẮT ĐẦU SECTION CÂU CHUYỆN --- */}
-<section id="love-story" data-animate className="overflow-hidden py-10">
+<section id="love-story" data-animate className="overflow-hidden py-1">
   
   {/* --- PHẦN 1: CÁC TIÊU ĐỀ (Đã xóa delay để chạy cùng lúc) --- */}
   
