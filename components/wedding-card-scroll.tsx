@@ -522,36 +522,49 @@ const handleTouchEnd = () => {
         </div>
 
   {/* ===== PHẦN ẢNH ===== */}
+  {/* ===== PHẦN ẢNH (GIỮ NGUYÊN CẤU TRÚC - FIX LỖI RENDER) ===== */}
   <div className="w-full flex justify-center px-4 pb-[10px] overflow-hidden">
     <div className="w-full max-w-5xl flex justify-center items-end gap-1.5 md:gap-1.5">
       
       {/* LEFT IMAGE */}
-      <div className="flex items-end justify-center">
+      {/* Thêm 'relative z-0' để định vị layer */}
+      <div className="flex items-end justify-center relative z-0">
         <img
           src="/anh15cat4.jpg"
           alt="Left image"
-          loading="lazy"
-          className="w-auto h-auto object-contain object-bottom"
+          // QUAN TRỌNG: Đổi sang eager. iOS cũ xử lý lazy trong container scroll rất tệ.
+          loading="eager"
+          // Thêm: transform-gpu (ép dùng card đồ họa), backface-hidden (chống nháy hình)
+          className="w-auto h-auto object-contain object-bottom transform-gpu backface-hidden"
+          style={{ WebkitBackfaceVisibility: 'hidden' }} // Hack cho Safari cũ
         />
       </div>
 
       {/* CENTER IMAGE */}
-      <div className="flex items-end justify-center translate-y-3">
+      {/* Thêm: relative z-10 (để ảnh này luôn nằm đè lên trên nếu có va chạm layer) */}
+      <div className="flex items-end justify-center translate-y-3 relative z-10">
         <img
           src="/anh15cat5.jpg"
           alt="Main center image"
-          loading="lazy"
-          className="w-auto h-auto object-contain object-bottom"
+          loading="eager"
+          // Thêm: transform-gpu
+          className="w-auto h-auto object-contain object-bottom transform-gpu backface-hidden"
+          // willChange: transform -> Báo trình duyệt "Chuẩn bị tinh thần đi, tôi sắp di chuyển đấy"
+          style={{ 
+            willChange: 'transform', 
+            WebkitBackfaceVisibility: 'hidden' 
+          }} 
         />
       </div>
 
       {/* RIGHT IMAGE */}
-      <div className="flex items-end justify-center">
+      <div className="flex items-end justify-center relative z-0">
         <img
           src="/anh15cat2.jpg"
           alt="Right image"
-          loading="lazy"
-          className="w-auto h-auto object-contain object-bottom"
+          loading="eager"
+          className="w-auto h-auto object-contain object-bottom transform-gpu backface-hidden"
+          style={{ WebkitBackfaceVisibility: 'hidden' }}
         />
       </div>
 
