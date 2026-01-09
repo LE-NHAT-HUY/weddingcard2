@@ -1083,16 +1083,6 @@ const handleTouchEnd = () => {
   </p>
 </section>
 
-{/* 2. HÌNH ẢNH TRANG TRÍ (Giữ nguyên vị trí relative/absolute như mẫu) */}
-<div className="relative w-full h-10"> {/* Đã thêm height h-10 để tạo khoảng cách ảo tránh bị đè */}
-  <div className="absolute left-[50%] top-[-100px] translate-y-[-50%] z-20">
-    <CustomImage />
-  </div>
-  <div className="absolute left-[5%] top-[-15px] translate-y-[-50%] z-20">
-    <CustomImage2 />
-  </div>
-</div>
-
 {/* 3. THÔNG TIN CHI TIẾT */}
 <section
   id="wedding-info-1"
@@ -1408,20 +1398,7 @@ const handleTouchEnd = () => {
   </p>
 
   {/* Nút chỉ đường - Xuất hiện cuối cùng */}
-  <a
-    href="https://maps.app.goo.gl/kgoqhKQqiGUGzcJb7?g_st=ic"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block mt-2 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
-    style={{
-      fontFamily: "'Montserrat', sans-serif",
-      opacity: isVisible("wedding-info-2") ? 1 : 0,
-      transform: isVisible("wedding-info-2") ? "translateY(0)" : "translateY(20px)",
-      transition: "opacity 0.8s ease 1.8s, transform 0.8s ease 1.8s",
-    }}
-  >
-    CHỈ ĐƯỜNG
-  </a>
+ 
 </section>
 
 
