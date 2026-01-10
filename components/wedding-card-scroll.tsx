@@ -1055,11 +1055,14 @@ const handleTouchEnd = () => {
 
 {/* ==================== TIỆC CƯỚI NHÀ GÁI ==================== */}
 
+{/* ==================== TIỆC CƯỚI NHÀ GÁI ==================== */}
+
 {/* 1. TIÊU ĐỀ */}
 <section
   id="quote1"
   data-animate
-  className={`px-7 sm:px-7 py-2 text-center transition-all duration-1700 ${
+  // Tăng duration từ 1700 lên 2500ms để hiện chậm hơn
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-[2500ms] ${
     isVisible("quote1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
@@ -1090,6 +1093,7 @@ const handleTouchEnd = () => {
   className="px-4 sm:px-4 py-6 sm:py-6 text-center overflow-hidden"
 >
   {/* THỨ BA - Đẩy từ dưới lên */}
+  {/* Delay cũ: 0.4s -> Mới: 1.0s */}
   <p
     className="text-xl sm:text-xl font-normal mb-4"
     style={{
@@ -1097,7 +1101,7 @@ const handleTouchEnd = () => {
       color: "#564e4eff",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
-      transition: "opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s",
+      transition: "opacity 1.2s ease 1.0s, transform 1.2s ease 1.0s", 
     }}
   >
     THỨ BA
@@ -1106,13 +1110,14 @@ const handleTouchEnd = () => {
   {/* 11H00 | 27 | 2026 */}
   <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
     {/* 11H00 - Trượt từ TRÁI sang */}
+    {/* Delay cũ: 0.6s -> Mới: 1.5s */}
     <span
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
         transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(-60px)",
-        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
+        transition: "opacity 1.4s ease 1.5s, transform 1.4s ease 1.5s",
       }}
     >
       11H00
@@ -1121,6 +1126,7 @@ const handleTouchEnd = () => {
     <span className="border-l-2 border-gray-500 h-13" />
 
     {/* Số 27 - Đẩy từ DƯỚI lên */}
+    {/* Delay cũ: 1.0s -> Mới: 2.0s */}
     <span
       className="text-6xl sm:text-6xl font-bold"
       style={{
@@ -1129,7 +1135,7 @@ const handleTouchEnd = () => {
         color: "#111",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
         transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(40px)",
-        transition: "opacity 1s ease 1s, transform 1s ease 1s",
+        transition: "opacity 1.5s ease 2.0s, transform 1.5s ease 2.0s",
       }}
     >
       27
@@ -1138,13 +1144,14 @@ const handleTouchEnd = () => {
     <span className="border-l-2 border-gray-500 h-13" />
 
     {/* 2026 - Trượt từ PHẢI sang */}
+    {/* Delay cũ: 0.6s -> Mới: 1.5s (Cùng lúc với giờ) */}
     <span
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-1") ? 1 : 0,
         transform: isVisible("wedding-info-1") ? "translateX(0)" : "translateX(60px)",
-        transition: "opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s",
+        transition: "opacity 1.4s ease 1.5s, transform 1.4s ease 1.5s",
       }}
     >
       2026
@@ -1152,6 +1159,7 @@ const handleTouchEnd = () => {
   </div>
 
   {/* Tháng 01 - Đẩy từ dưới lên */}
+  {/* Delay cũ: 1.2s -> Mới: 2.5s */}
   <p
     className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
@@ -1159,13 +1167,14 @@ const handleTouchEnd = () => {
       color: "#564e4eff",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
-      transition: "opacity 0.9s ease 1.2s, transform 0.9s ease 1.2s",
+      transition: "opacity 1.2s ease 2.5s, transform 1.2s ease 2.5s",
     }}
   >
     Tháng 01
   </p>
 
   {/* Lịch âm - Đẩy từ dưới lên */}
+  {/* Delay cũ: 1.4s -> Mới: 2.8s */}
   <p
     className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
     style={{
@@ -1174,13 +1183,14 @@ const handleTouchEnd = () => {
       fontStyle: "italic",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
-      transition: "opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s",
+      transition: "opacity 1.2s ease 2.8s, transform 1.2s ease 2.8s",
     }}
   >
     (Tức ngày 09 tháng 12 năm Ất Tỵ)
   </p>
 
   {/* Địa điểm - Đẩy từ dưới lên */}
+  {/* Delay cũ: 1.6s -> Mới: 3.2s */}
   <p
     className="text-lg sm:text-lg font-semibold mb-4"
     style={{
@@ -1191,13 +1201,14 @@ const handleTouchEnd = () => {
       fontWeight: 300,
       opacity: isVisible("wedding-info-1") ? 1 : 0,
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(30px)",
-      transition: "opacity 0.8s ease 1.6s, transform 0.8s ease 1.6s",
+      transition: "opacity 1.2s ease 3.2s, transform 1.2s ease 3.2s",
     }}
   >
     Nhà Văn Hóa Thôn Phúc Kiều
   </p>
   
   {/* Nút chỉ đường - Xuất hiện cuối cùng */}
+  {/* Delay cũ: 1.8s -> Mới: 3.6s */}
   <a
     href="https://maps.app.goo.gl/kgoqhKQqiGUGzcJb7?g_st=ic"
     target="_blank"
@@ -1207,14 +1218,14 @@ const handleTouchEnd = () => {
       fontFamily: "'Montserrat', sans-serif",
       opacity: isVisible("wedding-info-1") ? 1 : 0,
       transform: isVisible("wedding-info-1") ? "translateY(0)" : "translateY(20px)",
-      transition: "opacity 0.8s ease 1.8s, transform 0.8s ease 1.8s",
+      transition: "opacity 1.2s ease 3.6s, transform 1.2s ease 3.6s",
     }}
   >
     CHỈ ĐƯỜNG
   </a>
 </section>
 
-{/* Keyframes - đã điều chỉnh nhẹ để mượt hơn và chắc chắn ẩn ban đầu */}
+{/* Keyframes giữ nguyên */}
 <style jsx global>{`
   @keyframes overshootLeftFast {
     0% {
@@ -1235,9 +1246,6 @@ const handleTouchEnd = () => {
     }
   }
 `}</style>
-
-
-
 
 
 
@@ -1402,31 +1410,36 @@ const handleTouchEnd = () => {
 </section>
 
 
-{/* Tiệc cưới Nhà Trai - phần quote giữ nguyên hoặc đổi id nếu cần */}
+{/* ==================== TIỆC CƯỚI NHÀ TRAI ==================== */}
+
+{/* 1. TIÊU ĐỀ - Quote */}
 <section
   id="quote2"
   data-animate
-  className={`px-7 sm:px-7 py-2 text-center transition-all duration-700 ${
+  // Tăng duration lên 2500ms cho phần quote hiện ra từ từ
+  className={`px-7 sm:px-7 py-2 text-center transition-all duration-[2500ms] ${
     isVisible("quote2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
   }`}
 >
   <p
-    className="text-xl sm:text-xl mt-2 relative inline-block transition-all duration-700 delay-100"
+    // Xóa delay-100 cũ, để nó ăn theo parent hoặc set delay nhẹ nếu muốn
+    className="text-xl sm:text-xl mt-2 relative inline-block"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#342a2aff",
       letterSpacing: "1px",
       whiteSpace: "nowrap",
-      opacity: isVisible("quote2") ? 1 : 0,
-      transform: isVisible("quote2") ? "translateY(0)" : "translateY(10px)",
+      // Đã bao gồm trong class cha, nhưng nếu muốn animation riêng cho text bên trong thì giữ lại transition này
+      transition: "opacity 2.5s ease, transform 2.5s ease", 
     }}
   >
     TIỆC CƯỚI NHÀ TRAI
     <span
-      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full transition-all duration-700"
+      className="absolute left-0 bottom-0 w-full h-[1px] bg-[#251a1aff] rounded-full"
       style={{
         transform: isVisible("quote2") ? "scaleX(1)" : "scaleX(0)",
         transformOrigin: "left center",
+        transition: "transform 2.5s ease", // Gạch chân cũng chạy chậm theo
       }}
     />
   </p>
@@ -1439,13 +1452,15 @@ const handleTouchEnd = () => {
   className="px-4 sm:px-4 py-6 sm:py-6 text-center overflow-hidden"
 >
   {/* Thứ - đảo hướng: từ phải sang */}
+  {/* Delay: 1.0s */}
   <p
-    className={`text-xl sm:text-xl font-normal mb-4 transition-all duration-700 delay-300`}
+    className="text-xl sm:text-xl font-normal mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       opacity: isVisible("wedding-info-2") ? 1 : 0,
       transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(20px)",
+      transition: "opacity 1.2s ease 1.0s, transform 1.2s ease 1.0s",
     }}
   >
     THỨ TƯ
@@ -1454,13 +1469,14 @@ const handleTouchEnd = () => {
   {/* Thời gian | Ngày | Năm */}
   <div className="flex justify-center items-center gap-7 mb-1 text-2xl sm:text-2xl font-normal">
     {/* 11H00 - từ phải */}
+    {/* Delay: 1.5s */}
     <span
-      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-2") ? 1 : 0,
         transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(50px)",
+        transition: "opacity 1.4s ease 1.5s, transform 1.4s ease 1.5s",
       }}
     >
       11H00
@@ -1468,15 +1484,17 @@ const handleTouchEnd = () => {
 
     <span className="border-l-2 border-gray-500 h-13" />
 
-    {/* 28 */}
+    {/* 28 - Ngày dương */}
+    {/* Delay: 2.0s */}
     <span
-      className="text-6xl sm:text-6xl font-bold transition-all duration-1000 ease-out delay-[600ms]"
+      className="text-6xl sm:text-6xl font-bold"
       style={{
         fontFamily: "'Roboto Mono', monospace",
         lineHeight: 1,
         color: "#111",
         opacity: isVisible("wedding-info-2") ? 1 : 0,
         transform: isVisible("wedding-info-2") ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 1.5s ease 2.0s, transform 1.5s ease 2.0s",
       }}
     >
       28
@@ -1485,31 +1503,30 @@ const handleTouchEnd = () => {
     <span className="border-l-2 border-gray-500 h-13" />
 
     {/* 2026 - từ trái */}
+    {/* Delay: 1.5s (cùng lúc với giờ) */}
     <span
-      className="transition-all duration-1000 ease-out delay-[200ms]"
       style={{
         fontFamily: "'Montserrat', sans-serif",
         color: "#564e4eff",
         opacity: isVisible("wedding-info-2") ? 1 : 0,
         transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-50px)",
+        transition: "opacity 1.4s ease 1.5s, transform 1.4s ease 1.5s",
       }}
     >
       2026
     </span>
   </div>
 
-  {/* --- SỬA LỖI TẠI ĐÂY --- */}
-  {/* Tháng 01 - lao nhanh từ PHẢI */}
+  {/* Tháng 01 - Animation Keyframe lao nhanh từ PHẢI */}
+  {/* Delay: 2.5s (Tăng duration animation từ 0.9s lên 1.2s cho mượt) */}
   <p
     className="text-xl sm:text-2xl font-normal mt-3 mb-4"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
-      // QUAN TRỌNG: Để opacity là 0 để nó ẩn trong lúc chờ delay
       opacity: 0, 
-      // Animation sẽ tự động đưa opacity lên 1 khi kết thúc nhờ 'forwards'
       animation: isVisible("wedding-info-2")
-        ? "overshootRightFast 0.9s ease-out 0.6s forwards"
+        ? "overshootRightFast 1.2s ease-out 2.5s forwards"
         : "none",
     }}
   >
@@ -1517,22 +1534,25 @@ const handleTouchEnd = () => {
   </p>
 
   {/* Lịch âm */}
+  {/* Delay: 2.8s */}
   <p
-    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3 transition-all duration-800 ease-out delay-[1200ms]"
+    className="text-sm sm:text-sm text-gray-600 mt-3 mb-3"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       color: "#564e4eff",
       fontStyle: "italic",
       opacity: isVisible("wedding-info-2") ? 1 : 0,
       transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
+      transition: "opacity 1.2s ease 2.8s, transform 1.2s ease 2.8s",
     }}
   >
     (Tức ngày 10 tháng 12 năm Ất Tỵ)
   </p>
 
   {/* Địa điểm */}
+  {/* Delay: 3.2s */}
   <p
-    className="text-lg sm:text-lg font-semibold transition-all duration-800 ease-out delay-[1400ms]"
+    className="text-lg sm:text-lg font-semibold"
     style={{
       fontFamily: "'Great Vibes', cursive",
       color: "#111111",
@@ -1540,26 +1560,29 @@ const handleTouchEnd = () => {
       fontWeight: 300,
       opacity: isVisible("wedding-info-2") ? 1 : 0,
       transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
+      transition: "opacity 1.2s ease 3.2s, transform 1.2s ease 3.2s",
     }}
   >
     Tư Gia Nhà Trai
   </p>
 
+  {/* Nút chỉ đường */}
+  {/* Delay: 3.6s */}
   <a
     href="https://maps.app.goo.gl/ZA7jmKHUYWUxZR7E7?g_st=ic"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111] transition-all duration-800 ease-out delay-[1600ms]"
+    className="inline-block mt-4 px-6 py-1 text-sm rounded-full border border-[#111111] text-[#111111]"
     style={{
       fontFamily: "'Montserrat', sans-serif",
       opacity: isVisible("wedding-info-2") ? 1 : 0,
       transform: isVisible("wedding-info-2") ? "translateX(0)" : "translateX(-100%)",
+      transition: "opacity 1.2s ease 3.6s, transform 1.2s ease 3.6s",
     }}
   >
     CHỈ ĐƯỜNG
   </a>
 </section>
-
 
 {/* Keyframes cho hiệu ứng overshoot từ bên phải (Nhà Trai) */}
 <style jsx global>{`
