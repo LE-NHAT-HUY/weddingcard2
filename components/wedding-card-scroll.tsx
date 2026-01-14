@@ -1804,9 +1804,9 @@ const handleTouchEnd = () => {
 {/* Container bọc toàn bộ */}
       <div
         style={{
-          position: "relative",   // để dễ di chuyển bằng top/left
-          top: "40px",             // có thể thay đổi để đẩy xuống
-          left: "260px",            // có thể thay đổi để đẩy sang phải
+          position: "relative",   // giữ nguyên
+          top: "40px",            // giữ nguyên
+          left: "260px",          // giữ nguyên
           display: "inline-block",
         }}
       >
@@ -1818,12 +1818,23 @@ const handleTouchEnd = () => {
             color: "#4b8da1ff",
             display: "inline-block",
             textAlign: "center",
+            // Thêm dòng này để đảm bảo container cha không cắt con nếu lỡ tràn
+            overflow: "visible", 
           }}
         >
+          {/* --- SỬA CHỮ T TẠI ĐÂY --- */}
           <span
             style={{
-              fontSize: "36px", // chữ T to hơn
+              fontSize: "36px",
               display: "inline-block",
+              // --- CÁC THUỘC TÍNH SỬA LỖI ---
+              lineHeight: "2",          // Tăng chiều cao dòng để lấy lại phần ngọn chữ T
+              paddingRight: "20px",     // Thêm khoảng trống bên phải để lấy lại góc phải chữ T
+              marginRight: "-15px",     // Dùng margin âm để kéo chữ "háng 1" lại gần (bù trừ cho paddingRight)
+              paddingTop: "10px",       // Thêm chút khoảng trống phía trên
+              marginTop: "-10px",       // Bù trừ lại vị trí để chữ không bị tụt xuống
+              overflow: "visible",      // Đảm bảo không có gì bị ẩn
+              // -----------------------------
               animationName: "float",
               animationDuration: "2s",
               animationTimingFunction: "ease-in-out",
@@ -1833,6 +1844,7 @@ const handleTouchEnd = () => {
           >
             T
           </span>
+          
           <span
             style={{
               display: "inline-block",
