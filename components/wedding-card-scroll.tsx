@@ -780,7 +780,9 @@ const handleTouchEnd = () => {
       ? "opacity-100 translate-x-0"
       : "opacity-0 translate-x-12"
   } ${
-    guestName ? "text-2xl sm:text-2xl" : "text-4xl sm:text-4xl"
+    (guestName && guestName !== "Quý Khách") 
+        ? "text-2xl sm:text-2xl"   
+        : "text-2xl sm:text-2xl"   
   }`}
   style={{
     fontFamily: "'Great Vibes', cursive",

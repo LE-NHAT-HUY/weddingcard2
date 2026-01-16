@@ -36,5 +36,5 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // === Trang giới thiệu / trang share chung ===
 export default function Home() {
-  return <WeddingCardView initialGuestName="quý khách" />
+  return <WeddingCardView initialGuestName="Quý Khách" />
 }
