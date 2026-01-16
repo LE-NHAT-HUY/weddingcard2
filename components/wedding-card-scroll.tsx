@@ -1637,10 +1637,7 @@ const handleTouchEnd = () => {
 <section id="love-story" data-animate className="overflow-hidden py-1">
   
   {/* --- PHẦN 1: CÁC TIÊU ĐỀ (Đã xóa delay để chạy cùng lúc) --- */}
-  
-  {/* Dòng 1 */}
   <div
-    className={`transition-all duration-1000 ease-out`}
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
@@ -1650,8 +1647,16 @@ const handleTouchEnd = () => {
       letterSpacing: "4px",
       marginLeft: "20px", 
       marginTop: "20px",
+      
+      // TRẠNG THÁI
       opacity: isVisible("love-story") ? 1 : 0,
-      transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
+      transform: isVisible("love-story") ? "translate3d(0,0,0)" : "translate3d(-50px, 0, 0)", // Dùng translate3d để mượt hơn
+
+      // CẤU HÌNH CHUYỂN ĐỘNG
+      transitionProperty: "opacity, transform",
+      transitionDuration: "3000ms",    // TỐC ĐỘ: 3 giây
+      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+      transitionDelay: "3500ms",                 // CHỜ: 0.5s
     }}
   >
     Từ giảng đường...
@@ -1659,7 +1664,6 @@ const handleTouchEnd = () => {
 
   {/* Dòng 2 */}
   <div
-    className={`transition-all duration-1000 ease-out`} 
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
@@ -1671,8 +1675,14 @@ const handleTouchEnd = () => {
       marginRight: "20px", 
       marginTop: "20px", 
       textAlign: "right",
+      
       opacity: isVisible("love-story") ? 1 : 0,
-      transform: isVisible("love-story") ? "translateX(0)" : "translateX(50px)",
+      transform: isVisible("love-story") ? "translate3d(0,0,0)" : "translate3d(50px, 0, 0)",
+
+       transitionProperty: "opacity, transform",
+      transitionDuration: "3000ms",    // TỐC ĐỘ: 3 giây
+      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+      transitionDelay: "3500ms",        // CHỜ: 2s
     }}
   >
     ...Đến lễ đường
@@ -1680,7 +1690,6 @@ const handleTouchEnd = () => {
 
   {/* Dòng 3 */}
   <div
-    className={`transition-all duration-1000 ease-out`}
     style={{
       fontFamily: "'Great Vibes', cursive", 
       fontSize: "30px", 
@@ -1690,8 +1699,14 @@ const handleTouchEnd = () => {
       letterSpacing: "4px",
       marginLeft: "20px", 
       marginTop: "20px",
+      
       opacity: isVisible("love-story") ? 1 : 0,
-      transform: isVisible("love-story") ? "translateX(0)" : "translateX(-50px)",
+      transform: isVisible("love-story") ? "translate3d(0,0,0)" : "translate3d(-50px, 0, 0)",
+
+      transitionProperty: "opacity, transform",
+      transitionDuration: "3000ms",    // TỐC ĐỘ: 3 giây
+      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+      transitionDelay: "3500ms",       // CHỜ: 3.5s
     }}
   >
     Chuyện kể rằng.....
@@ -1700,7 +1715,7 @@ const handleTouchEnd = () => {
 
   {/* --- PHẦN 3: HÌNH ẢNH (Giảm delay còn 1000ms) --- */}
   <div
-    className={`transition-opacity duration-1000 delay-1000`}
+    className={`transition-opacity duration-1000 delay-4000`}
     style={{
       backgroundImage: "url('https://assets.cinelove.me/uploads/0f767b27-a71b-47a7-9e12-f4992f0c79f7/37db6e41-b641-49da-ab9c-e32958637d53.png')",
       backgroundSize: "cover", 
@@ -1735,14 +1750,27 @@ const handleTouchEnd = () => {
   >
     {/* Đoạn 1: Nam & Nhi! */}
     <p style={{ fontSize: "17px", marginBottom: "0.3rem" }}>
-      <span className="typing-line line-1">Nam & Nhi!</span>
+      <span 
+    className="typing-line line-1"
+    style={{ 
+      
+      display: "inline-block", 
+      
+      // 1. Thời gian chờ: 7 giây
+      animationDelay: "4500ms",
+    
+      animationFillMode: "both" 
+    }}
+  >
+    Nam & Nhi!
+  </span>
     </p>
 
     {/* Đoạn 2 (Gộp chung): Chạy lúc 3000ms */}
     <p style={{ marginBottom: "0.5rem", minHeight: "120px" }}>
       <TypewriterEffect 
         isVisible={isVisible("love-story")}
-        startDelay={3000} // SỬA: Giảm xuống 3000 để chạy ngay
+        startDelay={6000} // SỬA: Giảm xuống 3000 để chạy ngay
         showCursor={true} 
         // SỬA: Dùng \n thay vì \n\n để giảm khoảng cách
         text={`Chúng mình gặp nhau từ những ngày còn ngồi học chung ở cấp 3. Khi ấy chỉ là những buổi học nhóm, những câu chuyện nhỏ xíu của tuổi học trò, nhưng không ngờ lại gieo nên một tình cảm theo chúng mình đến tận hôm nay. Qua thời gian, chúng mình trưởng thành cùng nhau, đi qua nhiều thay đổi, và cuối cùng nhận ra: điều quan trọng nhất không phải là đi bao xa, mà là đi cùng ai, người mình muốn ở cạnh nhất... vẫn là người bạn học năm nào.\nVà hôm nay, chúng mình quyết định viết tiếp câu chuyện ấy bằng một lời hứa chung đường, chung nhà, chung tương lai.`}
