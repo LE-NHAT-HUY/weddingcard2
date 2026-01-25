@@ -2405,7 +2405,7 @@ const handleTouchEnd = () => {
 >
   <div className="absolute inset-0 w-full h-full relative overflow-hidden">
     {(() => {
-      const { src, blur } = optimizedPathFor("/anh26.jpg")
+      const { src, blur } = optimizedPathFor("/anhnen2.jpg")
       return (
         <Image
           src={src}
