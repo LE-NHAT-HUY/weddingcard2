@@ -820,7 +820,7 @@ const handleTouchEnd = () => {
 >
   <div className="flex justify-center items-end gap-2 md:gap-2 max-w-[1200px] mx-auto">
     {(() => {
-      const photos = [data.gallery?.[18], data.gallery?.[16], data.gallery?.[17]];
+      const photos = [data.gallery?.[18], data.gallery?.[17], data.gallery?.[16]];
       return photos.map((photo, idx) => {
         const { src, blur } = optimizedPathFor(photo);
         const isCenter = idx === 1;
