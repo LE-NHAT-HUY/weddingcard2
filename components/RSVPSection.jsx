@@ -8,7 +8,6 @@ export default function RSVPSection({
 }) {
   const [form, setForm] = useState({
     name: "",
-    // relation: "",  <-- ĐÃ XÓA
     attending: null,
     guests: 1,
     phone: "",
@@ -19,7 +18,6 @@ export default function RSVPSection({
 
   const [openFields, setOpenFields] = useState({
     name: false,
-    // relation: false, <-- ĐÃ XÓA
     attending: false,
     guestsPhone: false,
     message: false,
@@ -36,7 +34,8 @@ export default function RSVPSection({
   const successColor = "#166534";
 
   const onChange = (k, v) => setForm((s) => ({ ...s, [k]: v }));
-  const toggleField = (field) => setOpenFields((s) => ({ ...s, [field]: !s[field] }));
+  const toggleField = (field) =>
+    setOpenFields((s) => ({ ...s, [field]: !s[field] }));
 
   const fieldsRef = useRef([]);
   const [visibleFields, setVisibleFields] = useState([]);
@@ -72,13 +71,12 @@ export default function RSVPSection({
     setWishStatus(null);
     setWishError("");
 
+    // --- VẪN GIỮ VALIDATION ĐỂ TRÔNG GIỐNG THẬT ---
     if (!form.name.trim()) {
       setErrorMsg("Vui lòng nhập tên của bạn.");
       setLoading(false);
       return;
     }
-
-    // --- ĐÃ XÓA ĐOẠN KIỂM TRA RELATION TẠI ĐÂY ---
 
     if (form.attending === null) {
       setErrorMsg("Vui lòng cho biết bạn có tham dự hay không.");
@@ -92,52 +90,20 @@ export default function RSVPSection({
       return;
     }
 
-    try {
-      // 1️⃣ Gửi RSVP
-      const res = await fetch(submitEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          // relation: form.relation, <-- ĐÃ XÓA TRONG PAYLOAD
-          attending: form.attending,
-          guests: form.guests,
-          phone: form.phone,
-          message: form.message,
-        }),
-      });
-      if (!res.ok) throw new Error((await res.text()) || "Lỗi RSVP");
-
+    // --- PHẦN GIẢ LẬP GỬI DỮ LIỆU (KHÔNG GỌI API) ---
+    // Tạo độ trễ 1.5 giây để người dùng thấy loading giống thật
+    setTimeout(() => {
+      // 1. Giả vờ gửi RSVP thành công
       setStatus("success");
 
-      // 2️⃣ Gửi lời chúc
+      // 2. Giả vờ gửi lời chúc thành công (nếu có nhập)
       if (form.wishMessage.trim()) {
-        const wishPayload = {
-          name: form.name,
-          message: form.wishMessage,
-        };
-
-        const res = await fetch("/api/wishes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(wishPayload),
-        });
-
-        if (!res.ok) {
-          const err = await res.text();
-          console.error("Wish error:", err);
-          setWishStatus("error");
-        } else {
-          setWishStatus("success");
-        }
+        setWishStatus("success");
       }
 
-      // Reset form
+      // 3. Reset form như bình thường
       setForm({
         name: "",
-        // relation: "", <-- ĐÃ XÓA
         attending: null,
         guests: 1,
         phone: "",
@@ -145,17 +111,14 @@ export default function RSVPSection({
       });
       setOpenFields({
         name: false,
-        // relation: false, <-- ĐÃ XÓA
         attending: false,
         guestsPhone: false,
         message: false,
       });
-    } catch (err) {
-      setStatus("error");
-      setErrorMsg(err.message || "Gửi thất bại");
-    } finally {
+
+      // Tắt loading
       setLoading(false);
-    }
+    }, 1500); // 1500ms = 1.5 giây delay
   };
 
   const headerClass =
@@ -167,7 +130,6 @@ export default function RSVPSection({
   const radioClass =
     "w-5 h-5 border-2 border-[#111111] rounded-full cursor-pointer transition-all duration-200 flex-shrink-0";
 
-  // --- MẢNG FIELDS ĐÃ ĐƯỢC CẬP NHẬT ---
   const fields = [
     {
       label: "Tên của bạn là gì?",
@@ -175,7 +137,6 @@ export default function RSVPSection({
       type: "text",
       placeholder: "Nhập họ và tên",
     },
-    // Đã xóa phần tử "relation" ở giữa này
     {
       label: "Bạn có tham dự không?",
       key: "attending",
@@ -194,7 +155,8 @@ export default function RSVPSection({
       }}
     >
       <p className="text-2sm sm:text-2sm text-center font-medium tracking-wide mb-8">
-        Đừng quên gửi xác nhận tham dự để chúng mình đón tiếp một cách chu đáo hơn!
+        Đừng quên gửi xác nhận tham dự để chúng mình đón tiếp một cách chu đáo
+        hơn!
       </p>
 
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-6">
@@ -255,7 +217,9 @@ export default function RSVPSection({
                         style={{
                           appearance: "none",
                           backgroundColor:
-                            form.attending === true ? primaryColor : "transparent",
+                            form.attending === true
+                              ? primaryColor
+                              : "transparent",
                           borderColor: primaryColor,
                         }}
                       />
@@ -280,7 +244,9 @@ export default function RSVPSection({
                         style={{
                           appearance: "none",
                           backgroundColor:
-                            form.attending === false ? primaryColor : "transparent",
+                            form.attending === false
+                              ? primaryColor
+                              : "transparent",
                           borderColor: primaryColor,
                         }}
                       />
@@ -372,8 +338,7 @@ export default function RSVPSection({
                   e.currentTarget.style.backgroundColor = "#030b20ff";
               }}
               onMouseLeave={(e) => {
-                if (!loading)
-                  e.currentTarget.style.backgroundColor = primaryColor;
+                if (!loading) e.currentTarget.style.backgroundColor = primaryColor;
               }}
             >
               {loading ? "Đang gửi..." : "Gửi xác nhận"}
@@ -396,7 +361,7 @@ export default function RSVPSection({
               )}
               {status === "error" && (
                 <p className="text-sm font-medium text-center text-red-600">
-                  ❌ Gửi RSVP thất bại.
+                  ❌ Gửi thất bại.
                 </p>
               )}
             </div>
